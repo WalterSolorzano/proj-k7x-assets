@@ -9,7 +9,10 @@ compactar o reiniciar la sesión sin perder contexto.
 - **Entregable:** `presentacion/*.png` + `presentacion.md` (+ `presentacion/video/*.webm`)
 
 ## Decisiones
-- Entrega = imágenes y video, no demo en vivo.
+- **Alcance cerrado: prototipo visual, NO app funcional.** Sin backend, login, base de datos ni persistencia.
+- Rally Latinoamericano de Innovación 2026: 28 h (16-17 oct). El jurado premia la **calidad de la presentación**.
+- Entregables oficiales del Rally: video ≤2 min en YouTube + reporte pautado PDF + video de interacción internacional ≤1 min en TikTok.
+- Entrega propia = imágenes y video, no demo de uso.
 - Vista local en http://localhost:5173 con galería de mockups/capturas/videos.
 - Plantilla visual base: `mockups/00-demo.html` + `mockups/tokens.css`.
 

@@ -4,6 +4,9 @@ Todo subagente `seccion` lee este archivo antes de escribir código. El orquesta
 lo mantiene actualizado y es el único que lo edita.
 
 > Estado: **plantilla**. El orquestador lo rellena en el kickoff con la información de `brief.md`.
+>
+> **Alcance:** prototipo visual para un rally de 24 h. Pantallas + imágenes + video. **Sin** app funcional,
+> backend, login, base de datos ni persistencia. Navegación por links entre HTML.
 
 ## 1. Producto
 - **Qué es:** (pendiente)

@@ -18,6 +18,12 @@ Principios:
 - Presupuesto 24 h. Si no suma a lo visual, se corta.
 - Entrega = capturas en `presentacion/` + `presentacion.md` (+ video).
 
+## Alcance (rally de 24 h)
+- **Prototipo visual, no app.** Sin backend, sin login real, sin base de datos, sin persistencia, sin estado.
+- Navegación = links entre pantallas HTML. Nada más.
+- **Regla de corte:** si algo no aparece en una captura o en el video, no se hace.
+- Cuando dudes entre "que funcione" y "que se vea increíble", elige que se vea increíble.
+
 ## Arquitectura del repo (no la reinventes)
 - `CONTRATO.md` — **fuente única de verdad**: diseño, convenciones, inventario de secciones. Solo tú lo editas.
 - `secciones/<slug>/section.html` + `section.css` — unidad de trabajo **aislada** por subagente.
@@ -33,12 +39,12 @@ Principios:
 3. Rellena `CONTRATO.md` (producto + diseño) y deja el inventario de secciones esbozado.
 4. Actualiza `PROYECTO.md`.
 
-### Fase 1 — Look de referencia (1–3 h)
+### Fase 1 — Look de referencia (0,5–1,5 h)
 1. Define el look con una pantalla de referencia en `mockups/` (usa `mockups/00-demo.html` como base).
 2. Captura y muestra. Itera hasta aprobación explícita.
 3. Congela: el look aprobado es la ley. A partir de aquí, todo se mide contra él.
 
-### Fase 2 — Build en paralelo (10–16 h) ⭐
+### Fase 2 — Pantallas en paralelo (6–9 h) ⭐
 Aquí está la velocidad. Reparto:
 1. Traduce cada página aprobada en **secciones** y escribe el inventario en `CONTRATO.md` +
    `secciones/_sections.json`. Cada sección = una carpeta = un subagente.
@@ -65,16 +71,17 @@ Si el usuario quiere varias ventanas de OpenCode:
 3. Cada sesión toca solo su `secciones/<slug>/` y luego se une por merge (sin conflictos, porque
    son carpetas disjuntas). `paginas/` está en `.gitignore` justo para eso.
 
-### Fase 3 — Ensamblado y pulido (2–3 h)
+### Fase 3 — Ensamblado y pulido (1–2 h)
 1. `npm run build` → `paginas/`.
-2. Revisa la página ensamblada (`npm run serve`, abre la página completa). Corrige desajustes
-   entre secciones: espaciado, ritmo vertical, continuidad de color.
-3. Pulido cosmético: jerarquía, estados, micro-animaciones. Sin refactors grandes.
+2. Revisa la pantalla ensamblada (`npm run serve`). Corrige desajustes entre secciones: espaciado, ritmo vertical, continuidad de color.
+3. Conecta las pantallas con links para que el prototipo se sienta navegable en el video.
+4. Pulido cosmético: jerarquía, estados, micro-animaciones. Sin refactors grandes.
 
 ### Fase 4 — Presentación (1–2 h)
 1. Delega en `screenshot`: `npm run capture` (+ `--mobile`) y `npm run video`.
 2. Verifica `presentacion/*.png` y `presentacion.md`.
-3. Actualiza `PROYECTO.md` y entrega las rutas.
+3. Si el Rally pide video de pitch: clip de **≤ 2 min**, con guion, sin scroll largo.
+4. Actualiza `PROYECTO.md` y entrega las rutas.
 
 ## Ahorro de tokens
 Sigue `AGENTS.md`. Además:

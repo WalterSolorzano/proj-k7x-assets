@@ -23,6 +23,13 @@ Entregable final: **imágenes** del programa (capturas), no una demo en vivo.
 - Escribe varios archivos de una sola vez cuando sea posible.
 - Antes de grandes refactors, pregunta.
 
+## Alcance (rally de 24 h — importante)
+- **No** se construye una app funcional: es un **prototipo visual**. Sin backend, sin login real, sin base de datos, sin persistencia.
+- Navegación entre pantallas = links entre HTML. Nada más.
+- Lo que se entrega: pantallas bonitas, **imágenes** y un **video**. No una demo de uso.
+- **Regla de corte:** si algo no aparece en una captura o en el video, no se hace.
+- El jurado del Rally valora sobre todo la **calidad de la presentación**. Optimiza para eso.
+
 ## Trabajo en paralelo (clave para ir rápido)
 - Una **sección = una carpeta** en `secciones/<slug>/` (`section.html` + `section.css`). Un dueño, un subagente. Sin solapes → sin conflictos de merge.
 - La composición de páginas vive en `secciones/_sections.json`; `paginas/` es generado (`npm run build`) y está en `.gitignore`. No lo edites a mano.
@@ -30,11 +37,11 @@ Entregable final: **imágenes** del programa (capturas), no una demo en vivo.
 - Reparte con subagentes `seccion` en segundo plano (o `/secciones`). Sesiones separadas: worktrees + `session_move`, luego merge.
 
 ## Fases
-0. Kickoff → `brief.md` + `CONTRATO.md`
-1. Look de referencia → `mockups/`
-2. Build en paralelo → `secciones/` (un subagente por carpeta)
-3. Ensamblado y pulido → `paginas/`
-4. Presentación → `presentacion/*.png` + `presentacion.md` (+ video)
+0. Kickoff → `brief.md` + `CONTRATO.md` (≤20 min)
+1. Look de referencia → `mockups/` (una pantalla que fija el estilo)
+2. Pantallas en paralelo → `secciones/` (un subagente por carpeta)
+3. Ensamblado → `paginas/` (prototipo navegable por links)
+4. Presentación → `presentacion/*.png` + `presentacion.md` + video + reporte
 
 ## Herramientas (ya instaladas — no las reescribas)
 - `npm run serve` → galería local (secciones, páginas, mockups, capturas, videos) con recarga en vivo: http://localhost:5173
