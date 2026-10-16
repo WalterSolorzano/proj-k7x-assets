@@ -1,0 +1,21 @@
+/* tools/anim.css — animaciones que el script de video inyecta sobre cualquier mockup.
+   No se carga en la app real: solo la usa tools/video.mjs para que la UI "tenga vida" al grabar. */
+[data-rally-anim] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+[data-rally-anim].is-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-rally-anim] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

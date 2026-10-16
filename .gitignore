@@ -1,0 +1,5 @@
+node_modules/
+.tmp-video/
+
+# generado por `npm run build` (se regenera, no se versiona para evitar conflictos de merge)
+paginas/

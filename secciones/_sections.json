@@ -1,0 +1,10 @@
+{
+  "$comment": "Mapa de ensamblado. Cada página lista sus secciones en orden (nombre de carpeta en secciones/). Editarlo es la única forma de cambiar el orden o la composición.",
+  "pages": [
+    {
+      "id": "01-home",
+      "title": "Inicio",
+      "sections": ["00-nav", "01-hero", "99-footer"]
+    }
+  ]
+}
