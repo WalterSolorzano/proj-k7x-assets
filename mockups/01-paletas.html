@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NODO · los 4 temas, la misma pantalla</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+  /* Página de comparación. NO duplica el marcado de la pantalla: embebe 00-demo.html
+     4 veces con ?theme= y ?embed=1. Antes estaba copiada a mano ×4, y esas copias
+     dentro de paneles con aspecto de tarjeta generaban cards anidadas (CONTRATO §2.1). */
+  body{padding:var(--s-7) var(--s-5) var(--s-8)}
+  .pt-head{max-width:var(--maxw);margin:0 auto var(--s-7);padding:0 var(--s-4)}
+  .pt-head h1{font-family:var(--font-display);font-size:var(--fs-xl);margin:0 0 var(--s-2)}
+  .pt-head p{margin:0;color:var(--text-dim);font-size:var(--fs-sm);max-width:62ch}
+
+  .pt-list{max-width:var(--maxw);margin:0 auto;display:grid;gap:var(--s-8)}
+
+  /* cada tema = etiqueta + pantalla embebida. Sin contenedor tipo tarjeta alrededor. */
+  .pt-item{padding:0 var(--s-4)}
+  .pt-item__head{display:flex;align-items:baseline;gap:var(--s-3);flex-wrap:wrap;
+    padding-bottom:var(--s-3);margin-bottom:var(--s-4);border-bottom:1px solid var(--line)}
+  .pt-item__name{font-family:var(--font-display);font-weight:700;font-size:var(--fs-md)}
+  .pt-item__code{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-dim)}
+  .pt-frame{width:100%;height:1700px;border:1px solid var(--line);border-radius:var(--r-md);
+    display:block;background:var(--bg)}
+</style>
+</head>
+<body>
+
+<div class="pt-head">
+  <h1>4 temas · la misma pantalla</h1>
+  <p>Se elige el look en el momento, cuando ya se conoce el desafío: solo cambia el tema.
+     Se captura en una sola imagen.</p>
+</div>
+
+<div class="pt-list">
+
+  <div class="pt-item">
+    <div class="pt-item__head">
+      <span class="pt-item__name">1 · Oscuro tecnológico</span>
+      <span class="pt-item__code">data-theme="dark-tech" · por defecto</span>
+    </div>
+    <iframe class="pt-frame" src="00-demo.html?theme=dark-tech&embed=1" title="Tema oscuro tecnológico" loading="eager"></iframe>
+  </div>
+
+  <div class="pt-item">
+    <div class="pt-item__head">
+      <span class="pt-item__name">2 · Claro minimalista</span>
+      <span class="pt-item__code">data-theme="light-min"</span>
+    </div>
+    <iframe class="pt-frame" src="00-demo.html?theme=light-min&embed=1" title="Tema claro minimalista" loading="eager"></iframe>
+  </div>
+
+  <div class="pt-item">
+    <div class="pt-item__head">
+      <span class="pt-item__name">3 · Plano técnico</span>
+      <span class="pt-item__code">data-theme="blueprint"</span>
+    </div>
+    <iframe class="pt-frame" src="00-demo.html?theme=blueprint&embed=1" title="Tema plano técnico" loading="eager"></iframe>
+  </div>
+
+  <div class="pt-item">
+    <div class="pt-item__head">
+      <span class="pt-item__name">4 · Natural / sustentable</span>
+      <span class="pt-item__code">data-theme="natural"</span>
+    </div>
+    <iframe class="pt-frame" src="00-demo.html?theme=natural&embed=1" title="Tema natural sustentable" loading="eager"></iframe>
+  </div>
+
+</div>
+
+</body>
+</html>

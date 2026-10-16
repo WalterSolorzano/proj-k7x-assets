@@ -1,0 +1,210 @@
+/* secciones/10-bar — franja de mando SITRE · SINAPRED.
+   Dos escalas en una sola franja (CONTRATO.md §2.3): el país a la izquierda, el foco municipal
+   pegado al borde derecho y separado por hairline. Es la ÚNICA capa `--surface` de la página
+   (§2.0.3): sin caja, sin borde envolvente, sin sombra. Todo se separa con hairline, tipografía
+   y aire. Ninguna regla/barra de progreso: el estado se dice en texto y cifra. */
+
+.sec-10-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--surface);
+  border-bottom: var(--hairline);
+  font-variant-numeric: tabular-nums;
+}
+
+/* marca · banda nacional (absorbe el aire) · foco. El renglón mide 64 px. */
+.sec-10-bar__in {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: stretch;
+  column-gap: var(--s-4);
+  min-height: 64px;
+  padding: 0 var(--s-5);
+}
+
+/* ---------- marca ---------- */
+.sec-10-bar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.sec-10-bar__mark { flex: 0 0 auto; display: block; color: var(--accent); }
+.sec-10-bar__names { display: flex; flex-direction: column; gap: var(--s-1); }
+.sec-10-bar__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1;
+}
+.sec-10-bar__org {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: .16em;
+  line-height: 1;
+  color: var(--text-dim);
+}
+
+/* ---------- nivel nacional: dos renglones, el dato rey primero ---------- */
+.sec-10-bar__pais {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-1);
+  min-width: 0;
+  padding-left: var(--s-4);
+  border-left: var(--hairline);
+}
+.sec-10-bar__row { display: flex; align-items: center; }
+/* la separación entre datos es una hairline vertical, nunca una caja */
+.sec-10-bar__row > * + * {
+  margin-left: var(--s-3);
+  padding-left: var(--s-3);
+  border-left: var(--hairline);
+}
+
+/* etiqueta de escala: wayfinding de panel, declara dónde estamos (§2.3) */
+.sec-10-bar__scale {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* dato: etiqueta en 12 px, cifra en 14 px. El sistema se lee en la diferencia. */
+.sec-10-bar__item {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .02em;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.sec-10-bar__item b { color: var(--text); font-weight: 500; }
+.sec-10-bar__num { font-size: var(--fs-sm); }
+.sec-10-bar__pct { color: var(--text); }
+
+/* nodo en línea: el único movimiento continuo de la sección, y significa enlace vivo */
+.sec-10-bar__dot {
+  position: relative;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: var(--s-2);
+  border-radius: var(--r-pill);
+  background: var(--ok);
+  vertical-align: middle;
+}
+.sec-10-bar__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--ok);
+  border-radius: var(--r-pill);
+  animation: sec-10-bar-pulse calc(var(--dur) * 7) var(--ease) infinite;
+}
+
+/* modo apagón: estado de enlace, en texto y con icono. Sin chip, sin borde. */
+.sec-10-bar__blackout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .02em;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.sec-10-bar__blackout b { color: var(--text); font-weight: 500; }
+.sec-10-bar__blackout svg { flex: 0 0 auto; color: var(--accent); }
+
+/* ---------- nivel foco: el descenso, alineado al borde derecho ---------- */
+.sec-10-bar__foco {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: var(--s-1);
+  padding-left: var(--s-4);
+  border-left: var(--hairline);
+}
+.sec-10-bar__foco .sec-10-bar__row { justify-content: flex-end; }
+.sec-10-bar__focus {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .02em;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.sec-10-bar__focus b { color: var(--text); font-weight: 500; }
+.sec-10-bar__tag {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+/* alerta: el estado ES el dato. Cuadrado de relleno + nivel en texto, nunca un chip. */
+.sec-10-bar__alerta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  white-space: nowrap;
+}
+.sec-10-bar__sw {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--r-sm);
+  background: var(--bad);
+}
+
+@keyframes sec-10-bar-pulse {
+  0%        { transform: scale(1); opacity: .85; }
+  70%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Por debajo de 1440 el aire se ajusta; a 1280 o menos, el foco municipal se retira
+   de la franja antes que apretar los dos niveles hasta hacerlos ilegibles. */
+@media (max-width: 1439px) {
+  .sec-10-bar__in { column-gap: var(--s-3); padding: 0 var(--s-4); }
+}
+@media (max-width: 1279px) {
+  .sec-10-bar__in { grid-template-columns: auto minmax(0, 1fr); }
+  .sec-10-bar__foco { display: none; }
+}
+
+/* Franja estrecha: la banda nacional se apila, un renglón por dato. En un teléfono la barra
+   deja de ser fija: un renglón de 200 px comerse la pantalla no es una franja, es un problema. */
+@media (max-width: 760px) {
+  .sec-10-bar { position: static; }
+  .sec-10-bar__in { display: block; padding: var(--s-3) var(--s-4); }
+  .sec-10-bar__brand { padding-bottom: var(--s-3); }
+  .sec-10-bar__pais {
+    gap: var(--s-2);
+    padding: var(--s-3) 0 0;
+    border-left: 0;
+    border-top: var(--hairline);
+  }
+  .sec-10-bar__row {
+    flex-wrap: wrap;
+    column-gap: var(--s-3);
+    row-gap: var(--s-2);
+  }
+  .sec-10-bar__row > * + * { margin-left: 0; padding-left: 0; border-left: 0; }
+  .sec-10-bar__scale { flex: 1 0 100%; }
+  .sec-10-bar__item,
+  .sec-10-bar__blackout { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-10-bar__dot::after { animation: none; opacity: .4; }
+}

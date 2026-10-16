@@ -1,0 +1,151 @@
+/* secciones/23-reporte/section.css
+   SITRE · Brigadas en campo · Reporte en campo (uso a una mano, 390 px).
+   Gramática (CONTRATO.md §2.0): la ÚNICA cosa con borde son los tres botones,
+   porque son controles. La nota y el aviso de envío se separan con aire y una hairline.
+   Sin sombras, sin chips, sin rejillas de cajas. */
+
+/* Columna de teléfono. No hay token de ancho móvil: se declara aquí y solo aquí,
+   para que la sección también se sostenga cuando el preview la abre a 1440 px. */
+.sec-23-reporte__col { max-width: 420px; }
+
+.sec-23-reporte {
+  padding: var(--sec-pad) 0;
+  border-bottom: var(--hairline);
+}
+
+/* --- 1 · etiqueta única (mono uppercase). No hay título grande: la sección es un reporte, no un panel --- */
+.sec-23-reporte__lab {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* --- 2 · tres controles. Objetivo táctil grande, icono arriba, etiqueta debajo --- */
+.sec-23-reporte__acciones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+
+.sec-23-reporte__accion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 92px;
+  padding: var(--s-3) var(--s-2);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.sec-23-reporte__ico { flex: 0 0 auto; }
+.sec-23-reporte__accion-txt { display: block; }
+
+.sec-23-reporte__accion:hover { background: color-mix(in srgb, var(--text) 5%, transparent); }
+.sec-23-reporte__accion:active { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+
+/* El reporte que pide ayuda es el único que grita: borde y texto de acento, sin relleno. */
+.sec-23-reporte__accion--alerta {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  color: var(--accent);
+}
+.sec-23-reporte__accion--alerta:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+
+/* --- 3 · nota: etiqueta y texto, nada más. Sin caja, sin borde discontinuo --- */
+.sec-23-reporte__nota { margin-top: var(--gap-block); }
+
+.sec-23-reporte__nota-lab {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sec-23-reporte__nota-txt {
+  margin: var(--s-2) 0 0;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* --- 4 · estado de envío: separado por hairline, no por caja --- */
+.sec-23-reporte__envio {
+  margin-top: var(--gap-block);
+  padding-top: var(--gap-row);
+  border-top: var(--hairline);
+}
+
+.sec-23-reporte__envio-fila {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+.sec-23-reporte__envio-txt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.sec-23-reporte__envio-meta {
+  display: block;
+  margin-top: var(--s-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+/* --- 5 · el detalle memorable: el punto late como el radio que aún no llega.
+   Lento a propósito (≈2.8 s): la cola espera, no está transmitiendo. --- */
+.sec-23-reporte__pulso {
+  position: relative;
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin-top: calc(var(--fs-sm) * .42);
+  border-radius: var(--r-pill);
+  background: var(--warn);
+}
+
+.sec-23-reporte__pulso::before,
+.sec-23-reporte__pulso::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--warn);
+  border-radius: var(--r-pill);
+  animation: sec-23-reporte-latido calc(var(--dur) * 8) var(--ease) infinite;
+}
+.sec-23-reporte__pulso::after { animation-delay: calc(var(--dur) * 4); }
+
+@keyframes sec-23-reporte-latido {
+  0%            { transform: scale(1);   opacity: .5; }
+  70%, 100%     { transform: scale(2.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-23-reporte__pulso::before,
+  .sec-23-reporte__pulso::after { animation: none; opacity: .3; }
+}

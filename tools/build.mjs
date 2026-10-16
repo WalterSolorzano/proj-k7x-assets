@@ -38,7 +38,9 @@ for (const page of cfg.pages) {
   }
 
   const links = ['../assets/tokens.css', ...styles].map((h) => `<link rel="stylesheet" href="${h}">`).join('\n');
-  const html = fill(shell, { title: page.title || page.id, styles: links, content: parts.join('\n\n') });
+  const themeAttr = page.theme ? ` data-theme="${page.theme}"` : '';
+  const colorScheme = page.scheme || (page.theme === 'institucional' || page.theme === 'light-min' || page.theme === 'natural' ? 'light' : 'dark');
+  const html = fill(shell, { title: page.title || page.id, styles: links, content: parts.join('\n\n'), themeAttr, colorScheme });
   await writeFile(join(OUT, `${page.id}.html`), html, 'utf8');
 
   built++;

@@ -1,0 +1,128 @@
+/* secciones/19-privacidad — Cierre del sistema: privacidad por diseño.
+   Sección plana (CONTRATO.md §2.0 / §2.0.1): una LISTA gobernada por hairlines, no cuatro tarjetas.
+   Sin `--surface`, sin cajas, sin sombras. Iconos SVG inline de un solo grosor de trazo.
+   La cuarta afirmación cambia de registro (título que manda + rango de confianza dibujado). */
+
+.sec-19-privacidad { padding: var(--sec-pad) 0; }
+
+/* ---------- cabecera: más aire arriba (--sec-pad) que debajo (--s-3) ---------- */
+.sec-19-privacidad__head { max-width: 78ch; margin-bottom: var(--gap-block); }
+.sec-19-privacidad__title {
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-display); font-weight: 700;
+  font-size: var(--fs-xl);
+  letter-spacing: -.02em; line-height: var(--lh-tight);
+}
+.sec-19-privacidad__lede { margin: 0; max-width: 74ch; font-size: var(--fs-md); color: var(--text-dim); }
+
+/* ---------- las cuatro afirmaciones: filas de datos, separadas por hairline ---------- */
+.sec-19-privacidad__claims { margin: 0; padding: 0; list-style: none; }
+.sec-19-privacidad__claim {
+  display: grid; grid-template-columns: var(--s-6) minmax(0, 1fr);
+  gap: var(--gap-row) var(--gap-block);
+  padding: var(--pad-block) 0;
+  border-top: var(--hairline);
+}
+.sec-19-privacidad__claim-body {
+  display: grid; grid-template-columns: minmax(0, 26ch) minmax(0, 1fr);
+  gap: var(--gap-row) var(--gap-block); align-items: baseline;
+}
+.sec-19-privacidad__claim-t {
+  margin: 0; font-family: var(--font-display); font-weight: 600;
+  font-size: var(--fs-lg); letter-spacing: -.01em; line-height: var(--lh-tight);
+}
+.sec-19-privacidad__claim-p { margin: 0; max-width: 78ch; font-size: var(--fs-md); color: var(--text-dim); }
+
+/* ---------- icono: trazo fino, un solo grosor, hereda el color del contenedor ---------- */
+.sec-19-privacidad__ico { display: block; line-height: 0; color: var(--text-dim); transition: color var(--dur) var(--ease); }
+.sec-19-privacidad__ico svg {
+  display: block; width: var(--s-6); height: var(--s-6);
+  fill: none; stroke: currentColor; stroke-width: 1.25;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.sec-19-privacidad__claim:hover .sec-19-privacidad__ico { color: var(--accent); }
+
+/* ---------- la limitación declarada: misma fila, otro registro ---------- */
+.sec-19-privacidad__claim--fuerte {
+  padding: var(--gap-block) 0;
+  border-top-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+.sec-19-privacidad__claim--fuerte .sec-19-privacidad__claim-body { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+.sec-19-privacidad__claim--fuerte .sec-19-privacidad__claim-t {
+  font-size: clamp(var(--fs-xl), 2.4vw, var(--fs-2xl));
+}
+
+/* rango de confianza: tres estados, relleno — nunca color de texto */
+.sec-19-privacidad__conf { max-width: 70ch; margin-top: var(--s-2); }
+.sec-19-privacidad__conf-bars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
+.sec-19-privacidad__conf-seg { display: block; height: var(--s-2); border-radius: var(--r-pill); }
+.sec-19-privacidad__conf-seg--alta { background: var(--ok); }
+.sec-19-privacidad__conf-seg--media { background: var(--warn); }
+.sec-19-privacidad__conf-seg--sin { background: var(--nodata); }
+.sec-19-privacidad__conf-keys {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3); margin-top: var(--s-2);
+}
+.sec-19-privacidad__conf-key {
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: .04em; color: var(--text-dim);
+}
+
+/* ---------- franja de metadatos: tres columnas, hairlines, sin cajas ---------- */
+.sec-19-privacidad__meta {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-block) var(--s-7);
+  margin: var(--gap-block) 0 0; padding-top: var(--gap-block);
+  border-top: var(--hairline);
+}
+.sec-19-privacidad__meta-cell { min-width: 0; }
+.sec-19-privacidad__meta-k {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-19-privacidad__meta-v { margin: 0; font-size: var(--fs-sm); line-height: 1.55; color: var(--text-dim); }
+.sec-19-privacidad__meta-v b { font-weight: 600; color: var(--text); }
+
+/* ---------- sello de cierre: se estampa una sola vez, al cargar ---------- */
+@keyframes sec-19-privacidad__estampa {
+  from { opacity: 0; letter-spacing: calc(var(--track) * 1.9); }
+  to   { opacity: 1; letter-spacing: var(--track); }
+}
+.sec-19-privacidad__seal {
+  --track: .16em; /* el tracking del sello; se ajusta en pantalla estrecha */
+  margin: var(--gap-block) 0 0; padding-top: var(--pad-block);
+  border-top: var(--hairline); text-align: right;
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: var(--track); text-transform: uppercase; color: var(--text);
+  animation: sec-19-privacidad__estampa calc(var(--dur) * 2) var(--ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-19-privacidad__seal { animation: none; }
+}
+
+@media (max-width: 1080px) {
+  .sec-19-privacidad__claim-body { grid-template-columns: minmax(0, 22ch) minmax(0, 1fr); }
+}
+
+/* ---------- una columna: la afirmación pasa a icono + texto apilado ---------- */
+@media (max-width: 900px) {
+  .sec-19-privacidad__claim-body { grid-template-columns: minmax(0, 1fr); }
+  .sec-19-privacidad__meta { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .sec-19-privacidad__meta-cell { padding-top: var(--pad-block); border-top: var(--hairline); }
+  .sec-19-privacidad__meta-cell:first-child { padding-top: 0; border-top: 0; }
+}
+
+@media (max-width: 560px) {
+  .sec-19-privacidad__claim { grid-template-columns: var(--s-5) minmax(0, 1fr); }
+  .sec-19-privacidad__ico svg { width: var(--s-5); height: var(--s-5); }
+  .sec-19-privacidad__seal { --track: .12em; text-align: left; }
+}
+
+/* etiqueta de escala (CONTRATO.md �2.3): wayfinding de panel, no eyebrow decorativo. */
+.sec-19-privacidad__scale {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}

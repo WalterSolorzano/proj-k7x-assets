@@ -1,0 +1,3 @@
+[start_mcp] timer _start disparado (background=False)
+[start_mcp] el servidor ya estaba corriendo
+[start_mcp] puerto 9876 escuchando -> True

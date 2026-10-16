@@ -1,0 +1,25 @@
+/* secciones/29-pie — pie de la vista de brigadas.
+   Sin caja y sin fondo: una hairline arriba y dos líneas en mono. El sello de privacidad
+   viaja con la vista portable porque la brigada también debe saber qué NO se está guardando. */
+
+.sec-29-pie {
+  padding: var(--s-5) 0 var(--s-6);
+  border-top: var(--hairline);
+}
+
+.sec-29-pie .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2) var(--gap-block);
+}
+
+.sec-29-pie__seal,
+.sec-29-pie__ver {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-dim);
+}

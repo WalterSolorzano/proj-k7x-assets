@@ -1,0 +1,182 @@
+/* secciones/11-mapa — pieza central del tablero SITRE.
+   Sin cajas: el mapa ES el lienzo. Todo se separa con hairlines y aire.
+   Solo tokens de assets/tokens.css. */
+
+.sec-11-mapa { padding: var(--sec-pad) 0; }
+
+/* ---------- cabecera: título + conmutador de capas ---------- */
+.sec-11-mapa__head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--gap-block); flex-wrap: wrap; margin-bottom: var(--gap-block);
+}
+/* etiqueta de escala (§2.3): declara en qué escala se mira el mapa. Wayfinding de panel,
+   no eyebrow decorativo: sin icono, sin punto, sin borde, sin fondo. */
+.sec-11-mapa__escala {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-11-mapa__title {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 700;
+  letter-spacing: -0.02em; line-height: var(--lh-tight);
+}
+.sec-11-mapa__lede { margin: 0; max-width: 66ch; font-size: var(--fs-sm); color: var(--text-dim); }
+
+/* control: único sitio de la sección con borde, porque es lo único interactivo */
+.sec-11-mapa__layers { display: flex; gap: var(--s-2); flex: 0 0 auto; }
+.sec-11-mapa__layer {
+  appearance: none; cursor: pointer;
+  padding: var(--s-2) var(--s-3);
+  border: var(--hairline); border-radius: var(--r-sm); background: transparent;
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--text-dim);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.sec-11-mapa__layer:hover { background: color-mix(in srgb, var(--text) 5%, transparent); color: var(--text); }
+.sec-11-mapa__layer.is-on {
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  color: var(--text);
+}
+.sec-11-mapa__layer.is-on::before {
+  content: ""; display: inline-block; width: 6px; height: 6px; margin-right: var(--s-2);
+  border-radius: var(--r-pill); background: var(--accent); vertical-align: middle;
+}
+
+/* ---------- franja de contadores: sin caja, hairlines verticales ---------- */
+.sec-11-mapa__counters {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-bottom: var(--hairline);
+}
+.sec-11-mapa__counter { padding: 0 var(--s-5) var(--pad-block) 0; min-width: 0; }
+.sec-11-mapa__counter + .sec-11-mapa__counter {
+  padding-left: var(--gap-block); border-left: var(--hairline);
+}
+.sec-11-mapa__counter-lab {
+  display: block; font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-11-mapa__counter-v {
+  display: block; margin-top: var(--s-1);
+  font-family: var(--font-mono); font-size: var(--fs-xl); font-weight: 600;
+  letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.sec-11-mapa__counter-u { font-size: var(--fs-xs); font-weight: 400; letter-spacing: 0.02em; color: var(--text-dim); }
+
+/* ---------- el mapa: lienzo, sin marco ni fondo de tarjeta ---------- */
+.sec-11-mapa__scrollhint { display: none; }
+.sec-11-mapa__map { margin-top: var(--gap-block); }
+.sec-11-mapa__svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* geografía */
+.sec-11-mapa__sea { fill: color-mix(in srgb, var(--accent-3) 11%, var(--bg)); }
+.sec-11-mapa__sea-mark { fill: none; stroke: color-mix(in srgb, var(--accent-3) 40%, transparent); stroke-width: 1.2; }
+.sec-11-mapa__coast { fill: none; stroke: color-mix(in srgb, var(--accent-3) 55%, transparent); stroke-width: 2; }
+.sec-11-mapa__river { fill: none; stroke: color-mix(in srgb, var(--accent-3) 20%, transparent); stroke-width: 15; stroke-linecap: round; }
+.sec-11-mapa__river-core { fill: none; stroke: color-mix(in srgb, var(--accent-3) 65%, transparent); stroke-width: 1.4; }
+.sec-11-mapa__creek { fill: none; stroke: color-mix(in srgb, var(--accent-3) 45%, transparent); stroke-width: 2.5; }
+.sec-11-mapa__road { fill: none; stroke: color-mix(in srgb, var(--text) 22%, transparent); stroke-width: 3; stroke-linecap: round; }
+.sec-11-mapa__road--minor { stroke-width: 1.6; stroke: color-mix(in srgb, var(--text) 13%, transparent); }
+
+/* manzanas: relleno = ocupación estimada. El trazo es --bg, nunca --line */
+.sec-11-mapa__blk { stroke: var(--bg); stroke-width: 2; stroke-linejoin: round; }
+.sec-11-mapa__blk--pn { fill: var(--heat-4); }
+.sec-11-mapa__blk--mc { fill: var(--heat-5); }
+.sec-11-mapa__blk--cr { fill: var(--heat-3); }
+.sec-11-mapa__blk--mv { fill: var(--heat-2); }
+.sec-11-mapa__blk--rr { fill: var(--nodata); }
+.sec-11-mapa__blk--bc { fill: var(--heat-3); }
+
+/* anillo de prioridad sobre Malecón Centro */
+.sec-11-mapa__ring { fill: none; stroke: var(--bg); stroke-width: 2.4; stroke-dasharray: 9 7; }
+
+/* red y nodos */
+.sec-11-mapa__link { fill: none; stroke: color-mix(in srgb, var(--accent-2) 40%, transparent); stroke-width: 1.1; }
+.sec-11-mapa__link--off { fill: none; stroke: color-mix(in srgb, var(--text) 20%, transparent); stroke-width: 1.1; stroke-dasharray: 3 4; }
+.sec-11-mapa__node { stroke: var(--bg); stroke-width: 1.5; }
+.sec-11-mapa__node--on { fill: var(--ok); }
+.sec-11-mapa__node--last { fill: var(--warn); }
+.sec-11-mapa__node--off { fill: var(--bad); }
+.sec-11-mapa__node-halo {
+  fill: none; stroke: var(--bad); stroke-width: 1.2; stroke-dasharray: 3 4;
+  animation: sec-11-mapa__pulse calc(var(--dur) * 9) var(--ease) infinite;
+}
+.sec-11-mapa__base { fill: var(--accent-2); stroke: var(--bg); stroke-width: 1.5; }
+.sec-11-mapa__base-ring { fill: none; stroke: var(--accent-2); stroke-width: 1.2; opacity: 0.5; }
+
+/* tipografía dentro del svg: mono para dato, halos con --bg */
+.sec-11-mapa__svglab {
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: 0.08em; fill: var(--text-dim);
+}
+.sec-11-mapa__sector {
+  font-family: var(--font-mono); font-size: 12.5px; font-weight: 500;
+  letter-spacing: 0.12em; fill: var(--text);
+}
+.sec-11-mapa__prio {
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: 0.1em; fill: var(--accent);
+}
+.sec-11-mapa__axis { font-family: var(--font-mono); font-size: var(--fs-xs); fill: var(--text-dim); }
+.sec-11-mapa__halo {
+  paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round;
+}
+.sec-11-mapa__gridline { fill: none; stroke: color-mix(in srgb, var(--text) 35%, transparent); stroke-width: 1.4; }
+
+@keyframes sec-11-mapa__pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.25; }
+}
+
+/* ---------- leyenda: hairline arriba, sin caja ---------- */
+.sec-11-mapa__legend {
+  display: flex; flex-wrap: wrap; align-items: flex-start;
+  gap: var(--s-4) var(--s-7);
+  padding-top: var(--pad-block); border-top: var(--hairline);
+}
+.sec-11-mapa__legend-grp { display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
+.sec-11-mapa__legend-lab {
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+.sec-11-mapa__scale { display: flex; align-items: center; gap: 3px; }
+.sec-11-mapa__sw {
+  width: 26px; height: 14px; border-radius: 2px;
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+}
+.sec-11-mapa__sw--h1 { background: var(--heat-1); }
+.sec-11-mapa__sw--h2 { background: var(--heat-2); }
+.sec-11-mapa__sw--h3 { background: var(--heat-3); }
+.sec-11-mapa__sw--h4 { background: var(--heat-4); }
+.sec-11-mapa__sw--h5 { background: var(--heat-5); }
+.sec-11-mapa__sw--nd { background: var(--nodata); }
+.sec-11-mapa__caption { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); margin-left: var(--s-2); }
+.sec-11-mapa__key {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim);
+}
+.sec-11-mapa__dot { width: 8px; height: 8px; border-radius: var(--r-pill); background: var(--ok); flex: 0 0 auto; }
+.sec-11-mapa__dot--warn { background: var(--warn); }
+.sec-11-mapa__dot--bad { background: var(--bad); }
+.sec-11-mapa__note {
+  margin: var(--s-4) 0 0;
+  font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim);
+}
+
+/* ---------- estrecho: la sección se apila y el mapa se recorre ---------- */
+@media (max-width: 900px) {
+  .sec-11-mapa__head { align-items: flex-start; }
+}
+@media (max-width: 700px) {
+  .sec-11-mapa__counters { grid-template-columns: 1fr; }
+  .sec-11-mapa__counter { padding: var(--pad-block) 0; }
+  .sec-11-mapa__counter + .sec-11-mapa__counter { padding-left: 0; border-left: 0; border-top: var(--hairline); }
+  .sec-11-mapa__scrollhint {
+    display: block; margin: var(--s-3) 0 0; text-align: right;
+    font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim);
+  }
+  .sec-11-mapa__map { overflow-x: auto; overscroll-behavior-x: contain; }
+  .sec-11-mapa__svg { min-width: 880px; }
+  .sec-11-mapa__legend { gap: var(--s-4); }
+  .sec-11-mapa__legend-grp { width: 100%; }
+}

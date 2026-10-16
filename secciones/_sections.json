@@ -1,10 +1,19 @@
 {
-  "$comment": "Mapa de ensamblado. Cada página lista sus secciones en orden (nombre de carpeta en secciones/). Editarlo es la única forma de cambiar el orden o la composición.",
+  "$comment": "Mapa de ensamblado. Cada página lista sus secciones en orden (nombre de carpeta en secciones/). Editarlo es la única forma de cambiar el orden o la composición. `theme` lo inyecta build.mjs en <html data-theme>.",
   "pages": [
     {
-      "id": "01-home",
-      "title": "Inicio",
-      "sections": ["00-nav", "01-hero", "99-footer"]
+      "id": "01-plataforma",
+      "title": "SITRE · Plataforma SINAPRED",
+      "theme": "institucional",
+      "scheme": "light",
+      "sections": ["10-bar", "08-nacional", "09-escala", "11-mapa", "12-prioridad", "13-comparar", "15-detalle", "17-croquis", "14-red", "16-recursos", "19-privacidad"]
+    },
+    {
+      "id": "02-brigadas",
+      "title": "SITRE · Brigadas en campo",
+      "theme": "institucional",
+      "scheme": "light",
+      "sections": ["20-bar", "21-tarea", "22-mapa", "23-reporte", "29-pie"]
     }
   ]
 }

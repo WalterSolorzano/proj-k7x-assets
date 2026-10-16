@@ -1,0 +1,77 @@
+<section class="sec sec-22-mapa" aria-label="Mini-mapa del sector">
+  <div class="wrap">
+    <span class="sec-22-mapa__lab">Mini-mapa del sector</span>
+
+    <figure class="sec-22-mapa__canvas">
+      <svg class="sec-22-mapa__svg" viewBox="0 0 358 330" role="img" aria-label="Malecón Centro visto desde arriba: la manzana objetivo, con 780 personas estimadas, está rodeada por tres calles de acceso; la calle El Muelle está anegada, cuatro nodos SITRE cercanos informan su estado y la zona segura queda al este">
+
+        <path class="sec-22-mapa__sea" d="M0 18 C60 14 120 22 180 18 C240 14 300 20 358 16 L358 0 L0 0 Z"></path>
+        <path class="sec-22-mapa__coast" d="M0 18 C60 14 120 22 180 18 C240 14 300 20 358 16"></path>
+
+        <path class="sec-22-mapa__street" d="M0 32 C60 28 120 36 180 32 C240 28 300 34 358 30"></path>
+        <path class="sec-22-mapa__street sec-22-mapa__street--minor" d="M0 93 C80 91 160 95 240 93 C290 91 330 95 358 93"></path>
+        <path class="sec-22-mapa__street sec-22-mapa__street--minor" d="M0 155 C80 153 160 157 240 155 C290 153 330 157 358 155"></path>
+        <path class="sec-22-mapa__street sec-22-mapa__street--minor" d="M0 213 C80 211 160 215 240 213 C290 211 330 215 358 213"></path>
+        <path class="sec-22-mapa__street sec-22-mapa__street--minor" d="M103 32 L103 262"></path>
+        <path class="sec-22-mapa__street sec-22-mapa__street--minor" d="M297 32 L297 262"></path>
+        <path class="sec-22-mapa__street sec-22-mapa__street--flood" d="M215 330 L215 146"></path>
+        <path class="sec-22-mapa__river" d="M344 330 C336 268 346 198 338 130 C333 88 336 48 340 10"></path>
+
+        <g class="sec-22-mapa__blk">
+          <polygon points="22,46 96,42 102,86 28,90"></polygon>
+          <polygon points="110,42 182,46 176,84 104,86"></polygon>
+          <polygon points="196,46 262,42 268,82 190,84"></polygon>
+          <polygon points="276,42 324,46 320,80 268,82"></polygon>
+        </g>
+        <g class="sec-22-mapa__blk sec-22-mapa__blk--mid">
+          <polygon points="22,100 92,96 98,144 26,148"></polygon>
+          <polygon points="226,96 290,100 284,142 220,144"></polygon>
+          <polygon points="304,100 326,104 322,140 298,142"></polygon>
+        </g>
+        <g class="sec-22-mapa__blk sec-22-mapa__blk--mid">
+          <polygon points="22,162 92,158 98,204 28,208"></polygon>
+          <polygon points="110,158 208,162 202,204 116,208"></polygon>
+          <polygon points="226,162 290,166 284,200 220,204"></polygon>
+          <polygon points="304,166 326,170 322,198 300,200"></polygon>
+        </g>
+        <g class="sec-22-mapa__blk sec-22-mapa__blk--low">
+          <polygon points="22,220 92,216 98,258 28,262"></polygon>
+          <polygon points="110,216 180,220 174,256 104,258"></polygon>
+          <polygon points="196,220 262,216 268,254 190,256"></polygon>
+          <polygon points="276,216 324,220 320,252 268,254"></polygon>
+        </g>
+
+        <polygon class="sec-22-mapa__blk sec-22-mapa__blk--target" points="110,100 208,96 212,144 116,148"></polygon>
+        <polygon class="sec-22-mapa__ring" points="110,100 208,96 212,144 116,148"></polygon>
+        <text class="sec-22-mapa__text sec-22-mapa__text--key" x="160" y="126" text-anchor="middle">OBJETIVO</text>
+        <text class="sec-22-mapa__text sec-22-mapa__text--key" x="160" y="138" text-anchor="middle">780 PERSONAS</text>
+
+        <circle class="sec-22-mapa__node sec-22-mapa__node--on" cx="58" cy="122" r="4.5"></circle>
+        <circle class="sec-22-mapa__node sec-22-mapa__node--on" cx="255" cy="66" r="4.5"></circle>
+        <circle class="sec-22-mapa__node sec-22-mapa__node--last" cx="255" cy="176" r="4.5"></circle>
+        <circle class="sec-22-mapa__node sec-22-mapa__node--off" cx="160" cy="186" r="4.5"></circle>
+
+        <circle class="sec-22-mapa__brig" cx="36" cy="272" r="5"></circle>
+        <circle class="sec-22-mapa__halo sec-22-mapa__halo--accent" cx="36" cy="272" r="10"></circle>
+        <circle class="sec-22-mapa__ping" cx="36" cy="272" r="10"></circle>
+        <text class="sec-22-mapa__text sec-22-mapa__text--key" x="36" y="292" text-anchor="middle">BRIGADA 1</text>
+
+        <circle class="sec-22-mapa__safe" cx="300" cy="272" r="5.5"></circle>
+        <circle class="sec-22-mapa__halo sec-22-mapa__halo--safe" cx="300" cy="272" r="11"></circle>
+        <text class="sec-22-mapa__text sec-22-mapa__text--key" x="300" y="294" text-anchor="middle">ZONA SEGURA</text>
+
+        <text class="sec-22-mapa__text" x="20" y="26">AV. COSTANERA · LIBRE</text>
+        <text class="sec-22-mapa__text" x="196" y="316" text-anchor="middle">C. EL MUELLE · ANEGADA 0.9 M</text>
+      </svg>
+    </figure>
+
+    <div class="sec-22-mapa__legend">
+      <span class="sec-22-mapa__key"><i class="sec-22-mapa__dot sec-22-mapa__dot--on"></i>nodo en línea</span>
+      <span class="sec-22-mapa__key"><i class="sec-22-mapa__dot sec-22-mapa__dot--last"></i>dato viejo</span>
+      <span class="sec-22-mapa__key"><i class="sec-22-mapa__dot sec-22-mapa__dot--off"></i>sin dato</span>
+      <span class="sec-22-mapa__key"><i class="sec-22-mapa__dot sec-22-mapa__dot--safe"></i>punto de encuentro</span>
+    </div>
+
+    <p class="sec-22-mapa__note">Ruta sugerida: Av. Costanera al punto de encuentro, luego 180 m a pie.</p>
+  </div>
+</section>

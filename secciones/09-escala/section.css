@@ -1,0 +1,201 @@
+/* 09-escala · El descenso (CONTRATO §2.3).
+   Mismo encuadre cuatro veces: país → región → municipio → sector.
+   UN solo movimiento continuo (§2.4): el indicador "estás aquí" que baja la escalera.
+   Las duraciones del bucle se derivan de tokens: --eso-scan = var(--dur) * 36 (12.6 s),
+   --eso-rung = var(--dur) * 9 (3.15 s, un peldaño). Nada de curvas propias. */
+
+.sec-09-escala {
+  --eso-scan: calc(var(--dur) * 36);
+  --eso-rung: calc(var(--dur) * 9);
+  --eso-railw: 118px;
+  --eso-sea: color-mix(in srgb, var(--accent-3) 9%, var(--bg));
+  --eso-land: color-mix(in srgb, var(--text) 7%, var(--bg));
+  --eso-focus: color-mix(in srgb, var(--accent) 30%, var(--eso-land));
+  padding: var(--sec-pad) 0;
+}
+
+/* ---------- cabecera ---------- */
+.sec-09-escala__head { margin-bottom: var(--s-4); }
+.sec-09-escala__scale {
+  margin: 0;
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-09-escala__title { margin: var(--s-3) 0 var(--s-4); font-size: var(--fs-xl); font-weight: 700; }
+.sec-09-escala__intro {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--s-4) var(--s-7); flex-wrap: wrap;
+}
+.sec-09-escala__lede { margin: 0; max-width: 62ch; color: var(--text-dim); }
+.sec-09-escala__lede b { color: var(--text); font-weight: 600; }
+.sec-09-escala__note {
+  margin: 0; font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: .02em; color: var(--text-dim);
+}
+.sec-09-escala__note em { font-style: normal; color: var(--text); }
+
+/* ---------- escalera ---------- */
+.sec-09-escala__ladder { position: relative; }
+.sec-09-escala__rungs { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-rows: 1fr; }
+
+.sec-09-escala__step {
+  display: grid;
+  grid-template-columns: var(--eso-railw) minmax(0, 1fr);
+  gap: 0 var(--s-5);                  /* el marcador del raíl nunca pisa la primera cifra */
+  align-items: center;
+  padding: var(--s-5) 0;
+  border-top: var(--hairline);
+  opacity: .68;
+  animation: eso-active var(--eso-scan) var(--ease) infinite;
+}
+.sec-09-escala__step:nth-child(1) { animation-delay: 0s; }
+.sec-09-escala__step:nth-child(2) { animation-delay: var(--eso-rung); }
+.sec-09-escala__step:nth-child(3) { animation-delay: calc(var(--eso-rung) * 2); }
+.sec-09-escala__step:nth-child(4) { animation-delay: calc(var(--eso-rung) * 3); }
+
+/* la línea de foco: recorre los cuatro peldaños y muere en los extremos */
+.sec-09-escala__rail {
+  position: absolute; left: var(--eso-railw); top: 12.5%; bottom: 12.5%; width: 2px;
+  background: linear-gradient(to bottom,
+    transparent,
+    color-mix(in srgb, var(--accent) 62%, var(--line)) 10%,
+    color-mix(in srgb, var(--accent) 62%, var(--line)) 90%,
+    transparent);
+}
+.sec-09-escala__tick {
+  grid-column: 1; justify-self: end; margin-right: -4px;
+  width: 8px; height: 8px; border-radius: var(--r-pill);
+  background: var(--bg); border: 2px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+}
+.sec-09-escala__here {
+  position: absolute; left: 0; width: var(--eso-railw); top: 12.5%;
+  display: flex; align-items: center; justify-content: flex-end; gap: var(--s-2);
+  transform: translateY(-50%);
+  animation: eso-here var(--eso-scan) var(--ease) infinite;
+}
+.sec-09-escala__here-lab {
+  flex: 0 0 auto;
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+  white-space: nowrap;
+}
+.sec-09-escala__here-dot {
+  flex: 0 0 auto; width: 11px; height: 11px; border-radius: var(--r-pill);
+  background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* ---------- ficha del peldaño ---------- */
+.sec-09-escala__body {
+  display: grid; grid-template-columns: minmax(0, .64fr) minmax(0, 1.36fr);
+  align-items: center; gap: var(--s-6); min-width: 0;
+}
+.sec-09-escala__id { min-width: 0; }
+.sec-09-escala__tag {
+  display: flex; align-items: baseline; gap: var(--s-2); margin: 0 0 var(--s-1);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-09-escala__lvl { color: var(--accent); font-weight: 600; }
+.sec-09-escala__name { margin: 0 0 var(--s-2); font-size: var(--fs-xl); font-weight: 700; }
+.sec-09-escala__king {
+  margin: 0; font-family: var(--font-mono); font-size: var(--fs-md);
+  letter-spacing: -.01em; line-height: 1.4; color: var(--text-dim);
+}
+.sec-09-escala__king b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+.sec-09-escala__within { margin: var(--s-3) 0 0; font-size: var(--fs-sm); color: var(--text-dim); }
+
+/* ---------- marco: mismo encuadre, cuatro geografías. El mapa manda (§2.3) ---------- */
+.sec-09-escala__frame {
+  position: relative; justify-self: stretch;
+  width: 100%; aspect-ratio: 2 / 1;
+  background: var(--eso-sea);
+}
+.sec-09-escala__map { display: block; width: 100%; height: 100%; }
+
+/* Geografía real copiada de `assets/` sin tocar los `d`: el foco se pinta por selector.
+   Los trazos van en unidades de usuario del SVG, por eso son gruesos en el archivo. */
+.sec-09-escala__map .ni--coarse path,
+.sec-09-escala__map .mun path {
+  fill: var(--eso-land);
+  stroke: color-mix(in srgb, var(--text) 26%, transparent);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+}
+/* el objeto en foco de cada peldaño: el mismo color, un nivel más abajo */
+.sec-09-escala__map .ni--coarse #ni-raccn,
+.sec-09-escala__map .mun #ni-puerto-cabezas,
+.sec-09-escala__region path {
+  fill: var(--eso-focus);
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+/* croquis del sector: abstracción, no geografía */
+.sec-09-escala__ground { fill: var(--eso-land); }
+.sec-09-escala__blocks path { fill: color-mix(in srgb, var(--text) 13%, var(--bg)); }
+.sec-09-escala__blk--hit { fill: var(--heat-5); }
+.sec-09-escala__road { fill: none; stroke: color-mix(in srgb, var(--text) 22%, var(--bg)); stroke-width: 6; }
+.sec-09-escala__water { fill: color-mix(in srgb, var(--accent-3) 30%, var(--bg)); }
+.sec-09-escala__aim { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-dasharray: 9 7; }
+.sec-09-escala__pin { fill: var(--accent); stroke: var(--eso-land); stroke-width: 3; }
+
+/* escala gráfica: barra de ancho fijo, la distancia es la que baja */
+.sec-09-escala__ruler {
+  position: absolute; left: var(--s-3); bottom: var(--s-3);
+  display: flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .04em; color: var(--text-dim);
+}
+.sec-09-escala__rule {
+  position: relative; width: 46px; height: 1px; background: currentColor;
+}
+.sec-09-escala__rule::before, .sec-09-escala__rule::after {
+  content: ""; position: absolute; top: -3px; width: 1px; height: 7px; background: currentColor;
+}
+.sec-09-escala__rule::before { left: 0; }
+.sec-09-escala__rule::after { right: 0; }
+
+/* ---------- movimiento ---------- */
+@keyframes eso-active {
+  0%   { opacity: .68; }
+  4%   { opacity: 1; }
+  22%  { opacity: 1; }
+  26%  { opacity: .68; }
+  100% { opacity: .68; }
+}
+@keyframes eso-here {
+  0%   { top: 12.5%; opacity: 0; }
+  4%   { opacity: 1; }
+  25%  { top: 12.5%; }
+  32%  { top: 37.5%; }
+  50%  { top: 37.5%; }
+  57%  { top: 62.5%; }
+  75%  { top: 62.5%; }
+  82%  { top: 87.5%; }
+  96%  { top: 87.5%; opacity: 1; }
+  100% { top: 87.5%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-09-escala__step { animation: none; opacity: 1; }
+  .sec-09-escala__here { animation: none; top: 12.5%; }
+}
+
+/* ---------- adaptación ---------- */
+@media (max-width: 1100px) {
+  .sec-09-escala { --eso-railw: 92px; }
+  .sec-09-escala__body { grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr); gap: var(--s-5); }
+}
+@media (max-width: 900px) {
+  .sec-09-escala { --eso-railw: 56px; }
+  .sec-09-escala__here-lab { display: none; }
+  .sec-09-escala__body { grid-template-columns: minmax(0, 1fr); gap: var(--s-4); }
+  .sec-09-escala__frame { aspect-ratio: 4 / 3; }
+  .sec-09-escala__frame--sector { aspect-ratio: 16 / 9; }
+}
+@media (max-width: 560px) {
+  .sec-09-escala { --eso-railw: 30px; }
+  .sec-09-escala__intro { display: block; }
+  .sec-09-escala__note { margin-top: var(--s-3); }
+  .sec-09-escala__king { font-size: var(--fs-sm); }
+}

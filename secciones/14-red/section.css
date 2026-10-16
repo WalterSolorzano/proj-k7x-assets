@@ -1,0 +1,185 @@
+/* secciones/14-red — Red LoRa store-and-forward.
+   Sección plana (CONTRATO.md §2.0): el diagrama es el lienzo, los datos se separan con hairlines.
+   Sin `--surface`, sin cajas, sin sombras. Ningún color fuera de tokens. */
+
+.sec-14-red { padding: var(--sec-pad) 0; }
+
+/* ---------- cabecera ---------- */
+.sec-14-red__head { max-width: 78ch; margin-bottom: var(--gap-block); }
+/* etiqueta de escala (§2.3): wayfinding de panel, no eyebrow decorativo. */
+.sec-14-red__scale {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-14-red__title {
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-display); font-size: var(--fs-xl);
+  font-weight: 700; letter-spacing: -.02em; line-height: var(--lh-tight);
+}
+.sec-14-red__lede { margin: 0; color: var(--text-dim); font-size: var(--fs-md); max-width: 74ch; }
+
+/* ---------- diagrama de topología (SVG inline, sin caja) ---------- */
+.sec-14-red__fig { margin: 0; }
+.sec-14-red__plano { min-width: 0; }
+.sec-14-red__svg { display: block; width: 100%; height: auto; }
+.sec-14-red__svg--angosto { display: none; }
+
+.sec-14-red__link { fill: none; stroke: color-mix(in srgb, var(--accent-2) 45%, transparent); stroke-width: 1.2; }
+.sec-14-red__link--bad { stroke: color-mix(in srgb, var(--bad) 60%, transparent); stroke-dasharray: 3 4; }
+.sec-14-red__link--sin { stroke: color-mix(in srgb, var(--text) 20%, transparent); stroke-dasharray: 3 4; }
+
+.sec-14-red__netnode { stroke: var(--bg); stroke-width: 1.4; }
+.sec-14-red__netnode--on { fill: var(--ok); }
+.sec-14-red__netnode--last { fill: var(--warn); }
+.sec-14-red__netnode--off { fill: var(--bad); }
+
+.sec-14-red__bus { fill: var(--accent-2); stroke: var(--bg); stroke-width: 1.5; }
+.sec-14-red__x { fill: none; stroke: var(--bad); stroke-width: 1.9; stroke-linecap: round; }
+.sec-14-red__rule { fill: none; stroke: var(--line); stroke-width: 1; }
+
+.sec-14-red__svglab {
+  font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 500;
+  letter-spacing: .1em; fill: var(--text-dim);
+}
+.sec-14-red__svglab--xs { font-size: var(--fs-xs); }
+.sec-14-red__svglab--name { fill: var(--text); }
+
+/* el enlace caído reintenta y no llega: micro-animación con los tokens del sistema */
+@keyframes sec-14-red__retry { to { stroke-dashoffset: -7; } }
+.sec-14-red__link--sin { animation: sec-14-red__retry calc(var(--dur) * 4) linear infinite; }
+.sec-14-red__link--bad { animation: sec-14-red__retry calc(var(--dur) * 6) linear infinite; }
+
+/* ---------- leyenda bajo el diagrama ---------- */
+.sec-14-red__legend {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: var(--s-3) var(--s-6);
+  margin-top: var(--s-4); padding-top: var(--pad-block); border-top: var(--hairline);
+}
+.sec-14-red__legend-lab {
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+.sec-14-red__keys { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); }
+.sec-14-red__key {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .04em; color: var(--text-dim);
+}
+
+.sec-14-red__dot { display: block; flex: 0 0 auto; width: 8px; height: 8px; border-radius: var(--r-pill); background: var(--ok); }
+.sec-14-red__dot--ok { background: var(--ok); }
+.sec-14-red__dot--last { background: var(--warn); }
+.sec-14-red__dot--off { background: var(--bad); }
+.sec-14-red__sq { display: block; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 1px; background: var(--accent-2); }
+
+/* ---------- datos de la red: una sola línea de especificación, sin rejilla de cajas ---------- */
+.sec-14-red__datos {
+  display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-7);
+  margin: var(--gap-block) 0 0; padding: var(--pad-block) 0;
+  border-top: var(--hairline); border-bottom: var(--hairline);
+}
+.sec-14-red__dato { display: flex; align-items: baseline; gap: var(--s-3); }
+.sec-14-red__dato dt {
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+.sec-14-red__dato dd {
+  margin: 0; font-family: var(--font-mono); font-size: var(--fs-lg); font-weight: 600;
+  font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: -.01em;
+}
+
+/* ---------- nodos citados + cola de sincronización ---------- */
+.sec-14-red__grid {
+  display: grid; grid-template-columns: 1.55fr 1fr;
+  gap: var(--gap-block) var(--s-7); margin-top: var(--gap-block);
+}
+.sec-14-red__blk { min-width: 0; }
+.sec-14-red__lab {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim);
+}
+
+.sec-14-red__nodos { margin: 0; padding: 0; list-style: none; }
+.sec-14-red__nodo {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-1) var(--s-2);
+  padding: var(--s-3) 0; border-top: var(--hairline);
+}
+.sec-14-red__nodo > :nth-child(n + 3)::before { content: "·"; margin-right: var(--s-2); color: var(--text-dim); }
+.sec-14-red__nodo .sec-14-red__dot { align-self: center; margin-right: var(--s-1); }
+
+.sec-14-red__nodo-id {
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--text);
+}
+.sec-14-red__nodo-lugar { font-size: var(--fs-sm); font-weight: 500; color: var(--text); }
+.sec-14-red__nodo-estado { font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .04em; }
+.sec-14-red__nodo-estado--ok { color: var(--ok); }
+.sec-14-red__nodo-estado--bad { color: var(--bad); }
+.sec-14-red__nodo-estado--warn { color: var(--warn); }
+.sec-14-red__nodo-meta { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
+
+.sec-14-red__q {
+  margin: 0;
+  font-family: var(--font-mono); font-weight: 600; font-variant-numeric: tabular-nums;
+  font-size: clamp(var(--fs-2xl), 5vw, var(--fs-3xl)); line-height: .95; letter-spacing: -.04em;
+}
+.sec-14-red__qbar {
+  height: 10px; margin: var(--s-4) 0 var(--s-3);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  border-radius: var(--r-pill); overflow: hidden;
+}
+.sec-14-red__qbar i {
+  display: block; width: 72%; height: 100%;
+  background: color-mix(in srgb, var(--accent-3) 70%, transparent);
+  border-radius: var(--r-pill);
+  animation: sec-14-red__pend calc(var(--dur) * 6) var(--ease) infinite;
+}
+@keyframes sec-14-red__pend { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+
+.sec-14-red__note { margin: 0; max-width: 46ch; font-size: var(--fs-xs); line-height: 1.55; color: var(--text-dim); }
+
+/* ---------- cierre: autonomía ---------- */
+.sec-14-red__auto {
+  margin: var(--gap-block) 0 0; padding-top: var(--pad-block); border-top: var(--hairline);
+  max-width: 92ch; font-size: var(--fs-sm); color: var(--text-dim);
+}
+.sec-14-red__auto-k {
+  margin-right: var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--text);
+}
+
+/* ---------- el momento que dice "esto funciona" ----------
+   Los enlaces en línea llevan paquetes viajando del nodo hacia la estación base.
+   Es el ÚNICO movimiento continuo de la página: una sola idea, no efectos dispersos. */
+.sec-14-red__link:not(.sec-14-red__link--bad):not(.sec-14-red__link--sin) {
+  stroke: color-mix(in srgb, var(--accent-2) 72%, transparent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 2 9;
+  animation: sec-14-red__flow calc(var(--dur) * 11) linear infinite;
+}
+@keyframes sec-14-red__flow { to { stroke-dashoffset: -11; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-14-red__link--sin, .sec-14-red__link--bad, .sec-14-red__qbar i,
+  .sec-14-red__link:not(.sec-14-red__link--bad):not(.sec-14-red__link--sin) { animation: none; }
+}
+
+@media (max-width: 1080px) {
+  .sec-14-red__grid { grid-template-columns: 1fr; gap: var(--gap-block); }
+}
+
+/* el diagrama ancho necesita ancho: por debajo, la topología se lee en vertical */
+@media (max-width: 880px) {
+  .sec-14-red__svg--ancho { display: none; }
+  .sec-14-red__svg--angosto { display: block; }
+}
+
+@media (max-width: 620px) {
+  .sec-14-red__datos { display: block; gap: 0; }
+  .sec-14-red__dato { justify-content: space-between; padding-top: var(--s-3); border-top: var(--hairline); }
+  .sec-14-red__dato:first-child { padding-top: 0; border-top: 0; }
+  .sec-14-red__legend { justify-content: flex-start; }
+}

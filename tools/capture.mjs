@@ -2,7 +2,7 @@
 // Uso: npm run capture [-- --dir paginas --out presentacion --width 1440 --height 900 --mobile]
 //      npm run capture -- --url http://localhost:3000,http://localhost:3000/precios
 import { chromium } from 'playwright';
-import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { existsSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -75,7 +75,16 @@ if (URL_ARG) {
 const outDir = resolve(ROOT, OUT);
 await mkdir(outDir, { recursive: true });
 
-const browser = await chromium.launch();
+// Flags para PC de 8 GB: menos RAM por Chromium durante las capturas.
+const browser = await chromium.launch({
+  args: [
+    '--disable-dev-shm-usage',
+    '--disable-background-timer-throttling',
+    '--disable-renderer-backgrounding',
+    '--disable-backgrounding-occluded-windows',
+    '--js-flags=--max-old-space-size=1024',
+  ],
+});
 const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: SCALE });
 
 const made = [];
@@ -103,6 +112,17 @@ if (MOBILE) {
 await browser.close();
 
 const title = 'Rallylatam';
+// La galería es automática, pero el índice de entrega se escribe a mano por debajo de una marca.
+// Sin conservarlo, cada `npm run capture` borraría lo escrito a mano: el pie de barro clásico.
+const MARK = '<!-- manual -->';
+let tail = '';
+try {
+  const prev = await readFile(join(ROOT, 'presentacion.md'), 'utf8');
+  const i = prev.indexOf(MARK);
+  if (i !== -1) tail = prev.slice(i);
+} catch {
+  // primera ejecución: todavía no hay nada que conservar
+}
 const md = [
   `# ${title} — presentación`,
   '',
@@ -110,6 +130,7 @@ const md = [
   '',
   ...made.map((m) => `- ![${m.ref}](./${OUT}/${m.name})  \`${m.ref}\``),
   '',
+  ...(tail ? [tail] : []),
 ].join('\n');
 await writeFile(join(ROOT, 'presentacion.md'), md, 'utf8');
 console.log(`\n${made.length} capturas → ${OUT}/  ·  galería → presentacion.md`);

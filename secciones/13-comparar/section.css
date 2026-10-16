@@ -1,0 +1,310 @@
+/* secciones/13-comparar/section.css — Comparador antes / después
+   Aplanado (CONTRATO.md §2.0): filas separadas por hairline, sin caja envolvente,
+   sin sombras; los estados (lectura) son texto mono coloreado, no chips.
+   Referencia congelada: mockups/10-plataforma.html (.d-scrub / .d-delta / .d-tag).
+   Solo tokens; ningún valor de color propio. */
+
+.sec-13-comparar {
+  padding: var(--sec-pad) 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ---------- cabecera: título a la izquierda, lede a la derecha ---------- */
+.sec-13-comparar__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-block) var(--s-7);
+  align-items: end;
+  margin-bottom: var(--gap-block);
+}
+
+/* etiqueta de escala (§2.3). El `__head` es una rejilla con `row-gap`, así que etiqueta y
+   título van agrupados en un mismo hijo para que el aire de la rejilla siga siendo
+   el que había entre el título y el lede (mismo ritmo, sin tocar `.sec-13-comparar__head`). */
+.sec-13-comparar__titles { min-width: 0; }
+
+.sec-13-comparar__scale {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}
+
+.sec-13-comparar__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  color: var(--text);
+}
+
+.sec-13-comparar__lede {
+  margin: 0;
+  max-width: 74ch;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+/* ---------- scrubber estático (control visual, no interactivo) ---------- */
+.sec-13-comparar__scrub {
+  margin: var(--gap-block) 0 var(--gap-block);
+}
+
+.sec-13-comparar__track {
+  position: relative;
+  height: var(--s-1);
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  border-radius: var(--r-pill);
+}
+
+/* ventana del evento: 21:15 → 04:30 */
+.sec-13-comparar__band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+  border-radius: var(--r-pill);
+  transform-origin: left center;
+  animation: sec-13-comparar-wipe calc(var(--dur) * 2) var(--ease) both;
+}
+
+.sec-13-comparar__tick {
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: var(--s-4);
+  border-left: 1px solid currentColor;
+  color: color-mix(in srgb, var(--text) 34%, transparent);
+  transform: translate(-50%, -50%);
+}
+
+.sec-13-comparar__tick--1 { left: 0; }
+.sec-13-comparar__tick--2 { left: 50%; }
+.sec-13-comparar__tick--3 { left: 100%; color: var(--accent); }
+
+.sec-13-comparar__knob {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: var(--s-4);
+  height: var(--s-4);
+  background: var(--accent);
+  border: var(--hairline);
+  border-radius: var(--r-pill);
+  transform: translate(-50%, -50%);
+  animation: sec-13-comparar-breathe calc(var(--dur) * 6) var(--ease) infinite alternate;
+}
+
+.sec-13-comparar__stops {
+  display: flex;
+  margin-top: var(--s-3);
+}
+
+.sec-13-comparar__stop {
+  flex: 1 1 0;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  color: var(--text-dim);
+}
+
+.sec-13-comparar__stop:nth-child(1) { text-align: left; }
+.sec-13-comparar__stop:nth-child(2) { text-align: center; }
+.sec-13-comparar__stop:nth-child(3) { text-align: right; }
+.sec-13-comparar__stop--on { color: var(--text); }
+
+/* ---------- tabla por sector: hairlines, sin caja ---------- */
+.sec-13-comparar__grid {
+  margin-top: var(--gap-block);
+}
+
+.sec-13-comparar__row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(0, 1.05fr)
+    minmax(0, 1.15fr)
+    minmax(0, 1fr);
+  align-items: center;
+  gap: var(--gap-row) var(--s-5);
+  padding: var(--s-3) 0;
+  border-top: var(--hairline);
+}
+
+.sec-13-comparar__row--th {
+  padding: 0 0 var(--s-2);
+}
+
+.sec-13-comparar__th {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+
+.sec-13-comparar__thsub {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--fs-xs);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.sec-13-comparar__name {
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.sec-13-comparar__vals {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.sec-13-comparar__vals b {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.sec-13-comparar__nd {
+  color: var(--text-dim);
+}
+
+/* ---------- barra divergente ---------- */
+.sec-13-comparar__var {
+  position: relative;
+  height: var(--s-3);
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  border-radius: var(--r-sm);
+}
+
+/* marca central: el cero de la variación */
+.sec-13-comparar__var::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  border-left: 1px solid currentColor;
+  color: color-mix(in srgb, var(--text) 30%, transparent);
+  z-index: 1;
+}
+
+.sec-13-comparar__bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--r-sm);
+  animation: sec-13-comparar-grow calc(var(--dur) * 2) var(--ease) both;
+}
+
+.sec-13-comparar__bar--up {
+  left: 50%;
+  background: var(--accent);
+  transform-origin: left center;
+}
+
+.sec-13-comparar__bar--down {
+  right: 50%;
+  background: var(--accent-3);
+  transform-origin: right center;
+}
+
+.sec-13-comparar__bar--nd {
+  left: 0;
+  right: 0;
+  background: var(--nodata);
+  animation-name: sec-13-comparar-fade;
+}
+
+/* entrada escalonada, fila a fila */
+.sec-13-comparar__row:nth-child(2) .sec-13-comparar__bar { animation-delay: calc(var(--dur) * 0.3); }
+.sec-13-comparar__row:nth-child(3) .sec-13-comparar__bar { animation-delay: calc(var(--dur) * 0.6); }
+.sec-13-comparar__row:nth-child(4) .sec-13-comparar__bar { animation-delay: calc(var(--dur) * 0.9); }
+.sec-13-comparar__row:nth-child(5) .sec-13-comparar__bar { animation-delay: calc(var(--dur) * 1.2); }
+.sec-13-comparar__row:nth-child(6) .sec-13-comparar__bar { animation-delay: calc(var(--dur) * 1.5); }
+.sec-13-comparar__row:nth-child(7) .sec-13-comparar__bar { animation-delay: calc(var(--dur) * 1.8); }
+
+/* ---------- lectura: mono coloreado, sin chip ---------- */
+.sec-13-comparar__read {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+}
+
+.sec-13-comparar__read--up { color: var(--accent); }
+.sec-13-comparar__read--down { color: var(--accent-3); }
+.sec-13-comparar__read--warn { color: var(--warn); }
+.sec-13-comparar__read--flat { color: var(--text-dim); }
+
+/* ---------- nota: el argumento técnico de la sección ---------- */
+.sec-13-comparar__note {
+  margin: var(--gap-block) 0 0;
+  padding-top: var(--pad-block);
+  border-top: var(--hairline);
+  max-width: 96ch;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.sec-13-comparar__note b {
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ---------- movimiento ---------- */
+@keyframes sec-13-comparar-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes sec-13-comparar-wipe {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes sec-13-comparar-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes sec-13-comparar-breathe {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to   { transform: translate(-50%, -50%) scale(1.16); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-13-comparar__bar,
+  .sec-13-comparar__band,
+  .sec-13-comparar__knob {
+    animation: none;
+  }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 700px) {
+  .sec-13-comparar__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name name"
+      "vals read"
+      "var  var";
+    row-gap: var(--s-2);
+    padding: var(--s-4) 0;
+  }
+
+  .sec-13-comparar__row--th { display: none; }
+
+  .sec-13-comparar__name { grid-area: name; }
+  .sec-13-comparar__vals { grid-area: vals; font-size: var(--fs-xs); }
+  .sec-13-comparar__read { grid-area: read; font-size: var(--fs-xs); text-align: right; }
+  .sec-13-comparar__var  { grid-area: var; }
+
+  .sec-13-comparar__stops { margin-top: var(--s-2); }
+}

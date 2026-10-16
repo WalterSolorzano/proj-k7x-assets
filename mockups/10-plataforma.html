@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="es" data-theme="institucional">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SITRE · Plataforma SINAPRED</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+/* ===== SITRE · mockup plataforma · prefijo d- ===== */
+.d-wrap { max-width: var(--maxw-wide); margin: 0 auto; padding: 0 var(--s-5); }
+.d-lab { font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); }
+.d-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.d-note { margin: 0; font-size: var(--fs-sm); color: var(--text-dim); max-width: 68ch; }
+.d-note--tight { font-size: var(--fs-xs); line-height: 1.5; }
+.d-col { min-width: 0; }
+
+/* --- franja de mando: la ÚNICA capa con `--surface` de la vista --- */
+.d-bar { position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: var(--hairline); }
+.d-bar__in { max-width: var(--maxw-wide); margin: 0 auto; padding: var(--s-3) var(--s-5); display: flex; align-items: center; gap: var(--s-5); flex-wrap: wrap; min-height: 64px; }
+.d-brand { display: flex; align-items: center; gap: var(--s-3); }
+.d-brand__mark { color: var(--accent); flex: 0 0 auto; }
+.d-brand__name { font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700; letter-spacing: .08em; line-height: 1; }
+.d-brand__sub { max-width: 210px; padding-left: var(--s-3); border-left: var(--hairline); font-size: var(--fs-xs); line-height: 1.25; color: var(--text-dim); }
+.d-bar__mid { display: flex; flex-wrap: wrap; align-items: center; margin-left: auto; }
+.d-chip { display: inline-flex; align-items: center; gap: var(--s-2); font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .03em; color: var(--text-dim); white-space: nowrap; }
+.d-chip + .d-chip { margin-left: var(--pad-block); padding-left: var(--pad-block); border-left: var(--hairline); }
+.d-chip b { color: var(--text); font-weight: 500; }
+.d-chip--event { color: var(--text); }
+.d-bar__mid .d-chip--alert { margin-left: var(--pad-block); padding: var(--s-2) var(--s-3); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border: var(--hairline); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: var(--r-sm); color: var(--text); }
+.d-dot { width: 8px; height: 8px; border-radius: var(--r-pill); background: var(--ok); flex: 0 0 auto; }
+.d-dot--warn { background: var(--warn); }
+.d-dot--bad { background: var(--bad); }
+.d-dot--nd { background: var(--nodata); }
+.d-seal { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); white-space: nowrap; }
+
+/* --- bloques: se separan con aire y una regla, nunca con una caja --- */
+.d-main { padding-bottom: var(--gap-block); }
+.d-block { padding: var(--sec-pad) 0; border-top: var(--hairline); }
+.d-block:first-child { border-top: 0; }
+.d-block__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--gap-block); flex-wrap: wrap; margin-bottom: var(--gap-block); }
+.d-block__title { margin: 0 0 var(--s-2); font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 700; letter-spacing: -.02em; line-height: var(--lh-tight); }
+.d-cols { display: grid; grid-template-columns: 1.45fr 1fr; gap: var(--gap-block) var(--s-6); align-items: start; }
+.d-cols--even { grid-template-columns: 1fr 1fr; }
+
+/* --- conmutador de capas (control: conserva borde) --- */
+.d-tabs { display: flex; gap: var(--s-2); }
+.d-tab { padding: var(--s-2) var(--s-3); border: var(--hairline); border-radius: var(--r-sm); background: transparent; font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .06em; text-transform: uppercase; color: var(--text-dim); transition: background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.d-tab:hover { background: color-mix(in srgb, var(--text) 5%, transparent); color: var(--text); }
+.d-tab.is-on { background: color-mix(in srgb, var(--accent) 9%, transparent); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); color: var(--text); }
+.d-tab.is-on::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: var(--s-2); border-radius: var(--r-pill); background: var(--accent); vertical-align: middle; }
+
+/* --- franja de datos sobre el mapa: sin caja, solo reglas --- */
+.d-counters { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: var(--hairline); }
+.d-counter { padding: 0 var(--s-5) var(--pad-block) 0; }
+.d-counter + .d-counter { padding-left: var(--gap-block); border-left: var(--hairline); }
+.d-counter__v { display: block; margin-top: var(--s-1); font-family: var(--font-mono); font-size: var(--fs-xl); font-weight: 600; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.d-counter__u { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
+.d-mapwrap { margin-top: var(--gap-block); }
+.d-svg { display: block; width: 100%; height: auto; }
+
+/* --- svg del mapa --- */
+.d-sea { fill: color-mix(in srgb, var(--accent-3) 13%, var(--bg)); }
+.d-sea-mark { fill: none; stroke: color-mix(in srgb, var(--accent-3) 45%, transparent); stroke-width: 1.2; }
+.d-coast { fill: none; stroke: color-mix(in srgb, var(--text) 34%, transparent); stroke-width: 2; }
+.d-river { fill: none; stroke: color-mix(in srgb, var(--accent-3) 22%, transparent); stroke-width: 15; stroke-linecap: round; }
+.d-river-core { fill: none; stroke: color-mix(in srgb, var(--accent-3) 70%, transparent); stroke-width: 1.4; }
+.d-creek { fill: none; stroke: color-mix(in srgb, var(--accent-3) 45%, transparent); stroke-width: 2.5; }
+.d-road { fill: none; stroke: color-mix(in srgb, var(--text) 22%, transparent); stroke-width: 3; stroke-linecap: round; }
+.d-road--minor { stroke-width: 1.6; stroke: color-mix(in srgb, var(--text) 13%, transparent); }
+.d-blk { stroke: var(--bg); stroke-width: 2; stroke-linejoin: round; }
+.d-s-pn { fill: var(--heat-4); }
+.d-s-mc { fill: var(--heat-5); }
+.d-s-cr { fill: var(--heat-3); }
+.d-s-mv { fill: var(--heat-2); }
+.d-s-rr { fill: var(--nodata); }
+.d-s-bc { fill: var(--heat-3); }
+.d-ring { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 8 6; }
+.d-node { stroke: var(--bg); stroke-width: 1.5; }
+.d-node--on { fill: var(--ok); }
+.d-node--last { fill: var(--warn); }
+.d-node--off { fill: var(--bad); }
+.d-node-halo { fill: none; stroke: var(--bad); stroke-width: 1.2; stroke-dasharray: 3 4; opacity: .75; }
+.d-base { fill: var(--accent-2); stroke: var(--surface); stroke-width: 1.5; }
+.d-base-ring { fill: none; stroke: var(--accent-2); stroke-width: 1.2; opacity: .5; }
+.d-svglab { font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .08em; fill: var(--text-dim); }
+.d-sector { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: .12em; fill: var(--text); }
+.d-svg-halo { paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.d-prio { font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500; letter-spacing: .1em; fill: var(--accent); }
+.d-axis { font-family: var(--font-mono); font-size: var(--fs-xs); fill: var(--text-dim); }
+
+/* --- leyenda --- */
+.d-legend { display: flex; flex-wrap: wrap; gap: var(--s-6); align-items: flex-start; padding: var(--s-4); border-top: 1px solid var(--line); }
+.d-legend__grp { display: flex; align-items: center; gap: var(--s-3); }
+.d-scale { display: flex; align-items: center; gap: 3px; }
+.d-sw { width: 26px; height: 14px; border-radius: 2px; border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); }
+.d-sw--h1 { background: var(--heat-1); } .d-sw--h2 { background: var(--heat-2); }
+.d-sw--h3 { background: var(--heat-3); } .d-sw--h4 { background: var(--heat-4); }
+.d-sw--h5 { background: var(--heat-5); } .d-sw--nd { background: var(--nodata); }
+.d-scale__cap { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); margin-left: var(--s-2); }
+.d-key { display: inline-flex; align-items: center; gap: var(--s-2); font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
+
+/* --- ranking --- */
+.d-rank { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); overflow: hidden; }
+.d-rank__head, .d-row { display: grid; grid-template-columns: 34px 1.5fr 1.05fr .95fr 1.15fr 1.1fr 1.25fr; gap: var(--s-4); align-items: center; padding: var(--s-3) var(--s-4); }
+.d-rank__head { border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.d-row { border-top: 1px solid var(--line); }
+.d-row:first-of-type { border-top: 0; }
+.d-row--top { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+.d-row__pos { font-family: var(--font-mono); font-size: var(--fs-lg); font-weight: 600; color: var(--text-dim); }
+.d-row--top .d-row__pos { color: var(--accent); }
+.d-row__name { display: block; font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.d-row__meta { display: block; margin-top: var(--s-1); font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
+.d-ipr { display: flex; align-items: center; gap: var(--s-3); }
+.d-ipr__bar { flex: 1; height: 8px; background: var(--surface-2); border-radius: var(--r-pill); overflow: hidden; }
+.d-ipr__fill { display: block; height: 100%; background: var(--accent); border-radius: var(--r-pill); }
+.d-ipr__v { font-family: var(--font-mono); font-size: var(--fs-lg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.d-cell { display: flex; align-items: center; gap: var(--s-2); font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
+.d-cell::before { content: attr(data-l); display: none; }
+.d-cell__v { font-size: var(--fs-md); font-weight: 500; color: var(--text); font-variant-numeric: tabular-nums; }
+.d-cell--stack { flex-direction: column; align-items: flex-start; gap: var(--s-1); }
+.d-seg { display: inline-flex; gap: 2px; }
+.d-seg i { width: 6px; height: 13px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 1px; }
+.d-seg--r1 i:nth-child(-n+1) { background: var(--risk-1); }
+.d-seg--r2 i:nth-child(-n+2) { background: var(--risk-2); }
+.d-seg--r3 i:nth-child(-n+3) { background: var(--risk-3); }
+.d-seg--r4 i:nth-child(-n+4) { background: var(--risk-4); }
+.d-seg--r5 i:nth-child(-n+5) { background: var(--risk-5); }
+.d-act { display: inline-block; padding: var(--s-2) var(--s-3); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .06em; text-transform: uppercase; color: var(--text); }
+.d-act--go { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border-color: color-mix(in srgb, var(--accent) 42%, var(--line)); }
+.d-act--recon { background: color-mix(in srgb, var(--warn) 12%, var(--surface)); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+
+/* --- comparador --- */
+.d-scrub { padding-bottom: var(--s-5); }
+.d-scrub__track { position: relative; height: 6px; margin: 0 var(--s-4) var(--s-3); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-pill); }
+.d-scrub__fill { position: absolute; inset: 0 0 0 0; width: 100%; background: color-mix(in srgb, var(--accent) 22%, transparent); border-radius: var(--r-pill); }
+.d-scrub__stop { position: absolute; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 30%, transparent); border-radius: var(--r-pill); }
+.d-scrub__stop--1 { left: 0; } .d-scrub__stop--2 { left: 50%; } .d-scrub__stop--3 { left: 100%; }
+.d-scrub__knob { position: absolute; top: 50%; left: 100%; width: 18px; height: 18px; margin: -9px 0 0 -9px; background: var(--accent); border: 2px solid var(--surface); border-radius: var(--r-pill); box-shadow: var(--shadow-soft); }
+.d-scrub__labels { display: flex; justify-content: space-between; }
+.d-scrub__labels span { flex: 1; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
+.d-scrub__labels span:nth-child(2) { text-align: center; }
+.d-scrub__labels span:nth-child(3) { text-align: right; }
+.d-scrub__labels .is-on { color: var(--text); }
+.d-delta { display: grid; grid-template-columns: 1.15fr 1.05fr 1fr .85fr; gap: var(--s-4); align-items: center; padding: var(--s-3) var(--s-2); border-top: 1px solid var(--line); }
+.d-delta--head { border-top: 0; padding: var(--s-2); }
+.d-delta__name { font-size: var(--fs-sm); font-weight: 500; }
+.d-delta__vals { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.d-delta__vals b { color: var(--text); font-weight: 500; }
+.d-delta__track { position: relative; height: 14px; background: var(--surface-2); border-radius: 2px; }
+.d-delta__track::after { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: color-mix(in srgb, var(--text) 25%, transparent); }
+.d-delta__bar { position: absolute; top: 3px; bottom: 3px; background: var(--accent); border-radius: 1px; }
+.d-delta__bar--down { background: var(--accent-3); }
+.d-delta__bar--nd { background: var(--nodata); }
+.d-tag { justify-self: start; padding: var(--s-1) var(--s-2); border: 1px solid var(--line); border-radius: var(--r-sm); font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .04em; color: var(--text-dim); background: var(--surface-2); }
+.d-tag--warn { background: color-mix(in srgb, var(--warn) 12%, var(--surface)); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); color: var(--text); }
+.d-tag--bad { background: color-mix(in srgb, var(--bad) 10%, var(--surface)); border-color: color-mix(in srgb, var(--bad) 36%, var(--line)); color: var(--text); }
+.d-sep { height: 1px; margin: var(--s-4) 0; background: var(--line); }
+
+/* --- red --- */
+.d-net__svg { display: block; width: 100%; height: auto; }
+.d-link { fill: none; stroke: color-mix(in srgb, var(--accent-2) 45%, transparent); stroke-width: 1.2; }
+.d-link--off { stroke: color-mix(in srgb, var(--text) 20%, transparent); stroke-dasharray: 3 4; }
+.d-link--down { stroke: color-mix(in srgb, var(--bad) 60%, transparent); stroke-dasharray: 3 4; }
+.d-netnode { stroke: var(--surface); stroke-width: 1.4; }
+.d-bus { fill: var(--accent-2); stroke: var(--surface); stroke-width: 1.5; }
+.d-stats { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); border-radius: var(--r-sm); margin-top: var(--s-4); }
+.d-stat { padding: var(--s-3); border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+.d-stat:nth-child(1), .d-stat:nth-child(2) { border-top: 0; }
+.d-stat:nth-child(odd) { border-left: 0; }
+.d-stat__v { display: block; margin-top: var(--s-1); font-family: var(--font-mono); font-size: var(--fs-lg); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.d-queue { margin-top: var(--s-4); }
+.d-queue__top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); }
+.d-queue__v { font-family: var(--font-mono); font-size: var(--fs-xl); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -.03em; }
+.d-queue__bar { position: relative; height: 10px; margin: var(--s-3) 0 var(--s-2); background: var(--surface-2); border-radius: var(--r-pill); overflow: hidden; }
+.d-queue__fill { display: block; height: 100%; width: 72%; background: color-mix(in srgb, var(--accent-3) 70%, transparent); border-radius: var(--r-pill); }
+.d-nodecard { display: flex; justify-content: space-between; gap: var(--s-3); padding: var(--s-2) 0; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
+.d-nodecard b { color: var(--text); font-weight: 500; }
+
+/* --- detalle --- */
+.d-facts { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); border-radius: var(--r-sm); }
+.d-fact { padding: var(--s-3) var(--s-4); border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+.d-fact:nth-child(1), .d-fact:nth-child(2) { border-top: 0; }
+.d-fact:nth-child(odd) { border-left: 0; }
+.d-fact__v { display: block; margin-top: var(--s-2); font-family: var(--font-mono); font-size: var(--fs-lg); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.d-fact__s { display: block; margin-top: var(--s-1); font-size: var(--fs-xs); color: var(--text-dim); line-height: 1.4; }
+.d-fact--wide { grid-column: 1 / -1; border-left: 0; }
+.d-via { display: flex; align-items: center; gap: var(--s-2); margin-top: var(--s-2); font-size: var(--fs-xs); color: var(--text-dim); }
+.d-chart { margin: 0; }
+.d-chart__cap { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4); margin-bottom: var(--s-2); }
+.d-cmp { margin-top: var(--s-4); border: 1px solid var(--line); border-radius: var(--r-sm); }
+.d-cmp__h { display: block; padding: var(--s-3) var(--s-4); }
+.d-cmp__row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4); padding: var(--s-2) var(--s-4); border-top: 1px solid var(--line); font-size: var(--fs-xs); color: var(--text-dim); }
+.d-cmp__row b { font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 500; color: var(--text); font-variant-numeric: tabular-nums; }
+.d-cmp__row--sum { background: var(--surface-2); color: var(--text); }
+.d-cmp__row--sum b { color: var(--accent); }
+.d-gridline { stroke: color-mix(in srgb, var(--text) 8%, transparent); stroke-width: 1; }
+.d-area { fill: var(--heat-5); fill-opacity: .18; }
+.d-line { fill: none; stroke: var(--heat-5); stroke-width: 2; }
+.d-waterline { fill: none; stroke: var(--accent-3); stroke-width: 1.6; }
+.d-impact { stroke: var(--accent); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.d-impact-dot { fill: var(--heat-5); stroke: var(--surface); stroke-width: 1.5; }
+
+/* --- pie --- */
+.d-foot { border-top: 1px solid var(--line); background: var(--surface); }
+.d-foot__in { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-6); padding: var(--s-6) 0; }
+.d-foot p { margin: var(--s-2) 0 0; font-size: var(--fs-xs); line-height: 1.55; color: var(--text-dim); }
+
+@media (max-width: 1080px) {
+  .d-cols, .d-cols--even { grid-template-columns: 1fr; }
+  .d-rank__head { display: none; }
+  .d-row { grid-template-columns: 1fr 1fr; row-gap: var(--s-3); }
+  .d-row__pos { grid-column: 1 / -1; }
+  .d-cell::before { display: block; }
+  .d-cell { flex-direction: column; align-items: flex-start; gap: var(--s-1); }
+  .d-act { width: 100%; text-align: center; }
+  .d-delta { grid-template-columns: 1fr 1fr; row-gap: var(--s-2); }
+  .d-delta__name, .d-delta__vals { grid-column: 1 / -1; }
+  .d-foot__in { grid-template-columns: 1fr; gap: var(--s-5); }
+}
+@media (max-width: 620px) {
+  .d-brand__sub { display: none; }
+  .d-counters { grid-template-columns: 1fr; }
+  .d-counter { border-left: 0; border-top: 1px solid var(--line); }
+  .d-counter:first-child { border-top: 0; }
+  .d-facts, .d-stats { grid-template-columns: 1fr; }
+  .d-fact, .d-stat { border-left: 0; border-top: 1px solid var(--line); }
+  .d-fact:nth-child(2), .d-stat:nth-child(2) { border-top: 1px solid var(--line); }
+  .d-fact:first-child, .d-stat:first-child { border-top: 0; }
+}
+
+/* ---------- APLANADO FINAL (CONTRATO.md §2.0) ----------
+   Un contenedor con borde no contiene otro contenedor con borde. Para separar: hairline o aire.
+   `--surface` queda reservado a la franja de mando. Esta vista no tiene capas flotantes: sin sombras. */
+.d-rank, .d-stats, .d-facts, .d-cmp { border: 0; border-radius: 0; background: none; overflow: visible; }
+.d-rank__head { background: none; }
+.d-row--top { background: color-mix(in srgb, var(--accent) 6%, var(--bg)); }
+.d-seg i { background: color-mix(in srgb, var(--text) 10%, transparent); border: 0; }
+.d-act { width: auto; padding: 0; border: 0; border-radius: 0; background: none; text-align: left; font-weight: 500; letter-spacing: .08em; }
+.d-act--go { color: var(--accent); }
+.d-act--recon { color: var(--warn); }
+.d-stats, .d-facts { gap: 0 var(--s-5); margin-top: var(--gap-block); }
+.d-stat, .d-fact { padding: var(--pad-block) 0; border-left: 0; border-top: var(--hairline); }
+.d-cmp { margin-top: var(--gap-block); }
+.d-cmp__h { padding: 0 0 var(--s-2); }
+.d-cmp__row { padding: var(--s-2) 0; }
+.d-cmp__row--sum { background: none; }
+.d-scrub__track { border: 0; background: color-mix(in srgb, var(--text) 10%, transparent); }
+.d-scrub__knob { box-shadow: none; border-color: var(--bg); }
+.d-tag { padding: 0; border: 0; border-radius: 0; background: none; }
+.d-tag--warn { color: var(--warn); }
+.d-tag--bad { color: var(--bad); }
+.d-foot { background: none; }
+/* el mapa es el lienzo de la página: halos y marcadores funden con el fondo, no con una tarjeta */
+.d-svg-halo, .d-base, .d-netnode, .d-bus, .d-impact-dot { stroke: var(--bg); }
+</style>
+</head>
+<body>
+
+<header class="d-bar">
+  <div class="d-bar__in">
+    <div class="d-brand">
+      <svg class="d-brand__mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+        <circle cx="13" cy="13" r="3.2" fill="currentColor"></circle>
+        <path d="M6.4 6.4a9.4 9.4 0 0 0 0 13.2M19.6 19.6a9.4 9.4 0 0 0 0-13.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+        <path d="M9.4 9.4a5.1 5.1 0 0 0 0 7.2M16.6 16.6a5.1 5.1 0 0 0 0-7.2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></path>
+      </svg>
+      <span class="d-brand__name">SITRE</span>
+      <span class="d-brand__sub">Sistema de Inteligencia Territorial para Rescates</span>
+    </div>
+    <div class="d-bar__mid">
+      <span class="d-chip d-chip--event">Huracán Celeste · hora 7</span>
+      <span class="d-chip"><span class="d-dot"></span><b>34</b>&nbsp;/&nbsp;42 nodos en línea</span>
+      <span class="d-chip">Última sincronización <b>04:30</b></span>
+      <span class="d-chip d-chip--alert">
+        <svg width="13" height="13" viewBox="0 0 13 13" aria-hidden="true"><path d="M6.5 1.2 11.8 10.2H1.2Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"></path><path d="M6.5 4.6v2.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path><circle cx="6.5" cy="8.9" r=".7" fill="currentColor"></circle></svg>
+        Modo apagón · guardando en local
+      </span>
+    </div>
+    <span class="d-seal">Conteo agregado · sin identificar personas</span>
+  </div>
+</header>
+
+<main class="d-main">
+  <div class="d-wrap">
+  <div class="d-block" style="border-top:0">
+    <div class="d-block__head">
+      <div>
+        <h2 class="d-block__title">Mapa de calor territorial</h2>
+        <p class="d-note">Ocupación estimada por manzana, agrupada en 6 sectores. Corte 17 oct, 04:30 · hora 7 post-impacto.</p>
+      </div>
+      <div class="d-tabs" role="tablist" aria-label="Capas del mapa">
+        <span class="d-tab is-on" role="tab" aria-selected="true">Ocupación</span>
+        <span class="d-tab" role="tab">Amenaza</span>
+        <span class="d-tab" role="tab">Confianza</span>
+      </div>
+    </div>
+
+    <div class="d-panel">
+      <div class="d-counters">
+        <div class="d-counter">
+          <span class="d-lab">Sectores</span>
+          <span class="d-counter__v">6</span>
+        </div>
+        <div class="d-counter">
+          <span class="d-lab">Personas estimadas</span>
+          <span class="d-counter__v">2&nbsp;010 <span class="d-counter__u">est.</span></span>
+        </div>
+        <div class="d-counter">
+          <span class="d-lab">Nodos en silencio</span>
+          <span class="d-counter__v">8 <span class="d-counter__u">de 42</span></span>
+        </div>
+      </div>
+
+      <div class="d-mapwrap">
+        <svg class="d-svg" viewBox="0 0 1320 566" role="img" aria-label="Mapa de ocupación estimada por manzana en 6 sectores">
+          <path class="d-sea" d="M0 62 C120 54 210 78 320 74 C430 70 500 50 590 56 C640 60 660 50 700 54 C790 62 900 46 1010 54 C1140 64 1240 50 1320 58 L1320 0 L0 0 Z"></path>
+          <path class="d-sea-mark" d="M60 26 q14 -8 28 0 M110 40 q14 -8 28 0 M250 22 q14 -8 28 0 M420 30 q14 -8 28 0 M900 26 q14 -8 28 0 M1170 32 q14 -8 28 0"></path>
+          <path class="d-coast" d="M0 62 C120 54 210 78 320 74 C430 70 500 50 590 56 C640 60 660 50 700 54 C790 62 900 46 1010 54 C1140 64 1240 50 1320 58"></path>
+
+          <g class="d-roads">
+            <path class="d-road" d="M24 76 C180 66 320 78 470 70 C640 62 780 68 920 72 C1080 78 1190 70 1296 78"></path>
+            <path class="d-road" d="M344 58 C338 200 352 360 344 558"></path>
+            <path class="d-road" d="M656 58 C652 150 662 240 658 318"></path>
+            <path class="d-road" d="M24 262 C220 254 420 266 640 258"></path>
+            <path class="d-road" d="M700 268 C900 260 1100 270 1296 262"></path>
+            <path class="d-road" d="M700 312 C900 304 1080 316 1296 308"></path>
+            <path class="d-road d-road--minor" d="M30 452 C200 444 300 452 408 446"></path>
+            <path class="d-road d-road--minor" d="M1085 62 L1085 292"></path>
+            <path class="d-road d-road--minor" d="M1019 316 L1019 556"></path>
+          </g>
+
+          <path class="d-river" d="M392 566 C430 500 470 452 520 400 C566 352 604 300 622 240 C638 186 646 130 626 58"></path>
+          <path class="d-river-core" d="M392 566 C430 500 470 452 520 400 C566 352 604 300 622 240 C638 186 646 130 626 58"></path>
+          <path class="d-creek" d="M960 398 C972 440 990 486 984 556"></path>
+
+          <g class="d-blk d-s-pn">
+            <polygon points="44,96 146,92 152,152 50,158"></polygon>
+            <polygon points="160,92 262,96 256,154 154,152"></polygon>
+            <polygon points="276,96 330,100 326,156 270,154"></polygon>
+            <polygon points="46,178 148,174 154,240 52,246"></polygon>
+            <polygon points="162,174 264,178 258,242 156,240"></polygon>
+            <polygon points="278,178 332,182 328,244 272,242"></polygon>
+          </g>
+
+          <g class="d-blk d-s-mc">
+            <polygon points="344,88 424,84 430,146 350,150"></polygon>
+            <polygon points="436,84 516,88 510,148 430,146"></polygon>
+            <polygon points="528,88 588,92 582,150 522,148"></polygon>
+            <polygon points="346,170 426,166 432,238 352,244"></polygon>
+            <polygon points="438,166 518,170 512,240 432,238"></polygon>
+            <polygon points="530,172 592,176 586,242 524,240"></polygon>
+          </g>
+
+          <g class="d-blk d-s-cr">
+            <polygon points="704,102 816,96 822,166 710,172"></polygon>
+            <polygon points="834,96 944,102 938,168 828,166"></polygon>
+            <polygon points="962,102 1072,98 1078,166 956,168"></polygon>
+            <polygon points="1090,98 1256,104 1250,168 1084,166"></polygon>
+            <polygon points="708,206 820,200 826,286 714,292"></polygon>
+            <polygon points="838,200 948,206 942,284 832,286"></polygon>
+            <polygon points="966,206 1076,202 1082,280 960,284"></polygon>
+            <polygon points="1094,202 1258,208 1252,282 1088,280"></polygon>
+          </g>
+
+          <g class="d-blk d-s-mv">
+            <polygon points="44,276 144,272 150,338 50,344"></polygon>
+            <polygon points="158,272 256,276 250,340 152,338"></polygon>
+            <polygon points="272,276 332,280 328,342 266,340"></polygon>
+            <polygon points="46,368 146,364 152,430 52,436"></polygon>
+            <polygon points="160,364 258,368 252,432 154,430"></polygon>
+            <polygon points="274,368 334,372 330,434 268,432"></polygon>
+            <polygon points="48,460 148,456 154,542 54,548"></polygon>
+            <polygon points="162,456 260,460 254,544 156,542"></polygon>
+            <polygon points="276,460 336,464 332,546 270,544"></polygon>
+          </g>
+
+          <g class="d-blk d-s-rr">
+            <polygon points="492,298 604,294 590,368 524,374"></polygon>
+            <polygon points="420,384 512,376 500,450 442,454"></polygon>
+            <polygon points="352,468 452,458 440,546 372,550"></polygon>
+            <polygon points="648,300 744,306 730,372 644,366"></polygon>
+            <polygon points="548,388 660,394 646,454 540,448"></polygon>
+          </g>
+
+          <g class="d-blk d-s-bc">
+            <polygon points="762,326 878,320 884,394 768,398"></polygon>
+            <polygon points="896,320 1010,326 1004,392 890,394"></polygon>
+            <polygon points="1028,326 1142,322 1148,390 1022,392"></polygon>
+            <polygon points="766,422 882,416 888,494 772,500"></polygon>
+            <polygon points="900,416 1014,422 1008,492 894,494"></polygon>
+            <polygon points="1032,422 1146,418 1152,490 1026,492"></polygon>
+            <polygon points="770,516 890,510 892,548 774,552"></polygon>
+            <polygon points="904,510 1020,516 1016,546 898,548"></polygon>
+          </g>
+
+          <path class="d-ring" d="M338 96 Q338 82 354 82 L582 82 Q598 82 598 96 L598 236 Q598 250 582 250 L354 250 Q338 250 338 236 Z"></path>
+          <text class="d-prio d-svg-halo" x="342" y="76">PRIORIDAD 1 · IPR 94</text>
+
+          <g class="d-network">
+            <path class="d-link--off" d="M466 322 L432 336 M420 500 L432 344"></path>
+            <path class="d-link--off" d="M188 452 L432 344"></path>
+            <path class="d-link" d="M196 166 L432 330 M296 250 L432 330 M398 160 L432 328 M556 162 L432 332 M392 252 L420 318 M556 250 L432 336 M766 186 L440 330 M1096 186 L436 326 M1200 190 L436 332 M816 366 L440 340 M960 520 L442 344 M250 300 L428 330"></path>
+            <path class="d-base-ring" d="M446 316 A20 20 0 0 1 446 344 M452 308 A30 30 0 0 1 452 352"></path>
+          </g>
+
+          <g class="d-nodes">
+            <circle class="d-node d-node--on" cx="196" cy="166" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="296" cy="250" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="398" cy="160" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="556" cy="162" r="4.5"></circle>
+            <circle class="d-node d-node--last" cx="392" cy="252" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="556" cy="250" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="766" cy="186" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="1096" cy="186" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="1200" cy="190" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="250" cy="300" r="4.5"></circle>
+            <circle class="d-node d-node--on" cx="816" cy="366" r="4.5"></circle>
+            <circle class="d-node d-node--last" cx="960" cy="520" r="4.5"></circle>
+            <circle class="d-node-halo" cx="466" cy="322" r="9"></circle>
+            <circle class="d-node d-node--off" cx="466" cy="322" r="4.5"></circle>
+            <circle class="d-node-halo" cx="420" cy="500" r="9"></circle>
+            <circle class="d-node d-node--off" cx="420" cy="500" r="4.5"></circle>
+            <circle class="d-node-halo" cx="188" cy="452" r="9"></circle>
+            <circle class="d-node d-node--off" cx="188" cy="452" r="4.5"></circle>
+          </g>
+
+          <rect class="d-base" x="426" y="324" width="13" height="13" rx="1"></rect>
+          <text class="d-svglab d-svg-halo" x="432" y="374" text-anchor="middle">ESTACIÓN BASE</text>
+
+          <text class="d-sector d-svg-halo" x="188" y="170" text-anchor="middle">PUERTO NORTE · 640</text>
+          <text class="d-sector d-svg-halo" x="466" y="162" text-anchor="middle">MALECÓN CENTRO · 780</text>
+          <text class="d-sector d-svg-halo" x="188" y="358" text-anchor="middle">MERCADO VIEJO · 90</text>
+          <text class="d-sector d-svg-halo" x="980" y="188" text-anchor="middle">COLONIA EL ROBLE · 260</text>
+          <text class="d-sector d-svg-halo" x="956" y="410" text-anchor="middle">BARRIO LA CURVA · 240</text>
+          <text class="d-sector d-svg-halo" x="452" y="416" text-anchor="middle">RIBERA DEL RÍO</text>
+          <text class="d-svglab d-svg-halo" x="452" y="432" text-anchor="middle">SIN DATO · 3 NODOS EN SILENCIO</text>
+
+          <g class="d-inset">
+            <text class="d-svglab" x="26" y="26">MUNICIPIO COSTERO · 148 000 HAB.</text>
+            <text class="d-svglab" x="26" y="42">CAPA OCUPACIÓN · MANZANAS 04:30</text>
+          </g>
+
+          <g class="d-compass">
+            <path d="M1258 470 L1265 494 L1258 488 L1251 494 Z" fill="var(--text)"></path>
+            <text class="d-axis" x="1258" y="510" text-anchor="middle">N</text>
+            <path class="d-gridline" d="M1130 540 H1250 M1130 540 V534 M1250 540 V534 M1190 540 V536" style="stroke: color-mix(in srgb, var(--text) 35%, transparent)"></path>
+            <text class="d-axis" x="1130" y="530">0</text>
+            <text class="d-axis" x="1244" y="530">500 m</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="d-legend">
+        <div class="d-legend__grp">
+          <span class="d-lab">Ocupación estimada</span>
+          <span class="d-scale">
+            <i class="d-sw d-sw--h1"></i><i class="d-sw d-sw--h2"></i><i class="d-sw d-sw--h3"></i><i class="d-sw d-sw--h4"></i><i class="d-sw d-sw--h5"></i>
+          </span>
+          <span class="d-scale__cap">1 baja · 5 crítica</span>
+        </div>
+        <div class="d-legend__grp">
+          <span class="d-lab">Sin dato</span>
+          <i class="d-sw d-sw--nd"></i>
+          <span class="d-scale__cap">nodo en silencio</span>
+        </div>
+        <div class="d-legend__grp">
+          <span class="d-lab">Nodos</span>
+          <span class="d-key"><i class="d-dot"></i>en línea</span>
+          <span class="d-key"><i class="d-dot d-dot--warn"></i>último dato</span>
+          <span class="d-key"><i class="d-dot d-dot--bad"></i>silencio</span>
+        </div>
+        <span class="d-note d-note--tight">15 nodos representados de 42 · agrupación por sector</span>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="d-wrap">
+    <div class="d-block">
+      <div class="d-block__head">
+        <div>
+          <h2 class="d-block__title">Ranking de prioridad</h2>
+          <p class="d-note">IPR = ocupación estimada × amenaza × confianza. La confianza baja sube el IPR: el dato viejo o en silencio no se ignora, se manda a verificar.</p>
+        </div>
+        <span class="d-lab">Orden de la cola de rescate · 6 sectores</span>
+      </div>
+
+      <div class="d-rank">
+        <div class="d-rank__head">
+          <span class="d-lab">#</span>
+          <span class="d-lab">Sector</span>
+          <span class="d-lab">IPR</span>
+          <span class="d-lab">Ocupación estimada</span>
+          <span class="d-lab">Amenaza</span>
+          <span class="d-lab">Confianza</span>
+          <span class="d-lab">Acción sugerida</span>
+        </div>
+
+        <div class="d-row d-row--top">
+          <span class="d-row__pos">1</span>
+          <span><span class="d-row__name">Malecón Centro</span><span class="d-row__meta">prioridad 1 · marea y oleaje</span></span>
+          <span class="d-ipr"><span class="d-ipr__bar"><i class="d-ipr__fill" style="width:94%"></i></span><span class="d-ipr__v">94</span></span>
+          <span class="d-cell" data-l="Ocupación"><i class="d-sw d-sw--h5"></i><span class="d-cell__v">780</span></span>
+          <span class="d-cell" data-l="Amenaza"><span class="d-seg d-seg--r4"><i></i><i></i><i></i><i></i><i></i></span><span class="d-cell__v">4</span></span>
+          <span class="d-cell" data-l="Confianza"><i class="d-dot"></i>Alta · fresco 04:28</span>
+          <span class="d-act d-act--go">Enviar brigada</span>
+        </div>
+
+        <div class="d-row">
+          <span class="d-row__pos">2</span>
+          <span><span class="d-row__name">Ribera del Río</span><span class="d-row__meta">prioridad 2 · sin lectura propia</span></span>
+          <span class="d-ipr"><span class="d-ipr__bar"><i class="d-ipr__fill" style="width:91%"></i></span><span class="d-ipr__v">91</span></span>
+          <span class="d-cell" data-l="Ocupación"><i class="d-sw d-sw--nd"></i>sin dato</span>
+          <span class="d-cell" data-l="Amenaza"><span class="d-seg d-seg--r5"><i></i><i></i><i></i><i></i><i></i></span><span class="d-cell__v">5</span></span>
+          <span class="d-cell" data-l="Confianza"><i class="d-dot d-dot--bad"></i>Sin dato · nodos en silencio</span>
+          <span class="d-act d-act--recon">Enviar reconocimiento</span>
+        </div>
+
+        <div class="d-row">
+          <span class="d-row__pos">3</span>
+          <span><span class="d-row__name">Barrio La Curva</span><span class="d-row__meta">prioridad 3 · quebrada desbordada</span></span>
+          <span class="d-ipr"><span class="d-ipr__bar"><i class="d-ipr__fill" style="width:88%"></i></span><span class="d-ipr__v">88</span></span>
+          <span class="d-cell" data-l="Ocupación"><i class="d-sw d-sw--h3"></i><span class="d-cell__v">240</span></span>
+          <span class="d-cell" data-l="Amenaza"><span class="d-seg d-seg--r4"><i></i><i></i><i></i><i></i><i></i></span><span class="d-cell__v">4</span></span>
+          <span class="d-cell" data-l="Confianza"><i class="d-dot d-dot--warn"></i>Media · 2 de 5 nodos en silencio</span>
+          <span class="d-act d-act--recon">Verificar</span>
+        </div>
+
+        <div class="d-row">
+          <span class="d-row__pos">4</span>
+          <span><span class="d-row__name">Puerto Norte</span><span class="d-row__meta">prioridad 4 · agua en muelles</span></span>
+          <span class="d-ipr"><span class="d-ipr__bar"><i class="d-ipr__fill" style="width:86%"></i></span><span class="d-ipr__v">86</span></span>
+          <span class="d-cell" data-l="Ocupación"><i class="d-sw d-sw--h4"></i><span class="d-cell__v">640</span></span>
+          <span class="d-cell" data-l="Amenaza"><span class="d-seg d-seg--r3"><i></i><i></i><i></i><i></i><i></i></span><span class="d-cell__v">3</span></span>
+          <span class="d-cell" data-l="Confianza"><i class="d-dot d-dot--warn"></i>Media · fresco 04:10</span>
+          <span class="d-act d-act--go">Enviar brigada</span>
+        </div>
+
+        <div class="d-row">
+          <span class="d-row__pos">5</span>
+          <span><span class="d-row__name">Mercado Viejo</span><span class="d-row__meta">prioridad 5 · acumulación pluvial</span></span>
+          <span class="d-ipr"><span class="d-ipr__bar"><i class="d-ipr__fill" style="width:61%"></i></span><span class="d-ipr__v">61</span></span>
+          <span class="d-cell" data-l="Ocupación"><i class="d-sw d-sw--h2"></i><span class="d-cell__v">90</span></span>
+          <span class="d-cell" data-l="Amenaza"><span class="d-seg d-seg--r3"><i></i><i></i><i></i><i></i><i></i></span><span class="d-cell__v">3</span></span>
+          <span class="d-cell" data-l="Confianza"><i class="d-dot d-dot--bad"></i>Baja · dato de hace 5 h</span>
+          <span class="d-act">Actualizar dato</span>
+        </div>
+
+        <div class="d-row">
+          <span class="d-row__pos">6</span>
+          <span><span class="d-row__name">Colonia El Roble</span><span class="d-row__meta">prioridad 6 · sin afectación</span></span>
+          <span class="d-ipr"><span class="d-ipr__bar"><i class="d-ipr__fill" style="width:42%"></i></span><span class="d-ipr__v">42</span></span>
+          <span class="d-cell" data-l="Ocupación"><i class="d-sw d-sw--h3"></i><span class="d-cell__v">260</span></span>
+          <span class="d-cell" data-l="Amenaza"><span class="d-seg d-seg--r1"><i></i><i></i><i></i><i></i><i></i></span><span class="d-cell__v">1</span></span>
+          <span class="d-cell" data-l="Confianza"><i class="d-dot"></i>Alta · fresco 04:29</span>
+          <span class="d-act">Monitorear</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-wrap">
+    <div class="d-block">
+      <div class="d-block__head">
+        <div>
+          <h2 class="d-block__title">Comparador antes / después</h2>
+          <p class="d-note">Tres cortes comparables a la misma hora del día: la base habitual es el promedio de las últimas 8 semanas para el mismo día y hora.</p>
+        </div>
+      </div>
+
+      <div class="d-cols">
+        <div class="d-panel d-panel--pad">
+          <div class="d-scrub">
+            <div class="d-scrub__track">
+              <span class="d-scrub__fill"></span>
+              <span class="d-scrub__stop d-scrub__stop--1"></span>
+              <span class="d-scrub__stop d-scrub__stop--2"></span>
+              <span class="d-scrub__stop d-scrub__stop--3"></span>
+              <span class="d-scrub__knob"></span>
+            </div>
+            <div class="d-scrub__labels">
+              <span>Base habitual · 8 semanas</span>
+              <span>Pre-evento · 21:15</span>
+              <span class="is-on">Post-evento · 04:30</span>
+            </div>
+          </div>
+
+          <div class="d-delta d-delta--head">
+            <span class="d-lab">Sector</span>
+            <span class="d-lab">Base · pre · post</span>
+            <span class="d-lab">Variación</span>
+            <span class="d-lab">Lectura</span>
+          </div>
+
+          <div class="d-delta">
+            <span class="d-delta__name">Malecón Centro</span>
+            <span class="d-delta__vals">320 · 410 · <b>780</b></span>
+            <span class="d-delta__track"><i class="d-delta__bar" style="left:50%;width:50%"></i></span>
+            <span class="d-tag">+460 · aumento</span>
+          </div>
+
+          <div class="d-delta">
+            <span class="d-delta__name">Puerto Norte</span>
+            <span class="d-delta__vals">180 · 240 · <b>640</b></span>
+            <span class="d-delta__track"><i class="d-delta__bar" style="left:50%;width:50%"></i></span>
+            <span class="d-tag">+460 · aumento</span>
+          </div>
+
+          <div class="d-delta">
+            <span class="d-delta__name">Barrio La Curva</span>
+            <span class="d-delta__vals">550 · 610 · <b>240</b></span>
+            <span class="d-delta__track"><i class="d-delta__bar d-delta__bar--down" style="right:50%;width:34%"></i></span>
+            <span class="d-tag d-tag--warn">−310 · subregistro</span>
+          </div>
+
+          <div class="d-delta">
+            <span class="d-delta__name">Mercado Viejo</span>
+            <span class="d-delta__vals">480 · 430 · <b>90</b></span>
+            <span class="d-delta__track"><i class="d-delta__bar d-delta__bar--down" style="right:50%;width:42%"></i></span>
+            <span class="d-tag d-tag--warn">−390 · dato de 5 h</span>
+          </div>
+
+          <div class="d-delta">
+            <span class="d-delta__name">Ribera del Río</span>
+            <span class="d-delta__vals">140 · 300 · <b>sin dato</b></span>
+            <span class="d-delta__track"><i class="d-delta__bar d-delta__bar--nd" style="left:0;width:100%"></i></span>
+            <span class="d-tag d-tag--bad">nodo caído · 21:15</span>
+          </div>
+
+          <div class="d-delta">
+            <span class="d-delta__name">Colonia El Roble</span>
+            <span class="d-delta__vals">210 · 190 · <b>260</b></span>
+            <span class="d-delta__track"><i class="d-delta__bar" style="left:50%;width:6%"></i></span>
+            <span class="d-tag">+50 · estable</span>
+          </div>
+
+          <div class="d-sep"></div>
+          <p class="d-note d-note--tight">Una caída no es una evacuación. Si el nodo dejó de reportar, la ocupación queda sin dato y el sector sube en la cola: se envía reconocimiento, no se asume que la zona quedó vacía. Solo Malecón Centro y Puerto Norte muestran aumento confirmado con lectura fresca.</p>
+        </div>
+
+        <div class="d-panel d-panel--pad">
+          <span class="d-lab">Red LoRa store-and-forward</span>
+          <svg class="d-net__svg" viewBox="0 0 520 260" role="img" aria-label="Topología de la red LoRa: nodos, estación base y enlace con SINAPRED">
+            <g class="d-links">
+              <path class="d-link" d="M36 40 L320 128 M86 28 L320 128 M150 42 L318 124 M210 26 L322 128 M30 96 L318 130 M160 88 L320 132 M44 166 L318 134 M108 178 L320 136 M232 186 L322 134 M60 226 L320 134 M140 238 L318 136 M206 232 L320 132"></path>
+              <path class="d-link--down" d="M96 100 L318 130"></path>
+              <path class="d-link--off" d="M172 164 L320 132 M226 104 L320 130"></path>
+            </g>
+            <g>
+              <circle class="d-netnode d-node--on" cx="36" cy="40" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="86" cy="28" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="150" cy="42" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="210" cy="26" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="30" cy="96" r="4"></circle>
+              <circle class="d-netnode d-node--off" cx="96" cy="100" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="160" cy="88" r="4"></circle>
+              <circle class="d-netnode d-node--last" cx="226" cy="104" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="44" cy="166" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="108" cy="178" r="4"></circle>
+              <circle class="d-netnode d-node--off" cx="172" cy="164" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="232" cy="186" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="60" cy="226" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="140" cy="238" r="4"></circle>
+              <circle class="d-netnode d-node--on" cx="206" cy="232" r="4"></circle>
+            </g>
+            <rect class="d-bus" x="314" y="122" width="14" height="14" rx="1"></rect>
+            <path class="d-base-ring" d="M332 116 A16 16 0 0 1 332 142"></path>
+            <text class="d-svglab" x="34" y="18">NODOS EN CAMPO · 42</text>
+            <text class="d-svglab" x="368" y="112" text-anchor="middle">ESTACIÓN BASE</text>
+            <path class="d-link--off" d="M334 130 L430 130"></path>
+            <path d="M378 124 L386 136 M386 124 L378 136" stroke="var(--bad)" stroke-width="1.6" fill="none" stroke-linecap="round"></path>
+            <rect x="430" y="112" width="70" height="36" rx="4" fill="var(--surface-2)" stroke="var(--line)"></rect>
+            <text class="d-svglab" x="465" y="134" text-anchor="middle" style="fill:var(--text)">SINAPRED</text>
+            <text class="d-svglab d-svg-halo" x="382" y="160" text-anchor="middle">SIN ENLACE · 40 MIN</text>
+          </svg>
+
+          <div class="d-stats">
+            <div class="d-stat"><span class="d-lab">Nodos</span><span class="d-stat__v">42</span></div>
+            <div class="d-stat"><span class="d-lab">En línea</span><span class="d-stat__v">34</span></div>
+            <div class="d-stat"><span class="d-lab">En silencio</span><span class="d-stat__v">8</span></div>
+            <div class="d-stat"><span class="d-lab">Antigüedad media del dato</span><span class="d-stat__v">6 min</span></div>
+          </div>
+
+          <div class="d-nodecard">
+            <span><b>Nodo 07</b> · Malecón Centro · en línea 04:28 · batería 71 %</span>
+            <span class="d-key"><i class="d-dot"></i>ok</span>
+          </div>
+          <div class="d-nodecard">
+            <span><b>Nodo 14</b> · Ribera del Río · en silencio 7 h 15 min · último dato 300 · batería 62 %</span>
+            <span class="d-key"><i class="d-dot d-dot--bad"></i>silencio</span>
+          </div>
+          <div class="d-nodecard">
+            <span><b>Nodo 22</b> · Mercado Viejo · último dato 23:40 · batería 34 %</span>
+            <span class="d-key"><i class="d-dot d-dot--warn"></i>último dato</span>
+          </div>
+
+          <div class="d-queue">
+            <div class="d-queue__top">
+              <span class="d-lab">Cola de sincronización</span>
+              <span class="d-queue__v">1&nbsp;246</span>
+            </div>
+            <div class="d-queue__bar"><i class="d-queue__fill"></i></div>
+            <p class="d-note d-note--tight">registros pendientes en la estación · último enlace 04:30, hace 40 min. Sin internet los datos siguen guardándose en local.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-wrap">
+    <div class="d-block">
+      <div class="d-block__head">
+        <div>
+          <h2 class="d-block__title">Sector priorizado · Malecón Centro</h2>
+          <p class="d-note">Detalle del sector en el puesto 1 de la cola. Ocupación, vías de acceso, brigada asignada y sensores de nivel de agua.</p>
+        </div>
+        <span class="d-act d-act--go">Brigada 1 asignada</span>
+      </div>
+
+      <div class="d-cols d-cols--even">
+        <div>
+          <div class="d-facts">
+            <div class="d-fact">
+              <span class="d-lab">Ocupación estimada</span>
+              <span class="d-fact__v"><i class="d-sw d-sw--h5"></i> 780</span>
+              <span class="d-fact__s">Estimación agregada por manzana, sin identificar personas.</span>
+            </div>
+            <div class="d-fact">
+              <span class="d-lab">Última lectura</span>
+              <span class="d-fact__v">04:28</span>
+              <span class="d-fact__s">Hace 2 min · confianza alta</span>
+            </div>
+            <div class="d-fact">
+              <span class="d-lab">Amenaza ambiental</span>
+              <span class="d-fact__v">4 <i class="d-sw d-sw--h4"></i></span>
+              <span class="d-fact__s">Inundación costera. Marea y oleaje en ascenso.</span>
+            </div>
+            <div class="d-fact">
+              <span class="d-lab">Brigada asignada</span>
+              <span class="d-fact__v">Brigada 1</span>
+              <span class="d-fact__s">En ruta · 2.4 km · ETA 12 min</span>
+            </div>
+            <div class="d-fact d-fact--wide">
+              <span class="d-lab">Accesos y vías</span>
+              <span class="d-via"><b>Av. Costanera</b> · acceso oeste · libre</span>
+              <span class="d-via"><b>Calle El Muelle</b> · acceso sur · anegada 0.9 m</span>
+              <span class="d-via"><b>Paseo del Malecón</b> · bloqueado por escombros</span>
+            </div>
+            <div class="d-fact d-fact--wide">
+              <span class="d-lab">Sensores ambientales</span>
+              <span class="d-via"><b>Inundación en la vía</b> · 0.9 m</span>
+              <span class="d-via"><b>Marea y oleaje</b> · en ascenso · lectura 04:28</span>
+              <span class="d-via"><b>Nodo 07</b> · batería 71 % · en línea</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+        <figure class="d-chart">
+          <div class="d-chart__cap">
+            <span class="d-lab">Historial 24 h · ocupación estimada y nivel de agua</span>
+            <span class="d-key"><i class="d-dot d-dot--bad"></i>impacto 21:30</span>
+          </div>
+          <svg class="d-svg" viewBox="0 0 760 224" role="img" aria-label="Historial de 24 horas de ocupación estimada y nivel de agua en Malecón Centro">
+            <line class="d-gridline" x1="46" y1="20" x2="740" y2="20"></line>
+            <line class="d-gridline" x1="46" y1="76.7" x2="740" y2="76.7"></line>
+            <line class="d-gridline" x1="46" y1="133.3" x2="740" y2="133.3"></line>
+            <line class="d-gridline" x1="46" y1="190" x2="740" y2="190" style="stroke: color-mix(in srgb, var(--text) 22%, transparent)"></line>
+            <text class="d-axis" x="40" y="24" text-anchor="end">900</text>
+            <text class="d-axis" x="40" y="80" text-anchor="end">600</text>
+            <text class="d-axis" x="40" y="137" text-anchor="end">300</text>
+            <text class="d-axis" x="40" y="194" text-anchor="end">0</text>
+            <path class="d-area" d="M46,150 L118,145 L176,128 L263,116 L350,122 L436,126 L494,114 L530,113 L567,84 L610,69 L668,58 L697,50 L740,43 L740,190 L46,190 Z"></path>
+            <polyline class="d-line" points="46,150 118,145 176,128 263,116 350,122 436,126 494,114 530,113 567,84 610,69 668,58 697,50 740,43"></polyline>
+            <polyline class="d-waterline" points="46,183 176,181 263,178 436,175 494,173 567,148 610,119 668,95 697,75 740,62"></polyline>
+            <line class="d-impact" x1="538" y1="20" x2="538" y2="190"></line>
+            <text class="d-prio" x="546" y="32">IMPACTO 21:30</text>
+            <circle class="d-impact-dot" cx="530" cy="113" r="4"></circle>
+            <text class="d-axis d-svg-halo" x="524" y="104" text-anchor="end">PRE-EVENTO 410 · 21:15</text>
+            <circle class="d-impact-dot" cx="740" cy="43" r="4.5"></circle>
+            <text class="d-axis" x="46" y="212" text-anchor="start">04:30</text>
+            <text class="d-axis" x="205" y="212" text-anchor="middle">10:00</text>
+            <text class="d-axis" x="378" y="212" text-anchor="middle">16:00</text>
+            <text class="d-axis" x="538" y="212" text-anchor="middle">21:30</text>
+            <text class="d-axis" x="740" y="212" text-anchor="end">04:30</text>
+          </svg>
+          <div class="d-legend" style="padding: var(--s-3) 0 0; border-top: 0">
+            <span class="d-key"><i class="d-dot d-dot--bad"></i>ocupación estimada (personas)</span>
+            <span class="d-key"><i class="d-dot" style="background: var(--accent-3)"></i>nivel de agua (m)</span>
+            <span class="d-note d-note--tight">El salto ocurre a las 21:30, cuando la marea pasa el umbral de la vía.</span>
+          </div>
+        </figure>
+        <div class="d-cmp">
+          <span class="d-lab d-cmp__h">Comparativa del corte · Malecón Centro</span>
+          <div class="d-cmp__row"><span>Base habitual · martes 21:30, 8 semanas</span><b>320</b></div>
+          <div class="d-cmp__row"><span>Pre-evento · 16 oct 21:15</span><b>410</b></div>
+          <div class="d-cmp__row"><span>Post-evento · 17 oct 04:30</span><b>780</b></div>
+          <div class="d-cmp__row d-cmp__row--sum"><span>Variación</span><b>+460 · aumento confirmado</b></div>
+          <div class="d-cmp__row"><span>Confianza del dato</span><b>Alta · lectura 04:28</b></div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="d-foot">
+  <div class="d-wrap">
+    <div class="d-foot__in">
+      <div>
+        <span class="d-lab">Corte del reporte</span>
+        <p>17 oct 2026 · 04:30 · hora 7 post-impacto. Huracán Celeste, categoría 2, tocó tierra el 16 oct a las 21:30.</p>
+      </div>
+      <div>
+        <span class="d-lab">Fuente del dato</span>
+        <p>Estimación agregada de la red de nodos SITRE (Wi-Fi y Bluetooth) y sensores ambientales de nivel de agua y lluvia. Sin apps en el teléfono del usuario.</p>
+      </div>
+      <div>
+        <span class="d-lab">Privacidad</span>
+        <p>Conteo agregado · sin identificar personas. No se guardan identificadores ni se localiza a individuos: todo se procesa agregado por zona.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

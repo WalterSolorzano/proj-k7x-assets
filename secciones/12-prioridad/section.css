@@ -1,0 +1,300 @@
+/* secciones/12-prioridad/section.css — Ranking de prioridad (IPR) · SITRE
+   Referencia congelada: mockups/10-plataforma.html ("Ranking de prioridad", bloque ya aplanado).
+   CONTRATO.md §2.0 / §2.0.1: filas separadas por hairline, sin caja envolvente y sin bordes por celda.
+   Sin JS. Solo tokens. */
+
+.sec-12-prioridad { padding: var(--sec-pad) 0; }
+
+/* ---------- cabecera del bloque ---------- */
+.sec-12-prioridad__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--gap-block);
+  flex-wrap: wrap;
+  margin-bottom: var(--gap-block);
+}
+.sec-12-prioridad__intro { min-width: 0; }
+/* etiqueta de escala (§2.3): wayfinding de panel, no eyebrow decorativo. */
+.sec-12-prioridad__scale {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-12-prioridad__title {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: var(--lh-tight);
+}
+.sec-12-prioridad__lede {
+  margin: 0;
+  max-width: 72ch;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.sec-12-prioridad__lab {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ---------- rejilla: la tabla es una retícula, no una tarjeta ---------- */
+/* El margen negativo negativo con el relleno lateral de la fila alinea el texto con el borde del
+   contenedor y deja que el fondo de la fila destacada respire fuera de la columna. */
+.sec-12-prioridad__rank { margin-inline: calc(var(--s-3) * -1); }
+
+.sec-12-prioridad__hrow,
+.sec-12-prioridad__row {
+  display: grid;
+  grid-template-columns:
+    34px minmax(0, 1.5fr) minmax(0, 1.05fr) minmax(0, 0.95fr)
+    minmax(0, 1.15fr) minmax(0, 1.1fr) minmax(0, 1.25fr);
+  gap: var(--s-4);
+  align-items: center;
+  padding: var(--pad-block) var(--s-3);
+}
+
+.sec-12-prioridad__hrow {
+  padding-top: 0;
+  padding-bottom: var(--s-2);
+  border-bottom: var(--hairline);
+  align-items: end;
+}
+.sec-12-prioridad__hcell {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sec-12-prioridad__row { border-top: var(--hairline); }
+.sec-12-prioridad__hrow + .sec-12-prioridad__row { border-top: 0; }
+
+/* El sector #1: único tratamiento destacado de la tabla. */
+.sec-12-prioridad__row--top { background: color-mix(in srgb, var(--accent) 6%, var(--bg)); }
+
+/* ---------- posición ---------- */
+.sec-12-prioridad__pos {
+  font-family: var(--font-mono);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+.sec-12-prioridad__row--top .sec-12-prioridad__pos { color: var(--accent); }
+
+/* ---------- sector ---------- */
+.sec-12-prioridad__sector { display: block; min-width: 0; }
+.sec-12-prioridad__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.sec-12-prioridad__meta {
+  display: block;
+  margin-top: var(--s-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+}
+
+/* ---------- IPR: barra proporcional + cifra ---------- */
+.sec-12-prioridad__ipr {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-width: 0;
+}
+.sec-12-prioridad__bar {
+  flex: 1 1 auto;
+  min-width: var(--s-5);
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.sec-12-prioridad__fill {
+  display: block;
+  height: 100%;
+  background: color-mix(in srgb, var(--text) 78%, transparent);
+  border-radius: var(--r-pill);
+  transform-origin: left center;
+  animation: sec-12-prioridad-ipr 0.55s var(--ease) both;
+}
+.sec-12-prioridad__iprv {
+  font-family: var(--font-mono);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+/* Barrido de entrada: la cola se llena de arriba abajo. */
+@keyframes sec-12-prioridad-ipr {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.sec-12-prioridad__rank > .sec-12-prioridad__row:nth-child(3) .sec-12-prioridad__fill { animation-delay: 0.05s; }
+.sec-12-prioridad__rank > .sec-12-prioridad__row:nth-child(4) .sec-12-prioridad__fill { animation-delay: 0.1s; }
+.sec-12-prioridad__rank > .sec-12-prioridad__row:nth-child(5) .sec-12-prioridad__fill { animation-delay: 0.15s; }
+.sec-12-prioridad__rank > .sec-12-prioridad__row:nth-child(6) .sec-12-prioridad__fill { animation-delay: 0.2s; }
+.sec-12-prioridad__rank > .sec-12-prioridad__row:nth-child(7) .sec-12-prioridad__fill { animation-delay: 0.25s; }
+
+/* ---------- celdas de dato (ocupación · amenaza · confianza) ---------- */
+.sec-12-prioridad__cell {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.35;
+  color: var(--text-dim);
+}
+/* Etiqueta de columna: solo existe cuando la tabla se apila (móvil). */
+.sec-12-prioridad__cell::before,
+.sec-12-prioridad__ipr::before,
+.sec-12-prioridad__act::before {
+  content: attr(data-l);
+  display: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.sec-12-prioridad__v {
+  font-size: var(--fs-md);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+/* "sin dato" es un estado, no una ocupación baja: ni cifra ni color de escala. */
+.sec-12-prioridad__v--nd { color: var(--text-dim); font-size: var(--fs-xs); }
+
+/* Ocupación estimada → escala cálida `--heat-*`, solo relleno. */
+.sec-12-prioridad__sw {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 13px;
+  border-radius: 1px;
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  background: var(--nodata);
+}
+.sec-12-prioridad__sw--h2 { background: var(--heat-2); }
+.sec-12-prioridad__sw--h3 { background: var(--heat-3); }
+.sec-12-prioridad__sw--h4 { background: var(--heat-4); }
+.sec-12-prioridad__sw--h5 { background: var(--heat-5); }
+.sec-12-prioridad__sw--nd { background: var(--nodata); }
+
+/* Amenaza → escala azul `--risk-*`, cinco barras verticales. Nunca el mismo mapa de calor. */
+.sec-12-prioridad__seg { display: inline-flex; gap: 2px; flex: 0 0 auto; }
+.sec-12-prioridad__seg i {
+  width: 6px;
+  height: 13px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+}
+.sec-12-prioridad__seg--r1 i:nth-child(-n+1) { background: var(--risk-1); }
+.sec-12-prioridad__seg--r2 i:nth-child(-n+2) { background: var(--risk-2); }
+.sec-12-prioridad__seg--r3 i:nth-child(-n+3) { background: var(--risk-3); }
+.sec-12-prioridad__seg--r4 i:nth-child(-n+4) { background: var(--risk-4); }
+.sec-12-prioridad__seg--r5 i:nth-child(-n+5) { background: var(--risk-5); }
+
+/* Confianza del dato → `--ok` / `--warn` / `--bad` como punto, el estado va en el texto. */
+.sec-12-prioridad__dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--ok);
+}
+.sec-12-prioridad__dot--warn { background: var(--warn); }
+.sec-12-prioridad__dot--bad { background: var(--bad); }
+.sec-12-prioridad__conf { align-items: flex-start; }
+.sec-12-prioridad__conf .sec-12-prioridad__dot { margin-top: calc(var(--s-1) + 1px); }
+
+/* ---------- acción sugerida: texto mono coloreado, sin caja ---------- */
+.sec-12-prioridad__act {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.sec-12-prioridad__act--go { color: var(--accent); }
+.sec-12-prioridad__act--warn { color: var(--warn); }
+
+/* ---------- apilado ≤1080 px: dos columnas, nunca scroll horizontal ---------- */
+@media (max-width: 1080px) {
+  .sec-12-prioridad__rank { margin-inline: 0; }
+  .sec-12-prioridad__hrow { display: none; }
+
+  .sec-12-prioridad__row {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    grid-template-areas:
+      "pos sector"
+      "ipr ocupa"
+      "amena conf"
+      "act act";
+    column-gap: var(--s-4);
+    row-gap: var(--s-3);
+    align-items: start;
+    padding: var(--pad-block) 0;
+  }
+  .sec-12-prioridad__pos { grid-area: pos; }
+  .sec-12-prioridad__sector { grid-area: sector; }
+  .sec-12-prioridad__ipr { grid-area: ipr; }
+  .sec-12-prioridad__ocupa { grid-area: ocupa; }
+  .sec-12-prioridad__amena { grid-area: amena; }
+  .sec-12-prioridad__conf { grid-area: conf; }
+  .sec-12-prioridad__act { grid-area: act; }
+
+  /* Cada dato recupera su etiqueta de columna: la primera línea de la celda. */
+  .sec-12-prioridad__cell,
+  .sec-12-prioridad__ipr {
+    flex-wrap: wrap;
+    row-gap: var(--s-1);
+    align-items: flex-start;
+  }
+  .sec-12-prioridad__cell::before,
+  .sec-12-prioridad__ipr::before {
+    display: block;
+    flex: 0 0 100%;
+  }
+  .sec-12-prioridad__bar { flex: 1 1 var(--s-5); }
+  .sec-12-prioridad__act::before {
+    display: block;
+    margin-bottom: var(--s-1);
+  }
+  .sec-12-prioridad__conf .sec-12-prioridad__dot { margin-top: var(--s-1); }
+}
+
+@media (max-width: 620px) {
+  .sec-12-prioridad__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "sector sector"
+      "pos ipr"
+      "ocupa amena"
+      "conf conf"
+      "act act";
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-12-prioridad__fill { animation: none; }
+}

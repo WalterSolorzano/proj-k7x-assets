@@ -1,0 +1,188 @@
+{
+ "viewBox": "0 0 1000 760",
+ "priority": "ni-puerto-cabezas",
+ "units": [
+  {
+   "name": "Bonanza",
+   "id": "ni-bonanza",
+   "cx": 387,
+   "cy": 330.1,
+   "box": [
+    290.2,
+    260.6,
+    483.8,
+    399.7
+   ],
+   "pts": 46
+  },
+  {
+   "name": "Desembocadura de Cruz Río Grande",
+   "id": "ni-desembocadura-de-cruz-rio-grande",
+   "cx": 658.2,
+   "cy": 659.6,
+   "box": [
+    569.1,
+    580.5,
+    747.2,
+    738.7
+   ],
+   "pts": 91
+  },
+  {
+   "name": "La Cruz de Río Grande",
+   "id": "ni-la-cruz-de-rio-grande",
+   "cx": 469.1,
+   "cy": 660.2,
+   "box": [
+    334.9,
+    568.2,
+    603.4,
+    752.2
+   ],
+   "pts": 132
+  },
+  {
+   "name": "Mulukukú",
+   "id": "ni-mulukuku",
+   "cx": 291.8,
+   "cy": 578.3,
+   "box": [
+    204.3,
+    515.5,
+    379.2,
+    641
+   ],
+   "pts": 111
+  },
+  {
+   "name": "Prinzapolka",
+   "id": "ni-prinzapolka",
+   "cx": 547.4,
+   "cy": 497.4,
+   "box": [
+    347.7,
+    332.1,
+    747,
+    662.8
+   ],
+   "pts": 177
+  },
+  {
+   "name": "Puerto Cabezas",
+   "id": "ni-puerto-cabezas",
+   "cx": 773,
+   "cy": 289.8,
+   "box": [
+    554.1,
+    121.2,
+    992,
+    458.3
+   ],
+   "pts": 168
+  },
+  {
+   "name": "Rancho Grande",
+   "id": "ni-rancho-grande",
+   "cx": 121.8,
+   "cy": 600.1,
+   "box": [
+    63.8,
+    556.9,
+    179.7,
+    643.3
+   ],
+   "pts": 70
+  },
+  {
+   "name": "Río Blanco",
+   "id": "ni-rio-blanco",
+   "cx": 197.6,
+   "cy": 671,
+   "box": [
+    145.8,
+    609.7,
+    249.3,
+    732.2
+   ],
+   "pts": 92
+  },
+  {
+   "name": "Rosita",
+   "id": "ni-rosita",
+   "cx": 500.3,
+   "cy": 362.7,
+   "box": [
+    422.2,
+    264,
+    578.4,
+    461.4
+   ],
+   "pts": 44
+  },
+  {
+   "name": "San José de Bocay",
+   "id": "ni-san-jose-de-bocay",
+   "cx": 193.4,
+   "cy": 330.6,
+   "box": [
+    60,
+    143.7,
+    326.8,
+    517.6
+   ],
+   "pts": 156
+  },
+  {
+   "name": "Siuna",
+   "id": "ni-siuna",
+   "cx": 291.9,
+   "cy": 457.8,
+   "box": [
+    134.1,
+    374.4,
+    449.6,
+    541.3
+   ],
+   "pts": 83
+  },
+  {
+   "name": "Waslala",
+   "id": "ni-waslala",
+   "cx": 168.6,
+   "cy": 547.1,
+   "box": [
+    110,
+    470.7,
+    227.1,
+    623.5
+   ],
+   "pts": 90
+  },
+  {
+   "name": "Waspán",
+   "id": "ni-waspan",
+   "cx": 561.1,
+   "cy": 155.7,
+   "box": [
+    256,
+    8,
+    866.2,
+    303.4
+   ],
+   "pts": 265
+  },
+  {
+   "name": "Wiwilí de Jinotega",
+   "id": "ni-wiwili-de-jinotega",
+   "cx": 130.6,
+   "cy": 337.1,
+   "box": [
+    8,
+    152.7,
+    253.1,
+    521.6
+   ],
+   "pts": 224
+  }
+ ]
+}

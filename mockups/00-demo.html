@@ -3,121 +3,272 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Demo · plantilla visual</title>
+<title>NODO · pantalla de referencia (4 temas)</title>
 <link rel="stylesheet" href="../assets/tokens.css">
+<script>
+  /* Tema por query (?theme=light-min) y modo embebido (?embed=1), para que 01-paletas
+     muestre los 4 temas sin duplicar el marcado. Va en <head> a propósito:
+     aplica antes de pintar y evita que se vea un parpadeo con el tema anterior. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var t = q.get('theme');
+    if (t && t !== 'dark-tech') document.documentElement.setAttribute('data-theme', t);
+    if (q.get('embed') === '1') document.documentElement.classList.add('is-embed');
+  })();
+</script>
 <style>
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs-md);line-height:var(--lh);
-       -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:var(--font);font-size:var(--fs-md);line-height:var(--lh);
+       -webkit-font-smoothing:antialiased;overflow-x:hidden;background:var(--bg);color:var(--text)}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--s-5)}
 
-  /* glow de fondo */
-  .glow{position:fixed;inset:-20% -10% auto;height:70vh;pointer-events:none;z-index:0;
-    background:radial-gradient(60% 60% at 20% 0%,rgba(255,107,53,.20),transparent 70%),
-               radial-gradient(50% 50% at 85% 10%,rgba(124,92,255,.22),transparent 70%);}
+  /* ---------- lienzo del tema (todo lo vivo de la pantalla) ---------- */
+  .d-screen{position:relative;overflow:hidden;background:var(--bg);color:var(--text);min-height:100vh}
+  .d-nav,.d-hero,.d-metrics,.d-stage,.d-foot{position:relative;z-index:1}
 
-  nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(11,13,18,.72);border-bottom:1px solid var(--line)}
-  nav .wrap{display:flex;align-items:center;gap:var(--s-5);height:66px}
-  .brand{display:flex;align-items:center;gap:var(--s-3);font-weight:700;letter-spacing:.2px}
-  .brand .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow-soft)}
-  nav .links{display:flex;gap:var(--s-5);margin-left:auto;color:var(--text-dim);font-size:var(--fs-sm)}
-  nav .links a:hover{color:var(--text)}
-  .btn{padding:10px 18px;border-radius:var(--r-pill);font-size:var(--fs-sm);font-weight:600;border:1px solid var(--line)}
-  .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));border:0;color:#fff;box-shadow:var(--shadow-soft)}
+  /* ---------- franja superior: contexto del proyecto ---------- */
+  .d-topbar{position:relative;z-index:1;border-bottom:1px solid var(--line);
+    padding:var(--s-2) 0;
+    background:color-mix(in srgb, var(--surface-2) 52%, var(--bg))}
+  .d-topbar__in{display:flex;align-items:center;gap:var(--s-3);min-height:var(--s-6)}
+  .d-topbar__label{display:inline-flex;align-items:center;gap:var(--s-2);
+    font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;
+    letter-spacing:.14em;color:var(--text-dim)}
+  .d-topbar__meta{margin-left:auto;font-family:var(--font-mono);font-size:var(--fs-xs);
+    text-transform:uppercase;letter-spacing:.14em;color:var(--text-dim)}
 
-  section{position:relative;z-index:1}
-  .hero{padding:var(--s-8) 0 var(--s-7)}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:var(--r-pill);
-    font-size:var(--fs-xs);color:var(--text-dim);text-transform:uppercase;letter-spacing:.16em}
-  .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:block}
-  h1{font-size:clamp(38px,6vw,var(--fs-3xl));line-height:var(--lh-tight);letter-spacing:-.02em;margin:var(--s-5) 0 var(--s-4);max-width:18ch}
-  h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .lede{color:var(--text-dim);max-width:60ch;font-size:var(--fs-lg)}
-  .cta{display:flex;gap:var(--s-3);margin-top:var(--s-6);flex-wrap:wrap}
-  .btn.big{padding:14px 24px;font-size:var(--fs-md)}
+  /* ---------- barra superior ---------- */
+  .d-nav{position:sticky;top:0;z-index:2;border-bottom:1px solid var(--line);backdrop-filter:blur(14px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent)}
+  .d-nav__in{display:flex;align-items:center;gap:var(--s-5);height:var(--s-8)}
+  .d-brand{display:flex;align-items:center;gap:var(--s-3);font-family:var(--font-display);
+    font-weight:700;font-size:var(--fs-lg)}
+  .d-brand__dot{width:14px;height:14px;border-radius:var(--r-pill);display:block;
+    background:var(--accent);
+    box-shadow:0 0 0 5px color-mix(in srgb, var(--accent) 18%, transparent)}
+  .d-brand--sm{font-size:var(--fs-md)}
+  .d-brand--sm .d-brand__dot{width:10px;height:10px;box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent)}
+  .d-links{display:flex;gap:var(--s-5);margin-left:auto;font-size:var(--fs-sm);color:var(--text-dim)}
+  .d-links a{padding:var(--s-2) 0;border-bottom:1px solid transparent;
+    transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease)}
+  .d-links a:hover{color:var(--text);border-color:var(--accent)}
 
-  .panel{margin-top:var(--s-7);border:1px solid var(--line);border-radius:var(--r-lg);background:
-     linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0)) , var(--surface);
-     box-shadow:var(--shadow);overflow:hidden}
-  .panel .bar{display:flex;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);color:var(--text-dim);font-size:var(--fs-xs)}
-  .panel .bar b{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
-  .panel .body{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--s-4);padding:var(--s-6)}
-  .stat{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--s-5)}
-  .stat b{display:block;font-size:var(--fs-2xl);line-height:1;letter-spacing:-.02em}
-  .stat span{color:var(--text-dim);font-size:var(--fs-sm)}
+  /* ---------- botones ---------- */
+  .d-btn{display:inline-flex;align-items:center;gap:var(--s-2);padding:var(--s-3) var(--s-5);
+    border:1px solid var(--line);border-radius:var(--r-pill);background:var(--surface);color:var(--text);
+    font-family:var(--font);font-size:var(--fs-sm);font-weight:600;cursor:pointer;
+    transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+               border-color var(--dur) var(--ease), background var(--dur) var(--ease)}
+  .d-btn:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow-soft)}
+  .d-btn--primary{border-color:transparent;color:var(--bg);box-shadow:var(--shadow-soft);
+    background:var(--accent)}
+  .d-btn--primary:hover{box-shadow:var(--shadow)}
+  .d-btn--ghost{background:transparent}
+  .d-btn--lg{padding:var(--s-4) var(--s-6);font-size:var(--fs-md)}
 
-  .feats{padding:var(--s-8) 0}
-  .feats h2{font-size:var(--fs-xl);margin:0 0 var(--s-2)}
-  .feats p.sub{color:var(--text-dim);margin:0 0 var(--s-6);max-width:52ch}
-  .grid{display:grid;gap:var(--s-4);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--s-5);
-        transition:transform var(--dur) var(--ease),border-color var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
-  .card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow)}
-  .card .ico{width:38px;height:38px;border-radius:var(--r-sm);display:grid;place-items:center;margin-bottom:var(--s-4);
-     background:rgba(255,107,53,.14);color:var(--accent);font-size:18px}
-  .card h3{margin:0 0 var(--s-2);font-size:var(--fs-lg)}
-  .card p{margin:0;color:var(--text-dim);font-size:var(--fs-sm)}
+  /* ---------- hero ---------- */
+  /* la franja del hero es plana a propósito: tinte de superficie + línea inferior, sin degradado */
+  .d-hero{padding:var(--s-8) 0 var(--s-7);border-bottom:1px solid var(--line);
+    background:color-mix(in srgb, var(--surface) 68%, var(--bg))}
+  .d-h1{font-family:var(--font-display);font-size:clamp(32px, 5.6vw, var(--fs-3xl));
+    margin:0 0 var(--s-4);max-width:22ch;letter-spacing:-.03em}
+  .d-h1 span{color:var(--accent)}
+  .d-lede{margin:0;max-width:58ch;color:var(--text-dim);font-size:var(--fs-lg)}
+  .d-cta{display:flex;gap:var(--s-3);margin-top:var(--s-6);flex-wrap:wrap}
 
-  footer{border-top:1px solid var(--line);margin-top:var(--s-7);padding:var(--s-6) 0;color:var(--text-dim);font-size:var(--fs-sm)}
-  footer .wrap{display:flex;gap:var(--s-4);flex-wrap:wrap;align-items:center}
-  footer .right{margin-left:auto;font-family:var(--font-mono);font-size:var(--fs-xs)}
+  /* ---------- métricas ---------- */
+  .d-metrics{padding:var(--s-7) 0 var(--s-6)}
+  .d-metrics__grid{display:grid;gap:var(--s-4);grid-template-columns:repeat(3, 1fr)}
+  .d-metric{padding:var(--s-5);border:1px solid var(--line);border-radius:var(--r-md);
+    background:var(--surface);box-shadow:var(--shadow-soft);
+    transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease),
+               box-shadow var(--dur) var(--ease)}
+  .d-metric:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow)}
+  .d-metric b{display:block;font-family:var(--font-mono);font-weight:700;font-size:var(--fs-2xl);
+    line-height:1;letter-spacing:-.04em;color:var(--text)}
+  .d-metric span{display:block;margin-top:var(--s-3);color:var(--text-dim);font-size:var(--fs-sm)}
 
-  @media(max-width:640px){nav .links{display:none}.hero{padding-top:var(--s-7)}}
+  /* ---------- bloque de medios 16:9 (aquí entra el render 3D) ---------- */
+  .d-stage{padding:var(--s-6) 0 var(--s-7)}
+  .d-media{position:relative;margin:0;aspect-ratio:16 / 9;display:grid;place-items:center;
+    border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);
+    background:color-mix(in srgb, var(--surface-2) 55%, var(--bg));
+    transition:border-color var(--dur) var(--ease)}
+  .d-media::before{content:"";position:absolute;inset:0;opacity:.6;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(closest-side, var(--text), transparent 88%);
+    mask-image:radial-gradient(closest-side, var(--text), transparent 88%)}
+  .d-media::after{content:"";position:absolute;inset:-25%;
+    background:radial-gradient(42% 42% at 50% 50%, var(--glow), transparent 70%)}
+  .d-media:hover{border-color:var(--accent)}
+  /* etiqueta plana: una pastilla dentro del lienzo era una card dentro de otra card */
+  .d-media__label{position:relative;z-index:2;font-family:var(--font-mono);font-size:var(--fs-sm);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim)}
+  .d-media__tag{position:absolute;z-index:2;top:var(--s-4);font-family:var(--font-mono);
+    font-size:var(--fs-xs);letter-spacing:.16em;color:var(--text-dim)}
+  .d-media__tag--l{left:var(--s-5)}
+  .d-media__tag--r{right:var(--s-5)}
+
+  /* ---------- franja de cierre ---------- */
+  .d-foot{border-top:1px solid var(--line);padding:var(--s-6) 0;
+    background:color-mix(in srgb, var(--surface) 55%, transparent)}
+  .d-foot__in{display:flex;align-items:center;gap:var(--s-5);flex-wrap:wrap}
+  .d-foot__mid{font-size:var(--fs-sm);color:var(--text-dim)}
+  .d-foot__status{display:flex;gap:var(--s-4);margin-left:auto;flex-wrap:wrap}
+  .d-st{display:inline-flex;align-items:center;gap:var(--s-2);font-family:var(--font-mono);
+    font-size:var(--fs-xs);letter-spacing:.05em;color:var(--text-dim)}
+  .d-st__dot{width:8px;height:8px;border-radius:var(--r-pill);display:block}
+  .d-st__dot--ok{background:var(--ok);animation:pulse 2.6s var(--ease) infinite}
+  .d-st__dot--a1{background:var(--accent)}
+  .d-st__dot--a3{background:var(--accent-3)}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 color-mix(in srgb, var(--ok) 45%, transparent)}
+    60%{box-shadow:0 0 0 7px transparent}
+  }
+
+  /* ---------- herramienta: conmutador de tema ---------- */
+  .is-embed .d-switch{display:none}
+  .d-switch{position:fixed;left:50%;bottom:var(--s-5);transform:translateX(-50%);z-index:60;
+    display:flex;gap:var(--s-1);padding:var(--s-1);border:1px solid var(--line);border-radius:var(--r-pill);
+    background:color-mix(in srgb, var(--surface) 88%, transparent);box-shadow:var(--shadow);
+    backdrop-filter:blur(14px)}
+  .d-switch__btn{appearance:none;border:0;background:transparent;color:var(--text-dim);cursor:pointer;
+    padding:var(--s-2) var(--s-4);border-radius:var(--r-pill);white-space:nowrap;
+    font-family:var(--font);font-size:var(--fs-sm);font-weight:600;
+    transition:color var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease)}
+  .d-switch__btn:hover{color:var(--text);background:var(--surface-2)}
+  .d-switch__btn[aria-pressed="true"]{color:var(--bg);box-shadow:var(--shadow-soft);
+    background:var(--accent)}
+
+  /* ---------- móvil ---------- */
+  @media (max-width:640px){
+    .d-nav__in{gap:var(--s-4);height:var(--s-7)}
+    .d-nav .d-btn{margin-left:auto}
+    .d-links{display:none}
+    .d-brand{font-size:var(--fs-md)}
+    .d-hero{padding:var(--s-7) 0 var(--s-6)}
+    .d-lede{font-size:var(--fs-md)}
+    .d-cta .d-btn{flex:1 1 auto;justify-content:center}
+    .d-metrics__grid{grid-template-columns:1fr}
+    .d-media__label{font-size:var(--fs-xs);letter-spacing:.14em}
+    .d-media__tag--l{left:var(--s-4);top:var(--s-3)}
+    .d-media__tag--r{right:var(--s-4);top:var(--s-3)}
+    .d-foot__status{margin-left:0;width:100%}
+  }
+  /* móvil estrecho: las dos etiquetas del bloque de medios se apilan en vertical
+     (misma columna izquierda) para que no se solapen */
+  @media (max-width:600px){
+    .d-media__tag--r{right:auto;left:var(--s-4);
+      top:calc(var(--s-3) + var(--lh) * 1em + var(--s-1))}
+  }
+  @media (max-width:520px){
+    .d-switch{width:calc(100% - var(--s-5) * 2);justify-content:space-between}
+    .d-switch__btn{padding:var(--s-2) var(--s-3);font-size:var(--fs-xs)}
+  }
 </style>
 </head>
 <body>
-<div class="glow"></div>
 
-<nav>
-  <div class="wrap">
-    <span class="brand"><span class="mark"></span>Rallylatam</span>
-    <span class="links"><a href="#">Producto</a><a href="#">Casos</a><a href="#">Precios</a><a href="#">Docs</a></span>
-    <a class="btn primary" href="#">Empezar</a>
-  </div>
-</nav>
+<!-- ============ PANTALLA DE REFERENCIA (neutra: el contenido se sustituye el día 1) ============ -->
+<div class="d-screen" id="pantalla">
 
-<section class="hero">
-  <div class="wrap">
-    <span class="eyebrow"><i></i>Plantilla visual de demostración</span>
-    <h1>Tu proyecto <em>X</em>, listo para verse increíble.</h1>
-    <p class="lede">Este archivo es la plantilla base: tokens, tipografía, color y componentes.
-       Duplícalo y constrúye las pantallas reales encima. Aquí no hay lógica, solo estética.</p>
-    <div class="cta">
-      <a class="btn primary big" href="#">Ver el flujo</a>
-      <a class="btn big" href="#">Cómo funciona</a>
+  <!-- franja de contexto: va arriba del todo, separada del titular.
+       Como chip pegado al h1 era el "hero por defecto de la IA" (CONTRATO §2.1). -->
+  <div class="d-topbar">
+    <div class="wrap d-topbar__in">
+      <span class="d-topbar__label">Rally Latinoamericano de Innovación 2026</span>
+      <span class="d-topbar__meta">Prototipo visual · datos simulados</span>
     </div>
+  </div>
 
-    <div class="panel">
-      <div class="bar"><b></b><b></b><b></b><span style="margin-left:10px">localhost:5173/mockups</span></div>
-      <div class="body">
-        <div class="stat"><b>24h</b><span>presupuesto total</span></div>
-        <div class="stat"><b>4</b><span>fases del flujo</span></div>
-        <div class="stat"><b>100%</b><span>foco en lo visual</span></div>
-        <div class="stat"><b>0</b><span>tests excesivos</span></div>
+  <header class="d-nav">
+    <div class="wrap d-nav__in">
+      <span class="d-brand"><span class="d-brand__dot" aria-hidden="true"></span>NODO</span>
+      <nav class="d-links">
+        <a href="#problema">Problema</a>
+        <a href="#solucion">Solución</a>
+        <a href="#impacto">Impacto</a>
+      </nav>
+      <a class="d-btn d-btn--primary" href="#demo">Ver demo</a>
+    </div>
+  </header>
+
+  <section class="d-hero" id="problema">
+    <div class="wrap">
+      <h1 class="d-h1">Impacto que se <span>puede ver</span></h1>
+      <p class="d-lede">Plataforma modular que reduce costos y residuos. Prototipo visual construido para presentarse en video, con datos simulados.</p>
+      <div class="d-cta">
+        <a class="d-btn d-btn--primary d-btn--lg" href="#solucion">Ver la solución</a>
+        <a class="d-btn d-btn--ghost d-btn--lg" href="#impacto">Cómo funciona</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="feats">
-  <div class="wrap">
-    <h2>Piezas incluidas</h2>
-    <p class="sub">Cada bloque está pensado para reutilizarse y para lucir bien en una captura.</p>
-    <div class="grid">
-      <article class="card"><div class="ico">◆</div><h3>Tokens</h3><p>Color, tipografía, espacio, radios y sombras en un solo archivo.</p></article>
-      <article class="card"><div class="ico">▤</div><h3>Layout</h3><p>Nav, hero, métricas, grilla de tarjetas y footer responsivos.</p></article>
-      <article class="card"><div class="ico">✦</div><h3>Detalles</h3><p>Gradientes, hover, sombras suaves y jerarquía clara.</p></article>
-      <article class="card"><div class="ico">▶</div><h3>Video</h3><p>Animaciones de entrada listas para grabar con <code>npm run video</code>.</p></article>
+  <section class="d-metrics" id="impacto">
+    <div class="wrap d-metrics__grid">
+      <div class="d-metric"><b>-38 %</b><span>costo operativo por unidad</span></div>
+      <div class="d-metric"><b>+2.400</b><span>familias alcanzadas</span></div>
+      <div class="d-metric"><b>1,2 t</b><span>CO₂ evitadas al mes</span></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <span>Rallylatam · plantilla de demostración</span>
-    <span class="right">mockups/00-demo.html</span>
-  </div>
-</footer>
+  <section class="d-stage" id="solucion">
+    <div class="wrap">
+      <!-- aquí se sustituye por el render de Blender -->
+      <figure class="d-media">
+        <span class="d-media__tag d-media__tag--l">BLOQUE 01 · MEDIOS</span>
+        <span class="d-media__tag d-media__tag--r">16:9 · 1920×1080</span>
+        <figcaption class="d-media__label">AQUÍ VA EL RENDER 3D</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <footer class="d-foot">
+    <div class="wrap d-foot__in">
+      <span class="d-brand d-brand--sm"><span class="d-brand__dot" aria-hidden="true"></span>NODO</span>
+      <span class="d-foot__mid">Material de rodaje — Rally Latam 2026</span>
+      <span class="d-foot__status">
+        <span class="d-st"><i class="d-st__dot d-st__dot--ok"></i>RENDER · en cola</span>
+        <span class="d-st"><i class="d-st__dot d-st__dot--a1"></i>DATOS · simulados</span>
+        <span class="d-st"><i class="d-st__dot d-st__dot--a3"></i>BUILD · listo</span>
+      </span>
+    </div>
+  </footer>
+</div>
+
+<!-- HERRAMIENTA: quitar al pasar a producción -->
+<div class="d-switch" role="group" aria-label="Tema visual">
+  <button class="d-switch__btn" type="button" data-theme-name="dark-tech" aria-pressed="true">Oscuro</button>
+  <button class="d-switch__btn" type="button" data-theme-name="light-min" aria-pressed="false">Claro</button>
+  <button class="d-switch__btn" type="button" data-theme-name="blueprint" aria-pressed="false">Plano técnico</button>
+  <button class="d-switch__btn" type="button" data-theme-name="natural" aria-pressed="false">Natural</button>
+</div>
+
+<script>
+  /* HERRAMIENTA: quitar al pasar a producción — solo conmuta el tema en vivo. */
+  (function () {
+    var root = document.documentElement;
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.d-switch__btn'));
+
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var theme = button.getAttribute('data-theme-name');
+        if (theme === 'dark-tech') {
+          root.removeAttribute('data-theme');
+        } else {
+          root.setAttribute('data-theme', theme);
+        }
+        buttons.forEach(function (other) {
+          other.setAttribute('aria-pressed', other === button ? 'true' : 'false');
+        });
+      });
+    });
+  })();
+</script>
 </body>
 </html>

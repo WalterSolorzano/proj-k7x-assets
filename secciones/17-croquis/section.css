@@ -1,0 +1,220 @@
+/* ============================================================================
+   17-croquis — el nodo en el terreno
+   Croquis isométrico semirealista. El marcado lo genera tools/croquis.mjs:
+   las cosas se describen por su posición en el mundo y la proyección isométrica
+   hace el resto. Aquí solo va el aspecto y el movimiento.
+
+   MOVIMIENTO (CONTRATO.md §2.4). §2.4 pide un movimiento continuo por sección,
+   y a la vez declara que esta sección es el TECHO de movimiento del prototipo.
+   Se resuelve con una sola idea: TODO comparte un único reloj (`--cz`), así que
+   la escena se lee como un solo gesto — el nodo emite, el paquete viaja, la base
+   acusa recibo, la brigada avanza — y no como efectos sueltos compitiendo.
+   Nada de rebote; solo var(--ease).
+   ============================================================================ */
+
+.sec-17-croquis {
+  --cz: calc(var(--dur) * 15);       /* 5.25 s: el latido completo de la escena */
+}
+
+/* ---------------------------------------------------------------- cabecera */
+.sec-17-croquis__scale {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-17-croquis__title {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display); font-size: var(--fs-xl);
+  letter-spacing: -.01em;
+}
+.sec-17-croquis__lede {
+  margin: 0 0 var(--s-5);
+  max-width: 70ch; color: var(--text-dim);
+}
+
+/* ------------------------------------------------------------------ escena */
+.sec-17-croquis__escena { margin: 0; }
+.sec-17-croquis__svg { display: block; width: 100%; height: auto; }
+.sec-17-croquis__pie {
+  margin: var(--s-3) 0 0;
+  font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim);
+}
+
+/* ------------------------------------------------------------------ leyenda */
+.sec-17-croquis__leyenda {
+  display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-6);
+  margin: var(--s-5) 0 0; padding: 0; list-style: none;
+  border-top: var(--hairline); padding-top: var(--pad-block);
+}
+.cz-l {
+  display: flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim);
+}
+.cz-l__m { width: 14px; height: 14px; flex: 0 0 auto; }
+.cz-l__m--nodo { border-radius: 50%; background: var(--accent); }
+.cz-l__m--enlace { height: 2px; background: var(--accent); }
+.cz-l__m--brigada { background: var(--text); }
+.cz-l__m--agua { background: color-mix(in srgb, var(--risk-3) 55%, var(--bg)); }
+
+/* ============================================================================
+   Volúmenes: una sola variable por objeto (`--face`) y de ahí salen las tres
+   caras. Eso mantiene el volumen coherente y evita repetir tonos a mano.
+   Las caras se oscurecen mezclando hacia negro: es sombreado de un objeto
+   físico, no color de interfaz (la regla "nunca negro puro" de §2.1 habla de
+   texto y superficies de UI).
+   ============================================================================ */
+.manz .f-t, .cz__paseo .f-t, .cz__loma .f-t, .cz__verde .f-t,
+.manz .f-l, .cz__paseo .f-l, .cz__loma .f-l, .cz__verde .f-l,
+.manz .f-r, .cz__paseo .f-r, .cz__loma .f-r, .cz__verde .f-r { fill: var(--face); }
+.manz .f-l, .cz__paseo .f-l, .cz__loma .f-l, .cz__verde .f-l { fill: color-mix(in srgb, var(--face) 76%, #000); }
+.manz .f-r, .cz__paseo .f-r, .cz__loma .f-r, .cz__verde .f-r { fill: color-mix(in srgb, var(--face) 89%, #000); }
+/* Pretil: el borde de la techumbre. La cara interior va más clara, así el edificio se lee como
+   un volumen construido y no como un cubo liso. */
+.f-p { fill: color-mix(in srgb, var(--face) 84%, var(--bg)); }
+
+/* Ocupación: rampa cálida. Solo relleno, nunca color de texto. */
+.manz.h1 { --face: var(--heat-1); }
+.manz.h2 { --face: var(--heat-2); }
+.manz.h3 { --face: var(--heat-3); }
+.manz.h4 { --face: var(--heat-4); }
+.manz.h5 { --face: var(--heat-5); }
+/* Ribera del Río no tiene lectura: se dibuja sin dato, no en un color de escala. */
+.manz.hn { --face: var(--nodata); }
+
+.f-suelo   { fill: var(--surface-2); }
+.cz__paseo { --face: color-mix(in srgb, var(--text) 15%, var(--bg)); }
+.cz__loma  { --face: color-mix(in srgb, var(--text) 9%, var(--surface-2)); }
+.cz__verde { --face: color-mix(in srgb, var(--ok) 30%, var(--surface-2)); }
+
+/* --------------------------------------------------------------- agua y marea */
+.f-agua  { fill: color-mix(in srgb, var(--risk-2) 58%, var(--bg)); }
+.f-marea { fill: color-mix(in srgb, var(--risk-3) 48%, var(--bg)); }
+.ola {
+  fill: none; stroke: color-mix(in srgb, var(--risk-5) 26%, transparent);
+  stroke-width: 2; stroke-linecap: round;
+}
+/* por donde sube el agua a la calle: sin paseo, se ve el agua */
+.cz__brecha { fill: color-mix(in srgb, var(--risk-3) 48%, var(--bg)); }
+
+/* ------------------------------------------------------------ sombra proyectada
+   EXCEPCIÓN DOCUMENTADA Y ÚNICA del repo (CONTRATO.md §2.0/§2.4): aquí sí hay
+   sombra, porque es una escena física y una sombra proyectada es información de
+   altura, no decoración. En el resto del prototipo sigue prohibida. */
+.cz__poste, .cz__puck, .cz__antena, .cz__torre, .cz__veh, .cz__loma, .cz__lancha-cab {
+  filter: drop-shadow(15px 10px 5px color-mix(in srgb, var(--text) 20%, transparent));
+}
+
+/* ------------------------------------------------------------------ el nodo */
+.cz__plinto { fill: color-mix(in srgb, var(--text) 26%, var(--bg)); }
+.cz__poste .p-l { fill: color-mix(in srgb, var(--text) 60%, var(--bg)); }
+.cz__poste .p-r { fill: color-mix(in srgb, var(--text) 42%, var(--bg)); }
+.cz__poste .p-c { fill: color-mix(in srgb, var(--text) 72%, var(--bg)); }
+.cz__puck   { fill: var(--text); }
+.cz__antena { stroke: var(--text); stroke-width: 2.5; fill: none; stroke-linecap: round; }
+.cz__led    { fill: var(--accent); }
+
+.cz__ondas { fill: none; stroke: var(--accent); stroke-width: 2.6; }
+.onda {
+  transform-box: fill-box; transform-origin: center;
+  opacity: 0;
+  animation: cz-onda var(--cz) var(--ease) infinite;
+}
+.onda--2 { animation-delay: calc(var(--cz) / -3); }
+.onda--3 { animation-delay: calc(var(--cz) / -1.5); }
+@keyframes cz-onda {
+  0%   { transform: scale(.34); opacity: .9; }
+  100% { transform: scale(2.7); opacity: 0; }
+}
+
+/* ------------------------------------------------------------------ el enlace */
+.cz__enlace {
+  fill: none; stroke: color-mix(in srgb, var(--accent) 42%, transparent);
+  stroke-width: 1.6; stroke-dasharray: 4 7;
+}
+.cz__paquete {
+  fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round;
+  /* el trazo visible es corto y el hueco larguísimo: eso dibuja UN paquete
+     recorriendo el arco, no una línea punteada moviéndose */
+  stroke-dasharray: 16 1420;
+  animation: cz-paquete var(--cz) linear infinite;
+}
+@keyframes cz-paquete {
+  0%        { stroke-dashoffset: 0; }
+  62%, 100% { stroke-dashoffset: -1436; }
+}
+.cz__sinapred {
+  fill: none; stroke: color-mix(in srgb, var(--text) 30%, transparent);
+  stroke-width: 1.6; stroke-dasharray: 4 7;
+}
+.cz__rizo { stroke: color-mix(in srgb, var(--text) 30%, var(--bg)); stroke-width: 1.6; }
+.cz__torre .p-l { fill: color-mix(in srgb, var(--text) 40%, var(--bg)); }
+.cz__torre .p-r { fill: color-mix(in srgb, var(--text) 26%, var(--bg)); }
+.cz__torre .p-c { fill: color-mix(in srgb, var(--text) 50%, var(--bg)); }
+.cz__base-led { fill: var(--ok); animation: cz-led var(--cz) var(--ease) infinite; }
+/* La base acusa recibo justo cuando el paquete llega. */
+@keyframes cz-led {
+  0%, 54%   { opacity: .22; }
+  62%, 72%  { opacity: 1; }
+  80%, 100% { opacity: .22; }
+}
+
+/* ------------------------------------------------------- lecturas en vivo */
+.cz__k {
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: .1em;
+  fill: var(--text-dim);
+}
+.cz__v {
+  font-family: var(--font-mono); font-size: 17px; font-weight: 500; fill: var(--text);
+  animation: cz-lee var(--cz) var(--ease) infinite;
+}
+/* las cifras se refrescan al compás de la emisión: eso es el sistema midiendo */
+@keyframes cz-lee {
+  0%, 6%    { opacity: .35; }
+  14%, 100% { opacity: 1; }
+}
+
+/* --------------------------------------------------------- quién responde */
+.cz__lancha     { fill: color-mix(in srgb, var(--text) 38%, var(--bg)); }
+.cz__lancha-q   { fill: none; stroke: color-mix(in srgb, var(--text) 22%, var(--bg)); stroke-width: 2; }
+.cz__lancha-cab .f-t { fill: color-mix(in srgb, var(--text) 52%, var(--bg)); }
+.cz__lancha-cab .f-l { fill: color-mix(in srgb, var(--text) 66%, var(--bg)); }
+.cz__lancha-cab .f-r { fill: color-mix(in srgb, var(--text) 58%, var(--bg)); }
+.cz__estela {
+  fill: none; stroke: color-mix(in srgb, var(--bg) 66%, transparent);
+  stroke-width: 3; stroke-linecap: round;
+}
+
+.cz__veh     { fill: var(--text); }
+.cz__veh-cab { fill: var(--accent); }
+.cz__rueda   { fill: color-mix(in srgb, var(--text) 70%, var(--bg)); }
+.cz__brigada { animation: cz-brigada var(--cz) var(--ease) infinite; }
+@keyframes cz-brigada {
+  0%        { transform: translate(-46px, -23px); }
+  72%, 100% { transform: translate(0, 0); }
+}
+.cz__vecino   { fill: var(--ok); }
+.cz__vecino-p { stroke: var(--ok); stroke-width: 2; stroke-linecap: round; }
+
+/* ------------------------------------------------------------- rótulos */
+.cz__rot {
+  font-family: var(--font-mono); font-size: 15px; font-weight: 500;
+  letter-spacing: .12em; fill: var(--text);
+}
+.cz__sub { font-family: var(--font-mono); font-size: 13px; fill: var(--text-dim); }
+/* halo: el rótulo tiene que sobrevivir encima de cualquier relleno de la escala */
+.cz__halo { paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+
+.cz__norte path { fill: var(--text); }
+
+/* ------------------------------------------------------------ responsive */
+/* La escena no se encoge a un borrón: se desplaza (CONTRATO.md §3). */
+@media (max-width: 1100px) {
+  .sec-17-croquis__escena { overflow-x: auto; }
+  .sec-17-croquis__svg { min-width: 940px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onda, .cz__paquete, .cz__base-led, .cz__v, .cz__brigada, .cz__led { animation: none; }
+  .onda { opacity: .5; }
+  .cz__base-led, .cz__v { opacity: 1; }
+}

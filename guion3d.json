@@ -1,0 +1,72 @@
+{
+  "carril": "3D — prototipo del equipo de campo VIGÍA-07 / SIRT",
+  "contrato": "CONTRATO.md §7 y §8",
+  "motor": "Blender 4.5 LTS · EEVEE Next · 24 muestras · sin Cycles",
+  "nota": "Todo es geometria procedural (blender/sirt.py) + kit Poly Haven. Nada de generadores IA. Los clips necesitan la aprobacion de las imagenes antes de renderizarse (regla del usuario).",
+  "clips": [
+    {
+      "id": "3d-01",
+      "archivo": "presentacion/video/3d-01-turntable.mp4",
+      "tipo": "turntable",
+      "descripcion": "Orbita lateral completa (360°) alrededor del nodo en la punta del mastil, con el panel solar inclinado y las ventanas RF a la vista.",
+      "resolucion": "1920x1080",
+      "fps": 24,
+      "frames": 193,
+      "duracion_s": 8.0,
+      "camara": "50 mm · radio 1.75 m · altura 6.50 m · objetivo (0,0,6.14)",
+      "luz": "estudio (HDRI photo_studio_01 al 45%) + key/rim/suave",
+      "uso": "Plano de presentacion del aparato. Sirve para abrir o cerrar el bloque 3D. Fondo neutro, facil de recortar."
+    },
+    {
+      "id": "3d-02",
+      "archivo": "presentacion/video/3d-02-detalle.mp4",
+      "tipo": "orbita de detalle",
+      "descripcion": "Orbita a la altura de la instalacion: paso por el anemometro de cazoletas, el abrigo de humedad, la caja de conexiones, el pluviometro y la sonda de nivel.",
+      "resolucion": "1920x1080",
+      "fps": 24,
+      "frames": 169,
+      "duracion_s": 7.0,
+      "camara": "35 mm · radio 2.60 m · altura 5.45 m · objetivo (0,0,5.35)",
+      "luz": "estudio",
+      "uso": "Plano que explica que el equipo mide viento, humedad, lluvia y nivel de agua. Va con locucion corta."
+    },
+    {
+      "id": "3d-03",
+      "archivo": "presentacion/video/3d-03-vertical.mp4",
+      "tipo": "grúa vertical (9:16)",
+      "descripcion": "Subida por el poste: arranca en las bandas de umbral pintadas (ambar 1.20 m / roja 2.00 m) y termina en el nodo, pasando por los sensores.",
+      "resolucion": "1080x1920",
+      "fps": 24,
+      "frames": 145,
+      "duracion_s": 6.0,
+      "camara": "35 mm · de (3.00,-3.00,1.20) a (2.05,-2.05,4.60)",
+      "luz": "campo, hora dorada (HDRI kiara_8_sunset)",
+      "uso": "Formato vertical para redes. Tambien sirve recortado en 16:9 para cerrar con el aparato arriba."
+    },
+    {
+      "id": "3d-04",
+      "archivo": "presentacion/video/3d-04-llegada-centro-comercial.mp4",
+      "tipo": "llegada / fly-in",
+      "descripcion": "Vuelo desde el plano general del centro comercial hasta el nodo en la cubierta, pasando por el huerto solar inclinado y los equipos.",
+      "resolucion": "1920x1080",
+      "fps": 24,
+      "frames": 145,
+      "duracion_s": 6.0,
+      "camara": "35 mm · de (34.0,-42.0,11.0) a (15.0,-13.0,12.4), objetivo (-1,-2,7) -> (9,-3,11.15)",
+      "luz": "campo, hora dorada",
+      "uso": "Plano de contexto: donde esta el equipo en el mundo real. Encadena con el bloque del edificio monitoreado."
+    }
+  ],
+  "stills": [
+    { "archivo": "presentacion/3d/rev-03-puck-hero.png", "que": "Nodo, tres cuartos. Fondo TRANSPARENTE (RGBA).", "resolucion": "1920x1080", "uso": "Producto: entra sobre cualquier fondo de la presentacion." },
+    { "archivo": "presentacion/3d/rev-04-puck-macro.png", "que": "Macro del nodo: panel solar inclinado, ventanas RF, LEDs y placas grabadas.", "resolucion": "1920x1080", "uso": "Detalle de credibilidad tecnica." },
+    { "archivo": "presentacion/3d/rev-08-sensores.png", "que": "Instalacion completa al atardecer: anemometro, abrigo de humedad, caja de conexiones, pluviometro y sonda.", "resolucion": "1920x1080", "uso": "Plano que responde 'que mide'." },
+    { "archivo": "presentacion/3d/rev-09-instalacion.png", "que": "Vista tres cuartos de la instalacion completa con las montanas detras.", "resolucion": "1600x900", "uso": "Plano medio de contexto." },
+    { "archivo": "presentacion/3d/rev-01-centro-moderno.png", "que": "Centro comercial monitoreado: fachada vidriada, totem, estacionamiento.", "resolucion": "1920x1080", "uso": "El edificio donde se concentra la gente." },
+    { "archivo": "presentacion/3d/rev-02-cubierta-nodo.png", "que": "Cubierta plana con huerto solar inclinado, equipos de A/A y el nodo en su mastil.", "resolucion": "1600x900", "uso": "Explica por que el nodo va ahi arriba." }
+  ],
+  "descartados": {
+    "ref-*": "Renders de los disenos previos (caja lateral, corona tipo farola, escuela, centro comercial antiguo). Se borraron del entregable.",
+    "3d-03-poste-vertical0001-0145.mp4": "Clip viejo con el panel solar todavia plano. Reemplazado por 3d-03-vertical.mp4."
+  }
+}

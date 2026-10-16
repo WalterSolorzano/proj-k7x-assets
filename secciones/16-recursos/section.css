@@ -1,0 +1,380 @@
+/* secciones/16-recursos/section.css — Coordinación de brigadas y recursos · SITRE
+   Cierra el ciclo: el IPR ordena la cola (12-prioridad), esto la ejecuta.
+   CONTRATO.md §2.0 / §2.0.1 / §2.2: tabla de hairlines SIN caja envolvente, estados como texto mono
+   coloreado (nunca chips), y el bloque de cobertura como regla territorial propia de la sección.
+   Lo que el sistema NO alcanza es el dato principal: los dos sectores sin brigada van marcados y nombrados.
+   Sin JS. Solo tokens. */
+
+.sec-16-recursos { padding: var(--sec-pad) 0; }
+
+/* ---------- cabecera: más aire arriba (lo pone `--sec-pad`), apretado debajo ---------- */
+.sec-16-recursos__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--gap-block);
+  flex-wrap: wrap;
+  margin-bottom: var(--gap-block);
+}
+.sec-16-recursos__intro { min-width: 0; }
+.sec-16-recursos__title {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: var(--lh-tight);
+}
+.sec-16-recursos__lede {
+  margin: 0;
+  max-width: 74ch;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.sec-16-recursos__lab {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* ---------- tabla: retícula de hairlines, cero bordes de celda, cero caja ---------- */
+/* El margen negativo con el relleno lateral de la fila deja que el fondo de la fila en ruta
+   respire fuera de la columna, sin dibujar un contenedor. */
+.sec-16-recursos__tabla {
+  margin-inline: calc(var(--s-3) * -1);
+  font-variant-numeric: tabular-nums;
+}
+
+.sec-16-recursos__hrow,
+.sec-16-recursos__row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.05fr) minmax(0, 1.2fr) 74px minmax(0, 1.1fr)
+    72px minmax(0, 1.95fr);
+  gap: var(--s-4);
+  align-items: center;
+  padding: var(--pad-block) var(--s-3);
+}
+
+.sec-16-recursos__hrow {
+  padding-top: 0;
+  padding-bottom: var(--s-2);
+  border-bottom: var(--hairline);
+  align-items: end;
+}
+.sec-16-recursos__hcell {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sec-16-recursos__row {
+  border-top: var(--hairline);
+  transition: background var(--dur) var(--ease);
+}
+.sec-16-recursos__hrow + .sec-16-recursos__row { border-top: 0; }
+
+/* Brigada 1 es la que está en la calle: único fondo teñido de la tabla. */
+.sec-16-recursos__row--live { background: color-mix(in srgb, var(--accent) 6%, var(--bg)); }
+.sec-16-recursos__row:hover { background: color-mix(in srgb, var(--text) 3%, var(--bg)); }
+.sec-16-recursos__row--live:hover { background: color-mix(in srgb, var(--accent) 9%, var(--bg)); }
+
+/* Etiqueta de columna: existe solo cuando la tabla se apila (≤1080 px). */
+.sec-16-recursos__sector::before,
+.sec-16-recursos__ipr::before,
+.sec-16-recursos__estado::before,
+.sec-16-recursos__eta::before,
+.sec-16-recursos__insumos::before {
+  content: attr(data-l);
+  display: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ---------- brigada ---------- */
+.sec-16-recursos__brigada { display: block; min-width: 0; }
+.sec-16-recursos__bname {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.sec-16-recursos__bmeta {
+  display: block;
+  margin-top: var(--s-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  color: var(--text-dim);
+}
+
+/* ---------- sector · prioridad · ETA ---------- */
+.sec-16-recursos__sector {
+  font-size: var(--fs-md);
+  color: var(--text);
+  min-width: 0;
+}
+.sec-16-recursos__sector--none { color: var(--text-dim); }
+
+.sec-16-recursos__ipr {
+  font-family: var(--font-mono);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.sec-16-recursos__row--live .sec-16-recursos__ipr { color: var(--accent); }
+.sec-16-recursos__ipr--off {
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.sec-16-recursos__eta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-md);
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.sec-16-recursos__eta--off { color: var(--text-dim); }
+
+/* ---------- estado: texto mono coloreado, jamás un chip ---------- */
+.sec-16-recursos__estado {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.sec-16-recursos__estado--go { color: var(--accent); }
+.sec-16-recursos__estado--warn { color: var(--warn); }
+.sec-16-recursos__estado--dim { color: var(--text-dim); }
+
+/* La única micro-animación de la tabla: la brigada que ya está en la calle late despacio. */
+.sec-16-recursos__pulse {
+  position: relative;
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+  background: currentColor;
+}
+.sec-16-recursos__pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid currentColor;
+  border-radius: var(--r-pill);
+  animation: sec-16-recursos-pulse calc(var(--dur) * 7) var(--ease) infinite;
+}
+
+/* ---------- insumos ---------- */
+.sec-16-recursos__insumos {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--text-dim);
+}
+.sec-16-recursos__insumos b { color: var(--text); font-weight: 500; }
+.sec-16-recursos__insumos--off { color: var(--text-dim); }
+
+/* ---------- cobertura: la parte que muestra lo que NO alcanza ---------- */
+.sec-16-recursos__cob {
+  margin-top: var(--gap-block);
+  padding-top: var(--pad-block);
+  border-top: var(--hairline);
+}
+.sec-16-recursos__cobline {
+  margin: 0 0 var(--s-4);
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.sec-16-recursos__cobn {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Regla territorial: 6 marcas ordenadas por IPR, una por sector. 2 px entre marcas = segmentos de una
+   sola barra, no seis cajas. El relleno dice cubierto; la trama, sin brigada. */
+.sec-16-recursos__marks {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 2px;
+}
+.sec-16-recursos__mark { min-width: 0; }
+.sec-16-recursos__markbar {
+  display: block;
+  height: 14px;
+  border-radius: 1px 1px 0 0;
+  background: var(--accent-2);
+  transform-origin: left center;
+  animation: sec-16-recursos-grow 0.5s var(--ease) both;
+}
+/* Sin brigada: hueco tramado, no un color de escala. */
+.sec-16-recursos__mark--off .sec-16-recursos__markbar {
+  background:
+    repeating-linear-gradient(135deg,
+      color-mix(in srgb, var(--warn) 55%, transparent) 0 3px,
+      transparent 3px 8px),
+    var(--surface-2);
+}
+
+.sec-16-recursos__marktxt {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.25;
+  min-width: 0;
+}
+.sec-16-recursos__markname {
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sec-16-recursos__markipr {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+}
+.sec-16-recursos__mark--off .sec-16-recursos__markname { color: var(--warn); }
+.sec-16-recursos__mark--off .sec-16-recursos__markipr { color: var(--warn); }
+
+/* El dato que importa: quiénes quedan afuera, con su IPR y su acción. */
+.sec-16-recursos__cobnote {
+  margin: var(--s-5) 0 0;
+  max-width: 92ch;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.sec-16-recursos__cobnote b { color: var(--warn); font-weight: 500; }
+.sec-16-recursos__paren {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text);
+}
+
+/* ---------- nota de cierre: prosa, no dato ---------- */
+.sec-16-recursos__nota {
+  margin: var(--gap-block) 0 0;
+  padding-top: var(--pad-block);
+  border-top: var(--hairline);
+  max-width: 88ch;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.sec-16-recursos__nota b { color: var(--text); font-weight: 500; }
+
+@keyframes sec-16-recursos-pulse {
+  0%        { transform: scale(1); opacity: 0.75; }
+  70%, 100% { transform: scale(2.5); opacity: 0; }
+}
+@keyframes sec-16-recursos-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.sec-16-recursos__mark:nth-child(2) .sec-16-recursos__markbar { animation-delay: 0.05s; }
+.sec-16-recursos__mark:nth-child(3) .sec-16-recursos__markbar { animation-delay: 0.1s; }
+.sec-16-recursos__mark:nth-child(4) .sec-16-recursos__markbar { animation-delay: 0.15s; }
+.sec-16-recursos__mark:nth-child(5) .sec-16-recursos__markbar { animation-delay: 0.2s; }
+.sec-16-recursos__mark:nth-child(6) .sec-16-recursos__markbar { animation-delay: 0.25s; }
+
+/* ---------- apilado ≤1080 px: la tabla se ordena en dos columnas, sin scroll horizontal ---------- */
+@media (max-width: 1080px) {
+  .sec-16-recursos__tabla { margin-inline: 0; }
+  .sec-16-recursos__hrow { display: none; }
+
+  .sec-16-recursos__row {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-areas:
+      "brigada eta"
+      "sector  ipr"
+      "estado  estado"
+      "insumos insumos";
+    column-gap: var(--s-4);
+    row-gap: var(--gap-row);
+    align-items: start;
+    padding: var(--pad-block) 0;
+  }
+  .sec-16-recursos__brigada { grid-area: brigada; }
+  .sec-16-recursos__sector { grid-area: sector; }
+  .sec-16-recursos__ipr { grid-area: ipr; }
+  .sec-16-recursos__estado { grid-area: estado; }
+  .sec-16-recursos__eta { grid-area: eta; }
+  .sec-16-recursos__insumos { grid-area: insumos; }
+
+  /* Cada dato recupera su etiqueta de columna en la primera línea. */
+  .sec-16-recursos__sector::before,
+  .sec-16-recursos__ipr::before,
+  .sec-16-recursos__estado::before,
+  .sec-16-recursos__eta::before,
+  .sec-16-recursos__insumos::before { display: block; }
+  .sec-16-recursos__sector::before,
+  .sec-16-recursos__ipr::before,
+  .sec-16-recursos__eta::before,
+  .sec-16-recursos__insumos::before { margin-bottom: var(--s-1); }
+
+  .sec-16-recursos__estado { flex-wrap: wrap; row-gap: var(--s-1); }
+  .sec-16-recursos__estado::before { flex: 0 0 100%; }
+
+  .sec-16-recursos__ipr,
+  .sec-16-recursos__eta { justify-self: start; }
+}
+
+/* ---------- ≤760 px: la regla territorial pasa a dos columnas y el ritmo se aprieta ---------- */
+@media (max-width: 760px) {
+  .sec-16-recursos__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-2);
+  }
+  .sec-16-recursos__lab { white-space: normal; }
+  .sec-16-recursos__bname { font-size: var(--fs-md); }
+  .sec-16-recursos__cobline { font-size: var(--fs-md); }
+  .sec-16-recursos__marks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-4) var(--s-5);
+  }
+  .sec-16-recursos__markbar { height: 10px; }
+  .sec-16-recursos__marktxt { font-size: var(--fs-xs); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-16-recursos__pulse::after,
+  .sec-16-recursos__markbar { animation: none; }
+  .sec-16-recursos__markbar { transform: none; }
+  .sec-16-recursos__row { transition: none; }
+}
+
+/* etiqueta de escala (CONTRATO.md �2.3): wayfinding de panel, no eyebrow decorativo. */
+.sec-16-recursos__scale {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+}

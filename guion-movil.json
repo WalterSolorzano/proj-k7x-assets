@@ -1,0 +1,49 @@
+{
+  "_nota": "Guion de la PANTALLA DE BRIGADA (móvil). Va aparte porque el marco es vertical y el motor fija el preset por lanzamiento, no por toma. Se graba a 540x1170: el contenedor de las secciones móviles mide 430 px, así que queda un margen de papel a los lados en vez de un layout estirado.",
+  "_uso": "npm run video -- --guion guion-movil.json --width 540 --height 1170 --scale 2 --mp4 --stills --fps 30 --out presentacion/video/movil",
+  "_por_que": "La plataforma es el sistema nacional; esto es lo que ve la brigada en la calle. En el montaje suele ir como pantalla flotante o en una toma dedicada al trabajo de campo.",
+  "shots": [
+    {
+      "name": "m1-fijo-tarea",
+      "target": "paginas/02-brigadas.html",
+      "motion": "zoom",
+      "focus": ".sec-21-tarea",
+      "zoom": 0,
+      "duration": 4,
+      "pauseTop": 0.9,
+      "pauseBottom": 0.8,
+      "_para": "Plano fijo sobre la tarea asignada: Brigada 1 -> Malecón Centro. Fondo para rótulo en vertical."
+    },
+    {
+      "name": "m2-scroll-brigada",
+      "target": "paginas/02-brigadas.html",
+      "motion": "scroll",
+      "duration": 11,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "_para": "La pantalla completa de la brigada de arriba abajo. Muestra el ciclo: tarea -> mapa -> reporte."
+    },
+    {
+      "name": "m3-mapa-sector",
+      "target": "paginas/02-brigadas.html",
+      "motion": "zoom",
+      "focus": ".sec-22-mapa",
+      "zoom": 0.14,
+      "duration": 6,
+      "pauseTop": 0.9,
+      "pauseBottom": 1.1,
+      "_para": "El mini-mapa del sector en el teléfono: la misma geometría que el tablero nacional, a escala de una calle."
+    },
+    {
+      "name": "m4-reporte",
+      "target": "paginas/02-brigadas.html",
+      "motion": "zoom",
+      "focus": ".sec-23-reporte",
+      "zoom": 0.12,
+      "duration": 6,
+      "pauseTop": 0.9,
+      "pauseBottom": 1.1,
+      "_para": "El reporte que sube la brigada. Cierra el circuito: el dato que vuelve al sistema y corrige el índice."
+    }
+  ]
+}

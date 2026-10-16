@@ -1,9 +1,105 @@
 {
-  "$comment": "Ejemplo de guion de tomas. `target` puede ser una ruta del repo o una URL. motion: scroll | zoom | pan | static.",
+  "_nota": "Guion de tomas del material de rodaje de la PLATAFORMA (SITRE · SINAPRED) en 16:9. Cada toma = un clip. El material es la vista desde el país hasta el nodo: el orden de las tomas es el orden del descenso (CONTRATO.md 2.3), así que el montaje no tiene que inventar la narrativa, solo recortarla.",
+  "_truco_fijo": "El motor no sabe hacer un plano fijo sobre un elemento concreto (static no desplaza la página). Se resuelve con motion zoom y zoom 0: hace scrollIntoView al elemento y luego escala 1, o sea, lo encuadra sin moverse.",
+  "_stills": "Los .png se toman al FINAL del movimiento: son el fotograma ya encuadrado de cada clip, no la cabecera de la página.",
+  "_uso": "npm run video -- --guion guion.json --preset 16x9 --scale 2 --mp4 --stills --fps 30",
+  "_movil": "La pantalla de brigada va en su propio guion y su propio lanzamiento: guion-movil.json, 540x1170 (el contenedor móvil mide 430 px).",
   "shots": [
-    { "name": "01-hero-zoom", "target": "paginas/01-home.html", "motion": "zoom", "duration": 6 },
-    { "name": "02-recorrido", "target": "paginas/01-home.html", "motion": "scroll", "duration": 9 },
-    { "name": "03-deriva", "target": "mockups/00-demo.html", "motion": "pan", "duration": 7 },
-    { "name": "04-plano-fijo", "target": "mockups/00-demo.html", "motion": "static", "duration": 4 }
+    {
+      "name": "t1-fijo-pais",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-08-nacional__map",
+      "zoom": 0,
+      "duration": 4,
+      "pauseTop": 1.0,
+      "pauseBottom": 0.8,
+      "_para": "Plano fijo sobre el mapa nacional. Fondo sin movimiento: es donde el montaje escribe los titulares del arranque."
+    },
+    {
+      "name": "t2-zoom-pais",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-08-nacional__svg",
+      "zoom": 0.2,
+      "duration": 7,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "_para": "La nación entera, empujando hacia dentro. Plano de apertura: 17 unidades, 1 276 nodos, 3 eventos activos en un cuadro."
+    },
+    {
+      "name": "t3-scroll-descenso",
+      "target": "paginas/01-plataforma.html",
+      "motion": "scroll",
+      "duration": 16,
+      "pauseTop": 1.2,
+      "pauseBottom": 1.6,
+      "_para": "Recorrido de las 11 secciones de un tirón: pais -> region -> municipio -> sector -> nodo. Es el tramo de explicación y el que demuestra que la escala baja de verdad."
+    },
+    {
+      "name": "t4-escala",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-09-escala",
+      "zoom": 0.12,
+      "duration": 8,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "_para": "La escalera de cuatro peldaños: la misma geografía a cuatro escalas. Zoom suave para que los cuatro marcos sigan leyéndose juntos."
+    },
+    {
+      "name": "t5-municipio",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-11-mapa__svg",
+      "zoom": 0.16,
+      "duration": 7,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "_para": "Puerto Cabezas (Bilwi) por manzanas, con la ocupación estimada y los 8 nodos en silencio. Geografía real, no inventada."
+    },
+    {
+      "name": "t6-prioridad",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-12-prioridad",
+      "zoom": 0.12,
+      "duration": 6,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "_para": "La tabla de IPR y las decisiones que salen de ella. Aquí está el argumento fuerte: 3 de 6 sectores cubiertos, y los 3 que faltan son la petición de refuerzos."
+    },
+    {
+      "name": "t7-croquis-zoom",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-17-croquis__svg",
+      "zoom": 0.2,
+      "duration": 8,
+      "pauseTop": 1.2,
+      "pauseBottom": 1.4,
+      "_para": "LA TOMA ESTRELLA. El nodo emitiendo, el paquete LoRa viajando a la base, la brigada avanzando: todo con el mismo reloj. Es el clímax y el plano que justifica el video."
+    },
+    {
+      "name": "t8-croquis-pan",
+      "target": "paginas/01-plataforma.html",
+      "motion": "pan",
+      "focus": ".sec-17-croquis__svg",
+      "duration": 6,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "_para": "Alternativa sobria al zoom sobre la misma escena, para no repetir recurso dos veces seguidas en el montaje."
+    },
+    {
+      "name": "t9-red",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-14-red",
+      "zoom": 0.14,
+      "duration": 6,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "_para": "Topología de la red store-and-forward. Cierra el arco: qué pasa con los nodos que no llegan, y por qué el dato viejo cuenta."
+    }
   ]
 }

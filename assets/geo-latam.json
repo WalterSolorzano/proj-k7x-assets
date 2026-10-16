@@ -1,0 +1,111 @@
+{
+  "viewBox": "0 0 1000 900",
+  "centers": {},
+  "paths": [
+    {
+      "id": "ARG",
+      "name": "Argentina",
+      "d": ""
+    },
+    {
+      "id": "BLZ",
+      "name": "Belize",
+      "d": ""
+    },
+    {
+      "id": "BOL",
+      "name": "Bolivia",
+      "d": ""
+    },
+    {
+      "id": "BRA",
+      "name": "Brazil",
+      "d": ""
+    },
+    {
+      "id": "CHL",
+      "name": "Chile",
+      "d": ""
+    },
+    {
+      "id": "COL",
+      "name": "Colombia",
+      "d": ""
+    },
+    {
+      "id": "CRI",
+      "name": "Costa Rica",
+      "d": ""
+    },
+    {
+      "id": "CUB",
+      "name": "Cuba",
+      "d": ""
+    },
+    {
+      "id": "DOM",
+      "name": "Dominican Republic",
+      "d": ""
+    },
+    {
+      "id": "ECU",
+      "name": "Ecuador",
+      "d": ""
+    },
+    {
+      "id": "GTM",
+      "name": "Guatemala",
+      "d": ""
+    },
+    {
+      "id": "HND",
+      "name": "Honduras",
+      "d": ""
+    },
+    {
+      "id": "HTI",
+      "name": "Haiti",
+      "d": ""
+    },
+    {
+      "id": "MEX",
+      "name": "Mexico",
+      "d": ""
+    },
+    {
+      "id": "NIC",
+      "name": "Nicaragua",
+      "d": ""
+    },
+    {
+      "id": "PAN",
+      "name": "Panama",
+      "d": ""
+    },
+    {
+      "id": "PER",
+      "name": "Peru",
+      "d": ""
+    },
+    {
+      "id": "PRY",
+      "name": "Paraguay",
+      "d": ""
+    },
+    {
+      "id": "SLV",
+      "name": "El Salvador",
+      "d": ""
+    },
+    {
+      "id": "URY",
+      "name": "Uruguay",
+      "d": ""
+    },
+    {
+      "id": "VEN",
+      "name": "Venezuela",
+      "d": ""
+    }
+  ]
+}

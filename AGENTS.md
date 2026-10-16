@@ -49,6 +49,15 @@ Entregable final: **material de rodaje** — clips con movimiento + stills de al
 - `npm run capture` → capturas fullpage a `presentacion/` + `presentacion.md` (stills de alta calidad con `--scale 2`)
 - `npm run video` → **material de rodaje**: clips con movimiento (scroll/zoom/pan/static) + stills a `presentacion/video/`
 - Detalle en la skill `ui-preview`; no la cargues si no la necesitas.
+- Skill `impeccable` (`.opencode/skills/impeccable/`) → criterio de diseño + detector de anti-patrones IA. Ver abajo.
+
+## Calidad visual — skill `impeccable` (instalada)
+Evita el "look IA" (Inter por defecto, morado→azul, cards dentro de cards, gradientes en texto, easing con rebote…).
+- Cárgala con la skill `impeccable` antes de diseñar o revisar UI. Comandos: `critique`, `polish`, `bolder`, `distill`, `typeset`, `colorize`, `layout`, `animate`, `audit` (detalle en `.opencode/skills/impeccable/SKILL.md`).
+- **Detector sin LLM** (59 reglas deterministas) — úsalo antes de capturar, no en bucle:
+  `.\.opencode\skills\impeccable\scripts\impeccable.cmd detect mockups secciones` (o un archivo/URL suelto; `--json` para CI).
+- Regla del rally: el detector se corre **una vez por lote**, y las advertencias (`low-contrast`, `em-dash`, `codex-grid-background`) son consejo, no bloqueo. Lo visual manda; si una regla choca con `CONTRATO.md`, gana `CONTRATO.md` y se ignora con `impeccable ignores add-value <valor> --reason "…"`.
+- Anti-patrones concretos prohibidos en este repo: ver `CONTRATO.md` §2.1.
 
 ## Referencia rápida
 - Estado y decisiones: `PROYECTO.md`

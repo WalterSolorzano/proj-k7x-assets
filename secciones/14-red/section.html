@@ -1,0 +1,142 @@
+<section class="sec sec-14-red">
+  <div class="wrap wrap--wide">
+
+    <div class="sec-14-red__head">
+      <p class="sec-14-red__scale">RED · PUERTO CABEZAS</p>
+      <h2 class="sec-14-red__title">Red LoRa store-and-forward</h2>
+      <p class="sec-14-red__lede">Los nodos transmiten por radio de bajo consumo a la estación base, que guarda en local y sincroniza con SINAPRED al recuperar el enlace. El sistema no depende de internet para seguir midiendo.</p>
+    </div>
+
+    <figure class="sec-14-red__fig">
+      <div class="sec-14-red__plano">
+        <svg class="sec-14-red__svg sec-14-red__svg--ancho" viewBox="0 0 1120 470" role="img" aria-label="Topología de la red LoRa: 42 nodos en campo convergen en la estación base, que lleva 40 minutos sin enlace con SINAPRED.">
+          <g>
+            <path class="sec-14-red__link" d="M48 80 L898 226 M160 62 L898 222 M272 96 L898 228 M392 66 L898 224 M508 100 L898 230 M628 70 L898 224 M748 104 L898 232 M36 158 L898 228 M152 146 L898 226 M296 174 L898 230 M556 182 L898 232 M706 154 L898 228 M58 280 L898 234 M188 304 L898 236 M606 266 L898 234 M742 300 L898 236 M100 370 L898 236 M386 362 L898 234 M676 366 L898 236 M800 400 L898 238 M462 300 L898 234"></path>
+            <path class="sec-14-red__link sec-14-red__link--bad" d="M420 144 L898 230 M322 260 L898 234 M240 396 L898 238 M830 190 L898 226"></path>
+          </g>
+
+          <g>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="48" cy="80" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="160" cy="62" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="272" cy="96" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="392" cy="66" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="508" cy="100" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--last" cx="628" cy="70" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="748" cy="104" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="36" cy="158" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="152" cy="146" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="296" cy="174" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--off" cx="420" cy="144" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="556" cy="182" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="706" cy="154" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--off" cx="830" cy="190" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="58" cy="280" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="188" cy="304" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--off" cx="322" cy="260" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--last" cx="462" cy="300" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="606" cy="266" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="742" cy="300" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="100" cy="370" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--off" cx="240" cy="396" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="386" cy="362" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--off" cx="536" cy="396" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="676" cy="366" r="4"></circle>
+            <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="800" cy="400" r="4"></circle>
+          </g>
+
+          <rect class="sec-14-red__bus" x="900" y="222" width="17" height="17" rx="2"></rect>
+          <path class="sec-14-red__link sec-14-red__link--sin" d="M918 231 L1010 231"></path>
+          <path class="sec-14-red__x" d="M957 224 L971 238 M971 224 L957 238"></path>
+
+          <text class="sec-14-red__svglab" x="22" y="30">NODOS EN CAMPO · 42</text>
+          <text class="sec-14-red__svglab sec-14-red__svglab--name" x="964" y="264" text-anchor="middle">SINAPRED</text>
+          <text class="sec-14-red__svglab sec-14-red__svglab--xs" x="964" y="292" text-anchor="middle">SIN ENLACE · 40 MIN</text>
+        </svg>
+
+        <svg class="sec-14-red__svg sec-14-red__svg--angosto" viewBox="0 0 400 440" role="img" aria-label="Topología de la red LoRa en vertical: los nodos en campo bajan a la estación base, que lleva 40 minutos sin enlace con SINAPRED.">
+          <path class="sec-14-red__link" d="M40 52 L191 258 M135 44 L193 256 M330 46 L205 258 M66 100 L191 258 M285 102 L205 258 M96 156 L191 260 M318 158 L205 260 M235 56 L197 256"></path>
+          <path class="sec-14-red__link sec-14-red__link--bad" d="M210 166 L200 258"></path>
+
+          <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="40" cy="52" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="135" cy="44" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--last" cx="235" cy="56" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="330" cy="46" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="66" cy="100" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--off" cx="175" cy="112" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="285" cy="102" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="96" cy="156" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--off" cx="210" cy="166" r="4"></circle>
+          <circle class="sec-14-red__netnode sec-14-red__netnode--on" cx="318" cy="158" r="4"></circle>
+
+          <rect class="sec-14-red__bus" x="191" y="262" width="18" height="18" rx="2"></rect>
+          <path class="sec-14-red__link sec-14-red__link--sin" d="M200 282 L200 322"></path>
+          <path class="sec-14-red__x" d="M193 295 L207 309 M207 295 L193 309"></path>
+          <path class="sec-14-red__rule" d="M160 366 H240"></path>
+
+          <text class="sec-14-red__svglab" x="16" y="26">NODOS EN CAMPO · 42</text>
+          <text class="sec-14-red__svglab sec-14-red__svglab--xs" x="218" y="276">ESTACIÓN BASE</text>
+          <text class="sec-14-red__svglab sec-14-red__svglab--name" x="200" y="352" text-anchor="middle">SINAPRED</text>
+          <text class="sec-14-red__svglab sec-14-red__svglab--xs" x="200" y="390" text-anchor="middle">SIN ENLACE · 40 MIN</text>
+        </svg>
+      </div>
+
+      <figcaption class="sec-14-red__legend">
+        <span class="sec-14-red__legend-lab">Red LoRa store-and-forward · 915 MHz</span>
+        <span class="sec-14-red__keys">
+          <span class="sec-14-red__key"><i class="sec-14-red__sq"></i>estación base</span>
+          <span class="sec-14-red__key"><i class="sec-14-red__dot"></i>en línea</span>
+          <span class="sec-14-red__key"><i class="sec-14-red__dot sec-14-red__dot--last"></i>último dato</span>
+          <span class="sec-14-red__key"><i class="sec-14-red__dot sec-14-red__dot--off"></i>en silencio</span>
+        </span>
+      </figcaption>
+    </figure>
+
+    <dl class="sec-14-red__datos">
+      <div class="sec-14-red__dato"><dt>Nodos en campo</dt><dd>42</dd></div>
+      <div class="sec-14-red__dato"><dt>En línea</dt><dd>34</dd></div>
+      <div class="sec-14-red__dato"><dt>En silencio</dt><dd>8</dd></div>
+      <div class="sec-14-red__dato"><dt>Antigüedad media del dato</dt><dd>6 min</dd></div>
+    </dl>
+
+    <div class="sec-14-red__grid">
+      <div class="sec-14-red__blk">
+        <h3 class="sec-14-red__lab">Nodos citados</h3>
+        <ul class="sec-14-red__nodos">
+          <li class="sec-14-red__nodo">
+            <i class="sec-14-red__dot sec-14-red__dot--ok"></i>
+            <b class="sec-14-red__nodo-id">Nodo 07</b>
+            <span class="sec-14-red__nodo-lugar">Malecón Centro</span>
+            <span class="sec-14-red__nodo-estado sec-14-red__nodo-estado--ok">en línea 04:28</span>
+            <span class="sec-14-red__nodo-meta">batería 71 %</span>
+          </li>
+          <li class="sec-14-red__nodo">
+            <i class="sec-14-red__dot sec-14-red__dot--off"></i>
+            <b class="sec-14-red__nodo-id">Nodo 14</b>
+            <span class="sec-14-red__nodo-lugar">Ribera del Río</span>
+            <span class="sec-14-red__nodo-estado sec-14-red__nodo-estado--bad">en silencio 7 h 15 min</span>
+            <span class="sec-14-red__nodo-meta">último dato 300 · batería 62 %</span>
+          </li>
+          <li class="sec-14-red__nodo">
+            <i class="sec-14-red__dot sec-14-red__dot--last"></i>
+            <b class="sec-14-red__nodo-id">Nodo 22</b>
+            <span class="sec-14-red__nodo-lugar">Mercado Viejo</span>
+            <span class="sec-14-red__nodo-estado sec-14-red__nodo-estado--warn">último dato 23:40</span>
+            <span class="sec-14-red__nodo-meta">batería 34 %</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sec-14-red__blk">
+        <h3 class="sec-14-red__lab">Cola de sincronización</h3>
+        <p class="sec-14-red__q">1&nbsp;246</p>
+        <div class="sec-14-red__qbar"><i></i></div>
+        <p class="sec-14-red__note">registros pendientes en la estación · último enlace 04:30, hace 40 min. Sin internet los datos siguen guardándose en local.</p>
+      </div>
+    </div>
+
+    <p class="sec-14-red__auto">
+      <span class="sec-14-red__auto-k">Autonomía</span>Panel solar de 10 W y batería LiFePO4 de 12 Ah en cada nodo. El corte de energía no detiene la medición: los nodos operan con batería de respaldo hasta 7 días sin sol.
+    </p>
+
+  </div>
+</section>

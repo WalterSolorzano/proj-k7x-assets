@@ -152,17 +152,34 @@ function send(res, code, body, type) {
   res.end(body);
 }
 
-async function sectionPreview(slug) {
+async function sectionPreview(slug, themeOverride) {
   const frag = join(ROOT, 'secciones', slug, 'section.html');
   if (!existsSync(frag)) return null;
   const shell = await readFile(join(ROOT, 'secciones', '_shell.html'), 'utf8');
   const styles = [`/assets/tokens.css`];
   if (existsSync(join(ROOT, 'secciones', slug, 'section.css'))) styles.push(`/secciones/${slug}/section.css`);
+
+  // BUG corregido: hasta ahora este preview NO sustituía {{themeAttr}} ni {{colorScheme}}, así que
+  // toda sección aislada caía al tema por defecto del shell (dark-tech). Varios subagentes
+  // aprobaron su trabajo en un tema que el prototipo no usa. Ahora el tema sale de la página a la
+  // que pertenece la sección (_sections.json), y `?theme=<id>` lo fuerza para revisar los 4.
+  const LIGHT = ['institucional', 'light-min', 'natural'];
+  const cfg = JSON.parse(await readFile(join(ROOT, 'secciones', '_sections.json'), 'utf8'));
+  const page = cfg.pages.find((p) => p.sections.includes(slug));
+  const theme = themeOverride || page?.theme || 'institucional';
+  const scheme = themeOverride
+    ? (LIGHT.includes(theme) ? 'light' : 'dark')
+    : (page?.scheme || (LIGHT.includes(theme) ? 'light' : 'dark'));
+
   return shell
     .split('{{title}}')
-    .join(`${slug} · sección`)
+    .join(`${slug} · sección · tema ${theme}`)
     .split('{{styles}}')
     .join(styles.map((h) => `<link rel="stylesheet" href="${h}">`).join('\n'))
+    .split('{{themeAttr}}')
+    .join(` data-theme="${theme}"`)
+    .split('{{colorScheme}}')
+    .join(scheme)
     .split('{{content}}')
     .join(await readFile(frag, 'utf8'));
 }
@@ -182,7 +199,7 @@ const server = createServer(async (req, res) => {
   // preview aislado de una sección: /secciones/<slug>/
   const m = path.match(/^\/secciones\/([^/]+)\/?$/);
   if (m) {
-    const html = await sectionPreview(m[1]);
+    const html = await sectionPreview(m[1], url.searchParams.get('theme'));
     if (html) return send(res, 200, html.replace('</body>', `<script>${RELOAD}</script></body>`), 'text/html; charset=utf-8');
     return send(res, 404, `Sección no encontrada: ${m[1]}`, 'text/plain');
   }

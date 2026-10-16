@@ -1,20 +1,24 @@
 /* assets/tokens.css — Fuente única de verdad visual.
-   Todos los mockups, secciones y páginas comparten estos tokens. */
-:root {
-  /* color */
-  --bg: #0b0d12;
-  --surface: #141821;
-  --surface-2: #1b2130;
-  --line: #262d3d;
-  --text: #e9eef7;
-  --text-dim: #93a0b8;
-  --accent: #ff6b35;
-  --accent-2: #7c5cff;
-  --ok: #31d158;
+   Los mockups, secciones y páginas comparten estos tokens.
 
-  /* tipografía */
-  --font: ui-sans-serif, system-ui, "Segoe UI", Roboto, Inter, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+   SISTEMA DE TEMAS (para poder decidir el look EN EL MOMENTO):
+   - `:root` = tema por defecto (`dark-tech`). Todo lo que no declare `data-theme` lo hereda.
+   - Cada tema se activa con `data-theme="..."` en CUALQUIER elemento: institucional | dark-tech | light-min | blueprint | natural.
+     En `<html>` cambia la página entera; en un `<div>` permite poner los 4 temas uno al lado del otro.
+   - Los 4 temas usan LOS MISMOS nombres de variable. Ninguna sección debe cambiar por tema.
+   - Regla: si un color no está aquí, no existe. */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  /* ---------- estructural: NO cambia entre temas ---------- */
+  /* ---------- tipografía: UNA sola superfamilia (IBM Plex), tres cortes ----------
+     Estandarización pedida: Plex Sans (cuerpo/UI) + Plex Sans Condensed (títulos) +
+     Plex Mono (dato y medición). Un solo sistema, no tres fuentes sueltas. */
+  --font: "IBM Plex Sans", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-display: "IBM Plex Sans Condensed", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+
   --fs-xs: 12px;
   --fs-sm: 14px;
   --fs-md: 16px;
@@ -22,10 +26,10 @@
   --fs-xl: 28px;
   --fs-2xl: 44px;
   --fs-3xl: 64px;
+  --fs-4xl: 88px;
   --lh: 1.55;
-  --lh-tight: 1.08;
+  --lh-tight: 1.05;
 
-  /* espacio */
   --s-1: 4px;
   --s-2: 8px;
   --s-3: 12px;
@@ -35,22 +39,135 @@
   --s-7: 48px;
   --s-8: 72px;
 
-  /* formas y sombras */
-  --r-sm: 8px;
-  --r-md: 14px;
-  --r-lg: 22px;
-  --r-pill: 999px;
-  --shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.75);
-  --shadow-soft: 0 8px 24px -14px rgba(0, 0, 0, 0.7);
+  /* ---------- ritmo vertical: usar SIEMPRE estas, no números sueltos ----------
+     La jerarquía se construye con espacio, no con cajas. Regla de oro:
+     **más espacio ARRIBA de un título que DEBAJO.** Grupos apretados, separación generosa. */
+  --sec-pad: var(--s-6);    /* aire arriba/abajo de cada sección */
+  --gap-block: var(--s-5);  /* entre bloques hermanos dentro de una sección */
+  --gap-row: var(--s-3);    /* entre filas de una tabla o lista */
+  --pad-block: var(--s-4);  /* relleno interno de una fila o bloque */
+  --hairline: 1px solid var(--line); /* la ÚNICA forma permitida de encerrar algo */
 
-  /* movimiento */
+  /* ---------- radios: contenidos. Un tablero institucional no es una app de consumo ---------- */
+  --r-sm: 3px;
+  --r-md: 5px;
+  --r-lg: 8px;
+  --r-pill: 999px;
+
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dur: 0.35s;
-
   --maxw: 1160px;
+  --maxw-wide: 1400px;
+
+  /* ---------- escalas de datos: COMPARTIDAS por todas las secciones ----------
+     REGLA: solo como RELLENO de mapa, barra o serie. Nunca como color de texto.
+     Ocupación y amenaza son dos mapas de calor DISTINTOS: nunca el mismo color.
+     - `--nodata` (gris frío) = sin dato. Es un estado, no un valor bajo.
+     - `--heat-*` (cálido)   = ocupación estimada de personas, 1 baja → 5 crítica.
+     - `--risk-*` (azul)     = amenaza ambiental confirmada, 1 nula → 5 peligro.
+     - confianza del dato NO tiene escala propia: usa `--ok` / `--warn` / `--bad`. */
+  --nodata: #d9d5cb;
+  --heat-1: #fbe8c0;
+  --heat-2: #f6c977;
+  --heat-3: #ef9a4a;
+  --heat-4: #dd6a30;
+  --heat-5: #b8341f;
+  --risk-1: #dceaf2;
+  --risk-2: #a9cde2;
+  --risk-3: #6eaac9;
+  --risk-4: #37779f;
+  --risk-5: #0f4c75;
+  --warn: #8a5a0c;
+  --bad: #b8341f;
+
+  /* ---------- TEMA 1 (por defecto): oscuro tecnológico ---------- */
+  --bg: #0b0d12;
+  --surface: #141821;
+  --surface-2: #1b2130;
+  --line: #262d3d;
+  --text: #e9eef7;
+  --text-dim: #93a0b8;
+  --accent: #ff6b35;
+  --accent-2: #7c5cff;
+  --accent-3: #35d0ff;
+  --ok: #31d158;
+  --glow: rgba(255, 107, 53, 0.35);
+  --shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.75);
+  --shadow-soft: 0 8px 24px -14px rgba(0, 0, 0, 0.7);
 }
 
-/* base mínima compartida, para que toda sección se vea igual de fondo */
+/* ---------- TEMA 2: claro minimalista ---------- */
+[data-theme="light-min"] {
+  --bg: #fbfaf8;
+  --surface: #ffffff;
+  --surface-2: #f3f1ed;
+  --line: #e5e1da;
+  --text: #12141a;
+  --text-dim: #59616f;
+  --accent: #d93a10;
+  --accent-2: #5b3fd6;
+  --accent-3: #0d84b8;
+  --ok: #128a3d;
+  --glow: rgba(217, 58, 16, 0.22);
+  --shadow: 0 18px 50px -24px rgba(20, 20, 20, 0.22);
+  --shadow-soft: 0 8px 24px -16px rgba(20, 20, 20, 0.18);
+}
+
+/* ---------- TEMA 3: plano técnico / ingenieril ---------- */
+[data-theme="blueprint"] {
+  --bg: #06131f;
+  --surface: #0b1e2e;
+  --surface-2: #0f2739;
+  --line: #16405a;
+  --text: #e2f3ff;
+  --text-dim: #8fb6cf;
+  --accent: #2fd0ff;
+  --accent-2: #7ef0d0;
+  --accent-3: #4d8dff;
+  --ok: #38e08a;
+  --glow: rgba(47, 208, 255, 0.3);
+  --shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.8);
+  --shadow-soft: 0 8px 24px -14px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- TEMA 4: natural / sustentable ---------- */
+[data-theme="natural"] {
+  --bg: #f7f4ed;
+  --surface: #fffefb;
+  --surface-2: #efeade;
+  --line: #e0d8c6;
+  --text: #1e2419;
+  --text-dim: #575e51;
+  --accent: #2f7d4f;
+  --accent-2: #c0642a;
+  --accent-3: #4a7f8c;
+  --ok: #2f7d4f;
+  --glow: rgba(47, 125, 79, 0.22);
+  --shadow: 0 18px 50px -24px rgba(40, 45, 30, 0.24);
+  --shadow-soft: 0 8px 24px -16px rgba(40, 45, 30, 0.2);
+}
+
+/* ---------- TEMA 5 (ELEGIDO para SITRE): institucional claro ----------
+   Mezcla pedida: la limpieza de `light-min` + el calor y el verde de `natural`.
+   Sala de crisis con luz: papel cálido, superficies blancas, alerta terrosa.
+   Contrastes verificados sobre --bg: --text 15.8:1 · --text-dim 5.8:1 · --accent 4.7:1. */
+[data-theme="institucional"] {
+  --bg: #f8f6f1;
+  --surface: #ffffff;
+  --surface-2: #f1ede4;
+  --line: #e2dcd0;
+  --text: #1c2119;
+  --text-dim: #5a6355;
+  --accent: #b03d0c;
+  --accent-2: #2f7d4f;
+  --accent-3: #2a6f92;
+  --ok: #2f7d4f;
+  --glow: rgba(193, 68, 14, 0.2);
+  --shadow: 0 18px 50px -24px rgba(35, 38, 30, 0.22);
+  --shadow-soft: 0 8px 24px -16px rgba(35, 38, 30, 0.18);
+}
+
+/* ---------- base mínima compartida ---------- */
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
@@ -65,4 +182,30 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--s-4);
+}
+p { margin: 0 0 var(--s-4); }
+
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--s-5); }
+.wrap--wide { max-width: var(--maxw-wide); }
+
+/* ---------- superficies del navegador: también son diseño ----------
+   Lo que no dibujamos (selección, foco, barra de scroll) es la señal más barata de que
+   algo está construido y no ensamblado. Se tematizan desde la paleta, nunca se dejan al azar. */
+::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--text); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+html { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--text) 26%, transparent) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text) 22%, transparent); border-radius: var(--r-pill); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* En pantalla estrecha el aire de sección se reduce: la misma regla, en la escala del dispositivo.
+   (Un campo de 390 px no puede gastar 96 px entre bloques.) */
+@media (max-width: 700px) {
+  :root { --sec-pad: var(--s-6); }
+}

@@ -5,10 +5,14 @@
 //   npm run video                                   # scroll suave de cada pantalla
 //   npm run video -- --preset 9x16 --motion zoom     # vertical, con zoom cinematográfico
 //   npm run video -- --guion guion.json              # varias tomas definidas a mano
-//   npm run video -- --stills                        # además un PNG por toma
+//   npm run video -- --stills --scale 2 --mp4        # además PNG 2x por toma y mp4 para editar
 //
 // Tomas: scroll | zoom | pan | static
 // Presets: 16x9 (1920x1080) | 9x16 (1080x1920) | 4x5 | 1x1 | wide (2560x1080)
+// En el guion, cada toma acepta: name, target, motion, duration, pauseTop, pauseBottom,
+// focus (selector CSS: centra el movimiento en ese elemento), zoom (cuánto acerca, 0.14 por defecto),
+// hide (selector o lista: oculta elementos antes de grabar; útil para la barra fija al hacer zoom),
+// hover (selector: deja el cursor encima a propósito; si no se indica, el cursor no marca nada).
 import { chromium } from 'playwright';
 import { mkdir, readdir, rm, readFile, writeFile } from 'node:fs/promises';
 import { existsSync, readdirSync } from 'node:fs';
@@ -47,6 +51,8 @@ const MOTION = val('motion', 'scroll');
 const ANIM = !flag('no-anim');
 const STILLS = flag('stills');
 const MP4 = flag('mp4');
+const SCALE = Number(val('scale', 1)); // deviceScaleFactor: 2 => render a 2x (más nítido)
+const FPS = Number(val('fps', 0)); // 0 => mantiene el rate de la grabación
 const GUION = val('guion', null);
 const URL_ARG = val('url', null);
 
@@ -100,13 +106,17 @@ if (GUION) {
     duration: (s.duration ?? Number(val('duration', 8))) * 1000,
     pauseTop: (s.pauseTop ?? 1.2) * 1000,
     pauseBottom: (s.pauseBottom ?? 1.6) * 1000,
+    focus: s.focus || null,
+    zoom: s.zoom ?? 0.14,
+    hide: s.hide || null,
+    hover: s.hover || null,
   }));
 } else if (URL_ARG) {
   shots = String(URL_ARG)
     .split(',')
     .map((u) => u.trim())
     .filter(Boolean)
-    .map((u, i) => ({ name: `${String(i + 1).padStart(2, '0')}-${slug(u)}`, url: u, ref: u, motion: MOTION, duration: DURATION, pauseTop: PAUSE_TOP, pauseBottom: PAUSE_BOTTOM }));
+    .map((u, i) => ({ name: `${String(i + 1).padStart(2, '0')}-${slug(u)}`, url: u, ref: u, motion: MOTION, duration: DURATION, pauseTop: PAUSE_TOP, pauseBottom: PAUSE_BOTTOM, focus: null, zoom: 0.14 }));
 } else {
   const DIR = pickDir();
   const files = (await walk(resolve(ROOT, DIR))).sort();
@@ -122,6 +132,8 @@ if (GUION) {
     duration: DURATION,
     pauseTop: PAUSE_TOP,
     pauseBottom: PAUSE_BOTTOM,
+    focus: null,
+    zoom: 0.14,
   }));
 }
 
@@ -166,28 +178,36 @@ const MOVES = {
       },
       ms,
     ),
-  zoom: (page, ms) =>
+  zoom: (page, ms, shot) =>
     page.evaluate(
-      async (ms) => {
+      async ({ ms, focus, zoom }) => {
         const el = document.body;
-        el.style.transformOrigin = '50% 38%';
+        const target = focus ? document.querySelector(focus) : null;
+        if (target) target.scrollIntoView({ block: 'center', behavior: 'instant' });
+        const r = target?.getBoundingClientRect();
+        // El origen se mide en coordenadas del body (viewport + scroll), no del viewport.
+        el.style.transformOrigin = r
+          ? `${r.left + r.width / 2}px ${r.top + window.scrollY + r.height / 2}px`
+          : '50% 38%';
         const t0 = performance.now();
         await new Promise((res) => {
           const step = (now) => {
             const t = Math.min(1, (now - t0) / ms);
             const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-            el.style.transform = `scale(${1 + 0.14 * e})`;
+            el.style.transform = `scale(${1 + zoom * e})`;
             t < 1 ? requestAnimationFrame(step) : res();
           };
           requestAnimationFrame(step);
         });
       },
-      ms,
+      { ms, focus: shot.focus, zoom: shot.zoom },
     ),
-  pan: (page, ms) =>
+  pan: (page, ms, shot) =>
     page.evaluate(
-      async (ms) => {
+      async ({ ms, focus }) => {
         const el = document.body;
+        const target = focus ? document.querySelector(focus) : null;
+        if (target) target.scrollIntoView({ block: 'center', behavior: 'instant' });
         el.style.transformOrigin = '50% 50%';
         const t0 = performance.now();
         await new Promise((res) => {
@@ -200,7 +220,7 @@ const MOVES = {
           requestAnimationFrame(step);
         });
       },
-      ms,
+      { ms, focus: shot.focus },
     ),
   static: (page, ms) => page.waitForTimeout(ms),
 };
@@ -212,10 +232,20 @@ await mkdir(outDir, { recursive: true });
 await rm(tmpDir, { recursive: true, force: true });
 await mkdir(tmpDir, { recursive: true });
 
-const browser = await chromium.launch();
+// Flags para PC de 8 GB: contiene la RAM del navegador y evita tirones al grabar.
+const browser = await chromium.launch({
+  args: [
+    '--disable-dev-shm-usage',
+    '--disable-background-timer-throttling',
+    '--disable-renderer-backgrounding',
+    '--backgrounding-occluded-windows',
+    '--js-flags=--max-old-space-size=1024',
+    '--disable-features=CalculateNativeWinOcclusion',
+  ],
+});
 const context = await browser.newContext({
   viewport: { width: WIDTH, height: HEIGHT },
-  deviceScaleFactor: 1,
+  deviceScaleFactor: SCALE,
   recordVideo: { dir: tmpDir, size: { width: WIDTH, height: HEIGHT } },
 });
 
@@ -231,15 +261,31 @@ for (const shot of shots) {
     await page.addStyleTag({ path: join(ROOT, 'tools', 'anim.css') });
     await page.addScriptTag({ content: revealScript });
   }
+  // Elementos que estorban al encuadre (p. ej. la barra fija al hacer zoom).
+  if (shot.hide) {
+    const sel = Array.isArray(shot.hide) ? shot.hide : [shot.hide];
+    await page.addStyleTag({ content: sel.map((s) => `${s}{display:none !important}`).join('\n') });
+  }
+
   await page.waitForTimeout(shot.pauseTop);
 
+  // El cursor deja :hover donde caiga. Si la toma no pide uno concreto, se queda
+  // en la esquina (0,0) en vez de marcar un bloque al azar a mitad de pantalla.
+  if (shot.hover) {
+    const el = await page.$(shot.hover);
+    if (el) await el.hover({ force: true });
+    await page.waitForTimeout(250);
+  }
+  await MOVES[shot.motion](page, shot.duration, shot);
+
+  // El still se toma DESPUÉS del movimiento, no antes. Antes salía la cabecera de la página
+  // repetida en todas las tomas: los cinco stills del material anterior eran en realidad dos
+  // imágenes duplicadas. Así el .png es el fotograma ya encuadrado de su propio clip.
   if (STILLS) {
+    await page.waitForTimeout(140);
     await page.screenshot({ path: join(outDir, `${shot.name}.png`) });
   }
 
-  await page.mouse.move(WIDTH * 0.5, HEIGHT * 0.45, { steps: 14 });
-  await page.waitForTimeout(250);
-  await MOVES[shot.motion](page, shot.duration);
   await page.waitForTimeout(shot.pauseBottom);
 
   await page.close();
@@ -264,7 +310,9 @@ if (MP4) {
     const src = join(outDir, f.name);
     const dst = src.replace(/\.webm$/, '.mp4');
     try {
-      await execFileAsync(ffmpeg, ['-y', '-i', src, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', dst]);
+      // -r fuerza rate constante: CapCut/Premiere se llevan mal con VFR.
+      const fpsArgs = FPS > 0 ? ['-r', String(FPS)] : [];
+      await execFileAsync(ffmpeg, ['-y', '-i', src, ...fpsArgs, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', dst]);
       console.log(`✓ ${OUT}/${f.name.replace(/\.webm$/, '.mp4')}`);
     } catch {
       console.warn(`  ! No se pudo convertir ${f.name}: falta ffmpeg.`);

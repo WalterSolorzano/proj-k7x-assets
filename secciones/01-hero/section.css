@@ -2,13 +2,13 @@
 .sec-hero__glow {
   position: absolute; inset: -30% -10% auto; height: 70vh; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(60% 60% at 20% 0%, rgba(255, 107, 53, .20), transparent 70%),
-    radial-gradient(50% 50% at 85% 10%, rgba(124, 92, 255, .22), transparent 70%);
+    radial-gradient(60% 60% at 20% 0%, var(--glow), transparent 70%),
+    radial-gradient(50% 50% at 85% 10%, color-mix(in srgb, var(--accent-2) 26%, transparent), transparent 70%);
 }
 .sec-hero__eyebrow {
-  display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px;
-  border: 1px solid var(--line); border-radius: var(--r-pill);
-  font-size: var(--fs-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .16em;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .14em;
 }
 .sec-hero__eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); display: block; }
 .sec-hero__title {
@@ -17,15 +17,14 @@
 }
 .sec-hero__title em {
   font-style: normal;
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  color: var(--accent);
 }
 .sec-hero__lede { color: var(--text-dim); max-width: 60ch; font-size: var(--fs-lg); }
-.sec-hero__lede code { background: #1c2230; padding: 1px 6px; border-radius: 5px; font-family: var(--font-mono); font-size: 15px; }
+.sec-hero__lede code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-family: var(--font-mono); font-size: 15px; }
 .sec-hero__cta { display: flex; gap: var(--s-3); margin-top: var(--s-6); flex-wrap: wrap; }
 .sec-hero__btn {
   padding: 14px 24px; border-radius: var(--r-pill); font-weight: 600;
   border: 1px solid var(--line); transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .sec-hero__btn:hover { transform: translateY(-2px); border-color: var(--accent); }
-.sec-hero__btn--primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: 0; color: #fff; }
+.sec-hero__btn--primary { background: var(--accent); border: 0; color: var(--bg); }

@@ -1,0 +1,341 @@
+/* secciones/08-nacional — primera pantalla de la plataforma: Nicaragua entera.
+   Escala PAÍS. El mapa manda; todo lo demás son hairlines y tipografía.
+   Geografía real copiada de assets/geo-nicaragua-paths.html (los `d` no se tocan).
+   Solo tokens de assets/tokens.css. Sin cajas, sin sombras, sin --surface. */
+
+.sec-08-nacional { padding: var(--sec-pad) 0; }
+
+/* ============ tablero: una retícula, dos columnas en escritorio ============ */
+.sec-08-nacional__board { display: grid; gap: var(--gap-block); }
+
+/* ============ cabecera ============ */
+.sec-08-nacional__head { min-width: 0; }
+
+/* etiqueta de escala: wayfinding de panel, la ÚNICA del bloque */
+.sec-08-nacional__scale {
+  display: flex; align-items: center; gap: var(--s-3);
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-08-nacional__scale i { flex: 1 1 auto; min-width: var(--s-4); height: 1px; background: var(--line); }
+
+.sec-08-nacional__title {
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 700;
+  letter-spacing: -0.02em; line-height: var(--lh-tight);
+}
+.sec-08-nacional__lede { margin: 0; max-width: 64ch; font-size: var(--fs-sm); color: var(--text-dim); }
+
+/* dato de estado: 3 eventos activos */
+.sec-08-nacional__state {
+  border-top: var(--hairline);
+  padding-top: var(--pad-block);
+}
+.sec-08-nacional__state-v {
+  display: flex; align-items: center; gap: var(--s-2);
+  margin: 0 0 var(--s-1);
+  font-family: var(--font-mono); font-size: var(--fs-md); font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.sec-08-nacional__state-v span { font-weight: 400; color: var(--text-dim); }
+.sec-08-nacional__state-dot {
+  flex: 0 0 auto; width: 9px; height: 9px;
+  border-radius: var(--r-pill); background: var(--accent);
+}
+.sec-08-nacional__state-m {
+  margin: 0; font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.06em; color: var(--text-dim);
+}
+
+/* ============ el mapa: lienzo, sin marco ============ */
+.sec-08-nacional__map { margin: 0; min-width: 0; }
+.sec-08-nacional__mapframe { overflow-x: auto; overscroll-behavior-x: contain; }
+.sec-08-nacional__svg {
+  display: block; width: 100%; height: auto; overflow: visible;
+  min-width: 880px; min-height: 700px;
+}
+.sec-08-nacional__scrollhint { display: none; }
+.sec-08-nacional__cap {
+  margin: var(--s-4) 0 0;
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.04em; color: var(--text-dim);
+}
+
+/* ============ geografía: relleno por carga de nodos (solo relleno) ============ */
+.sec-08-nacional__units > path {
+  stroke: var(--bg); stroke-width: 1.4; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+/* 210 · 186 */
+.sec-08-nacional__units [id="ni-managua"],
+.sec-08-nacional__units [id="ni-raccn"] { fill: var(--heat-5); }
+/* 96 · 88 · 82 */
+.sec-08-nacional__units [id="ni-matagalpa"],
+.sec-08-nacional__units [id="ni-jinotega"],
+.sec-08-nacional__units [id="ni-raccs"] { fill: var(--heat-4); }
+/* 76 · 74 · 62 */
+.sec-08-nacional__units [id="ni-leon"],
+.sec-08-nacional__units [id="ni-chinandega"],
+.sec-08-nacional__units [id="ni-esteli"] { fill: var(--heat-3); }
+/* 58 · 54 · 52 · 46 */
+.sec-08-nacional__units [id="ni-nueva-segovia"],
+.sec-08-nacional__units [id="ni-chontales"],
+.sec-08-nacional__units [id="ni-masaya"],
+.sec-08-nacional__units [id="ni-granada"] { fill: var(--heat-2); }
+/* 44 · 40 · 38 · 36 · 34 */
+.sec-08-nacional__units [id="ni-rivas"],
+.sec-08-nacional__units [id="ni-carazo"],
+.sec-08-nacional__units [id="ni-boaco"],
+.sec-08-nacional__units [id="ni-rio-san-juan"],
+.sec-08-nacional__units [id="ni-madriz"] { fill: var(--heat-1); }
+
+/* la zona crítica: perímetro marcado, no un color más */
+.sec-08-nacional__units [id="ni-raccn"] {
+  stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round;
+}
+.sec-08-nacional__alertrim {
+  fill: none; stroke: var(--bg); stroke-width: 4.6;
+  stroke-dasharray: 1.5 12; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ============ traza de Celeste y símbolos de evento ============ */
+.sec-08-nacional__track {
+  fill: none; stroke: color-mix(in srgb, var(--bad) 42%, transparent);
+  stroke-width: 2.4; stroke-dasharray: 9 7; stroke-linecap: round;
+}
+.sec-08-nacional__track-run {
+  fill: none; stroke: var(--bad); stroke-width: 4.5; stroke-linecap: round;
+  stroke-dasharray: 36 90;
+  animation: sec-08-nacional__run calc(var(--dur) * 14) var(--ease) infinite;
+}
+.sec-08-nacional__arrow { fill: var(--bad); }
+.sec-08-nacional__storm-arm {
+  fill: none; stroke: var(--bad); stroke-width: 3; stroke-linecap: round;
+}
+.sec-08-nacional__leaders path {
+  fill: none; stroke: color-mix(in srgb, var(--text) 38%, transparent); stroke-width: 1.4;
+}
+.sec-08-nacional__quake path {
+  fill: none; stroke: var(--ok); stroke-width: 2.4; stroke-linecap: round;
+}
+
+/* marcas de evento: disco claro + aro de nivel, legibles sobre cualquier relleno */
+.sec-08-nacional__ring { fill: var(--bg); stroke-width: 2.4; }
+.sec-08-nacional__ring--roja { stroke: var(--bad); }
+.sec-08-nacional__ring--amarilla { stroke: var(--warn); }
+.sec-08-nacional__ring--verde { stroke: var(--ok); }
+.sec-08-nacional__dotmark--roja { fill: var(--bad); }
+.sec-08-nacional__dotmark--amarilla { fill: var(--warn); }
+.sec-08-nacional__dotmark--verde { fill: var(--ok); }
+
+/* ============ tipografía dentro del svg ============
+   El halo es --bg: la etiqueta sobrevive encima de cualquier relleno. */
+.sec-08-nacional__halo {
+  paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round;
+}
+.sec-08-nacional__svg .sec-08-nacional__geo {
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.34em;
+  fill: var(--text-dim); opacity: 0.72;
+}
+.sec-08-nacional__svg .sec-08-nacional__unit {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.03em; fill: var(--text);
+}
+.sec-08-nacional__svg .sec-08-nacional__unitbig {
+  font-family: var(--font-mono); font-size: 27px; font-weight: 600;
+  letter-spacing: 0.2em; fill: var(--text);
+  paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round;
+}
+.sec-08-nacional__svg .sec-08-nacional__unitbig--s { font-size: 21px; letter-spacing: 0.22em; }
+.sec-08-nacional__svg .sec-08-nacional__unitsub {
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: 0.14em; fill: var(--text);
+}
+.sec-08-nacional__svg .sec-08-nacional__event {
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.02em; fill: var(--text);
+  paint-order: stroke; stroke: var(--bg); stroke-width: 4.5px; stroke-linejoin: round;
+}
+.sec-08-nacional__svg .sec-08-nacional__event-meta {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+  fill: var(--text-dim);
+}
+.sec-08-nacional__svg .sec-08-nacional__event-lvl {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.1em; fill: var(--text);
+  paint-order: stroke; stroke: var(--bg); stroke-width: 4.5px; stroke-linejoin: round;
+}
+.sec-08-nacional__svg .sec-08-nacional__event-lvl--roja {
+  font-size: 14px; font-weight: 600; letter-spacing: 0.14em;
+}
+
+/* ============ columna de datos ============ */
+.sec-08-nacional__rail {
+  display: flex; flex-direction: column; gap: var(--gap-block);
+  min-width: 0;
+  border-top: var(--hairline); padding-top: var(--pad-block);
+}
+
+/* eventos: filas de datos separadas por hairline, sin cajas */
+.sec-08-nacional__events { list-style: none; margin: 0; padding: 0; }
+.sec-08-nacional__event-item { padding: var(--pad-block) 0; }
+.sec-08-nacional__event-item:first-child { padding-top: 0; }
+.sec-08-nacional__event-item + .sec-08-nacional__event-item { border-top: var(--hairline); }
+.sec-08-nacional__event-top {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--s-3); margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.sec-08-nacional__lvl { display: inline-flex; align-items: center; }
+.sec-08-nacional__dot {
+  width: 8px; height: 8px; margin-right: var(--s-2);
+  border-radius: var(--r-pill); flex: 0 0 auto;
+}
+.sec-08-nacional__dot--roja { background: var(--bad); }
+.sec-08-nacional__dot--amarilla { background: var(--warn); }
+.sec-08-nacional__dot--verde { background: var(--ok); }
+.sec-08-nacional__event-when {
+  font-size: var(--fs-xs); letter-spacing: 0.06em;
+  text-transform: none; color: var(--text-dim); white-space: nowrap;
+}
+.sec-08-nacional__event-name {
+  margin: 0 0 var(--s-1);
+  font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700;
+  letter-spacing: -0.01em; line-height: var(--lh-tight);
+}
+.sec-08-nacional__event-meta { margin: 0; font-size: var(--fs-sm); color: var(--text-dim); }
+
+/* leyenda: rampa real, sin caja */
+.sec-08-nacional__legend { border-top: var(--hairline); padding-top: var(--pad-block); }
+.sec-08-nacional__legend-lab {
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-08-nacional__ramp {
+  list-style: none; display: flex; gap: var(--s-2);
+  margin: 0 0 var(--gap-block); padding: 0;
+}
+.sec-08-nacional__ramp-cell { flex: 1 1 0; min-width: 0; }
+.sec-08-nacional__sw {
+  display: block; height: 16px; border-radius: var(--r-sm);
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+}
+.sec-08-nacional__sw--h1 { background: var(--heat-1); }
+.sec-08-nacional__sw--h2 { background: var(--heat-2); }
+.sec-08-nacional__sw--h3 { background: var(--heat-3); }
+.sec-08-nacional__sw--h4 { background: var(--heat-4); }
+.sec-08-nacional__sw--h5 { background: var(--heat-5); }
+.sec-08-nacional__ramp-cell b {
+  display: block; margin-top: var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.sec-08-nacional__ramp-cell span {
+  display: block; font-family: var(--font-mono); font-size: var(--fs-xs);
+  color: var(--text-dim); white-space: nowrap;
+}
+.sec-08-nacional__keys {
+  list-style: none; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4);
+  margin: 0; padding: 0;
+}
+.sec-08-nacional__keys li {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.04em; color: var(--text-dim);
+}
+.sec-08-nacional__dash {
+  width: 26px; height: 0; margin-right: var(--s-2); flex: 0 0 auto;
+  border-top: 2px dashed color-mix(in srgb, var(--bad) 60%, transparent);
+}
+
+/* zona crítica: el puente a la sección de descenso de escala */
+.sec-08-nacional__cross { border-top: var(--hairline); padding-top: var(--pad-block); }
+.sec-08-nacional__cross-lab {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+}
+.sec-08-nacional__cross-v {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700;
+  line-height: var(--lh-tight);
+}
+.sec-08-nacional__cross-v span {
+  display: block; margin-top: var(--s-1);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 400;
+  letter-spacing: 0.06em; color: var(--text-dim);
+}
+.sec-08-nacional__cross-m { margin: 0; font-size: var(--fs-sm); color: var(--text-dim); }
+
+/* ============ franja de KPIs: una fila de tabla, no seis tarjetas ============ */
+.sec-08-nacional__kpis {
+  display: grid; grid-template-columns: 1fr; gap: 0;
+  border-top: var(--hairline); margin-top: var(--gap-block);
+}
+.sec-08-nacional__kpi {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2);
+  margin: 0; padding: var(--pad-block) 0;
+}
+.sec-08-nacional__kpi + .sec-08-nacional__kpi { border-top: var(--hairline); }
+.sec-08-nacional__kpi b {
+  font-family: var(--font-mono); font-size: var(--fs-md); font-weight: 600;
+  letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+}
+.sec-08-nacional__kpi span {
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.05em; color: var(--text-dim);
+}
+
+/* ============ movimiento: uno solo, el dato en movimiento ============ */
+@keyframes sec-08-nacional__run {
+  0%   { stroke-dashoffset: 126; opacity: 0; }
+  8%   { stroke-dashoffset: 116; opacity: 1; }
+  76%  { stroke-dashoffset: 30;  opacity: 1; }
+  92%  { stroke-dashoffset: 0;   opacity: 0; }
+  100% { stroke-dashoffset: 0;   opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sec-08-nacional__track-run { animation: none; opacity: 0; }
+}
+
+/* ============ responsive ============ */
+@media (max-width: 960px) {
+  .sec-08-nacional__scrollhint {
+    display: block; margin: 0 0 var(--s-2); text-align: right;
+    font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim);
+  }
+}
+@media (min-width: 700px) {
+  .sec-08-nacional__kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sec-08-nacional__kpi { padding: var(--pad-block) var(--s-4); border-left: var(--hairline); }
+  .sec-08-nacional__kpi + .sec-08-nacional__kpi { border-top: 0; }
+  .sec-08-nacional__kpi:nth-child(3n + 1) { border-left: 0; padding-left: 0; }
+  .sec-08-nacional__kpi:nth-child(n + 4) { border-top: var(--hairline); }
+}
+@media (min-width: 1100px) {
+  .sec-08-nacional__kpis { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .sec-08-nacional__kpi:nth-child(n + 4) { border-top: 0; }
+}
+
+/* escritorio ancho: el mapa manda (columna de 900+ px) y los datos van al lado.
+   El rail comparte la columna con el dato de estado para que la hairline vertical sea continua. */
+@media (min-width: 1340px) {
+  .sec-08-nacional__board { grid-template-columns: minmax(0, 1fr) 360px; gap: 0; }
+  .sec-08-nacional__head { grid-column: 1; grid-row: 1; padding: 0 var(--gap-block) var(--gap-block) 0; }
+  .sec-08-nacional__state {
+    grid-column: 2; grid-row: 1;
+    border-top: 0; border-left: var(--hairline);
+    padding: 0 0 var(--gap-block) var(--s-5);
+  }
+  .sec-08-nacional__map { grid-column: 1; grid-row: 2; padding-right: var(--gap-block); }
+  .sec-08-nacional__rail {
+    grid-column: 2; grid-row: 2;
+    border-top: 0; border-left: var(--hairline);
+    padding: 0 0 0 var(--s-5);
+  }
+  .sec-08-nacional__kpis { grid-column: 1 / -1; grid-row: 3; }
+}

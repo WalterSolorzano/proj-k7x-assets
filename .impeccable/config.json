@@ -1,0 +1,44 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "mockups/00-demo.html"
+        ],
+        "createdAt": "2026-10-16T16:05:42.177Z",
+        "reason": "CONTRATO.md 2.1 linea 46: es el lienzo real donde entra el render 3D"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "**/*.html"
+        ],
+        "createdAt": "2026-10-16T17:56:47.057Z",
+        "reason": "CONTRATO sec.2: --bg papel del tema institucional, congelado para SITRE"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "mockups/11-brigadas.html"
+        ],
+        "createdAt": "2026-10-16T18:30:30.101Z",
+        "reason": "CONTRATO 2.0: aplanado, los bloques no tienen borde ni padding interno"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "mockups/11-brigadas.html"
+        ],
+        "createdAt": "2026-10-16T18:30:30.164Z",
+        "reason": "CONTRATO 2.2: etiquetas cartograficas del mini-mapa, deliberadas"
+      }
+    ]
+  }
+}
