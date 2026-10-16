@@ -1,0 +1,9 @@
+{
+  "$comment": "Ejemplo de guion de tomas. `target` puede ser una ruta del repo o una URL. motion: scroll | zoom | pan | static.",
+  "shots": [
+    { "name": "01-hero-zoom", "target": "paginas/01-home.html", "motion": "zoom", "duration": 6 },
+    { "name": "02-recorrido", "target": "paginas/01-home.html", "motion": "scroll", "duration": 9 },
+    { "name": "03-deriva", "target": "mockups/00-demo.html", "motion": "pan", "duration": 7 },
+    { "name": "04-plano-fijo", "target": "mockups/00-demo.html", "motion": "static", "duration": 4 }
+  ]
+}

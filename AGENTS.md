@@ -1,8 +1,8 @@
 # Rallylatam — reglas del proyecto
 
-Proyecto **X**: hackathon de 24 h. Lenguaje y destino **aún no decididos**.
-Prioridad: producto **visualmente atractivo** por encima de mecánica compleja.
-Entregable final: **imágenes** del programa (capturas), no una demo en vivo.
+Proyecto **X**: un **recurso visual** que se inserta dentro del video del pitch. Lenguaje y destino **aún no decididos** (escena 3D, web, visualización, app…).
+Prioridad: que sea **visualmente impactante** en pantalla, no que tenga mecánica compleja.
+Entregable final: **material de rodaje** — clips con movimiento + stills de alta calidad. **No** se produce el video, se produce lo que va dentro.
 
 ## Reglas de oro
 1. **Mockups primero.** Ninguna línea de lógica antes de aprobar los mockups visuales.
@@ -46,8 +46,8 @@ Entregable final: **imágenes** del programa (capturas), no una demo en vivo.
 ## Herramientas (ya instaladas — no las reescribas)
 - `npm run serve` → galería local (secciones, páginas, mockups, capturas, videos) con recarga en vivo: http://localhost:5173
 - `npm run build` → compone `paginas/` desde `secciones/`
-- `npm run capture` → capturas fullpage a `presentacion/` + `presentacion.md`
-- `npm run video` → video de la UI desplazándose con animaciones a `presentacion/video/`
+- `npm run capture` → capturas fullpage a `presentacion/` + `presentacion.md` (stills de alta calidad con `--scale 2`)
+- `npm run video` → **material de rodaje**: clips con movimiento (scroll/zoom/pan/static) + stills a `presentacion/video/`
 - Detalle en la skill `ui-preview`; no la cargues si no la necesitas.
 
 ## Referencia rápida

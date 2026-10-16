@@ -25,9 +25,15 @@ function pickDir() {
   return 'mockups';
 }
 
+const PRESETS = { '16x9': [1920, 1080], '9x16': [1080, 1920], '4x5': [1080, 1350], '1x1': [1080, 1080], wide: [2560, 1080] };
+const PRESET = val('preset', null);
+const [dw, dh] = (PRESET && PRESETS[PRESET]) || [1440, 900];
+
 const OUT = val('out', 'presentacion');
-const WIDTH = Number(val('width', 1440));
-const HEIGHT = Number(val('height', 900));
+const WIDTH = Number(val('width', dw));
+const HEIGHT = Number(val('height', dh));
+const SCALE = Number(val('scale', 1)); // 2 => stills retina (3840x2160) para hacer zoom en edición
+const FIT = val('fit', 'page'); // page = pantalla completa | viewport = recorte 16:9
 const MOBILE = flag('mobile');
 const URL_ARG = val('url', null);
 
@@ -70,7 +76,7 @@ const outDir = resolve(ROOT, OUT);
 await mkdir(outDir, { recursive: true });
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: SCALE });
 
 const made = [];
 const shoot = async (t, suffix = '') => {
@@ -78,7 +84,7 @@ const shoot = async (t, suffix = '') => {
   await page.goto(t.url, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts?.ready);
   await page.waitForTimeout(350);
-  await page.screenshot({ path: join(outDir, `${name}.png`), fullPage: true });
+  await page.screenshot({ path: join(outDir, `${name}.png`), fullPage: FIT === 'page' });
   made.push({ name: `${name}.png`, ref: t.ref });
   console.log(`✓ ${OUT}/${name}.png`);
 };

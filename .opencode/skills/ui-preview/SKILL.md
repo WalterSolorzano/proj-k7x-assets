@@ -38,22 +38,34 @@ npm run capture -- --mobile            # añade viewport 390px
 npm run capture -- --url http://localhost:3000,http://localhost:3000/precios
 ```
 
-## 3. Video de la UI desplazándose con animaciones
+## 3. Material de rodaje (footage para el video del pitch)
+
+El propósito **no es producir el video final**, sino el **material** que se inserta en él:
+clips con movimiento y stills de alta calidad.
 
 ```sh
-npm run video                        # presentacion/video/NN-*.webm
-npm run video -- --duration 10       # desplazamiento más lento
-npm run video -- --no-anim           # sin inyectar animaciones
-npm run video -- --url http://localhost:3000
-npm run video:mp4                    # además convierte a .mp4 (requiere ffmpeg-static o ffmpeg)
+npm run video                          # una toma (scroll) por pantalla → presentacion/video/*.webm
+npm run video -- --preset 9x16         # vertical (TikTok/Reels)
+npm run video -- --motion zoom         # tomas: scroll | zoom | pan | static
+npm run video -- --duration 10         # movimiento más lento
+npm run video -- --stills              # además un PNG por toma
+npm run video -- --guion guion.json    # varias tomas definidas a mano (ver guion.json)
+npm run video:mp4                      # además convierte a .mp4
 ```
 
-`tools/video.mjs` graba cada pantalla con Playwright: hace scroll suave de arriba a abajo,
-pausa al inicio y al final, y —si no lo pide `--no-anim`— inyecta `tools/anim.css` más un
-IntersectionObserver que revela secciones al entrar en pantalla. Por eso **cualquier sección o
-página se ve animada en el video sin tocar su código**.
+`tools/video.mjs` genera un índice en `presentacion/video/material.md` con cada toma y su
+movimiento, para que el editor sepa qué tiene.
 
-Parámetros: `--dir`, `--out`, `--url`, `--width`, `--height`, `--duration`, `--pause-top`, `--pause-bottom`.
+Presets: `16x9` (1920×1080, por defecto) · `9x16` · `4x5` · `1x1` · `wide`.
+
+## 3b. Stills de alta calidad (para zoom/Ken Burns en edición)
+
+```sh
+npm run capture -- --preset 16x9 --scale 2 --fit viewport
+```
+
+`--scale 2` produce PNG retina (3840×2160) ideales para acercar sin que se pixele.
+`--fit viewport` recorta a 16:9 en lugar de capturar la página entera.
 
 ## Requisitos
 

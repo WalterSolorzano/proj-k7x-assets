@@ -5,8 +5,9 @@ lo mantiene actualizado y es el único que lo edita.
 
 > Estado: **plantilla**. El orquestador lo rellena en el kickoff con la información de `brief.md`.
 >
-> **Alcance:** prototipo visual para un rally de 24 h. Pantallas + imágenes + video. **Sin** app funcional,
-> backend, login, base de datos ni persistencia. Navegación por links entre HTML.
+> **Alcance:** somos el **recurso que va dentro del video del pitch**, no el video. Rally de 24 h:
+> prototipo visual, sin app funcional, backend, login, base de datos ni persistencia.
+> Entregamos **material de rodaje**: clips con movimiento + stills de alta calidad.
 
 ## 1. Producto
 - **Qué es:** (pendiente)
