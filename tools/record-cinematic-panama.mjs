@@ -78,12 +78,12 @@ async function main() {
 
   // Recortar exactamente con -ss 00:00:04.180 para asegurar que el primer fotograma sea 100% visible
   await execFileAsync(ffmpegStatic, [
-    '-ss', '00:00:04.180',
+    '-ss', '00:00:02.000',
     '-i', videoPath,
     '-c:v', 'libx264',
     '-pix_fmt', 'yuv420p',
     '-r', '30',
-    '-preset', 'slow',
+    '-preset', 'veryfast',
     '-crf', '17',
     '-y',
     finalMp4

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alineación ODS - SITRA</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #ffffff;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      color: #0f172a;
+      position: relative;
+    }
+
+    /* Subtle high-end backdrop pattern */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.04) 0%, transparent 60%),
+        linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      z-index: 0;
+    }
+
+    /* Top branding banner */
+    .header-bar {
+      position: absolute;
+      top: 40px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-badge {
+      background: #0284c7;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-title span {
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .agenda-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .agenda-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    /* Tray at the bottom for docked icons */
+    .dock-container {
+      position: absolute;
+      bottom: 50px;
+      left: 80px;
+      right: 80px;
+      height: 180px;
+      background: rgba(248, 250, 252, 0.85);
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      gap: 24px;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    .dock-placeholder-label {
+      position: absolute;
+      left: 36px;
+      top: -14px;
+      background: #ffffff;
+      padding: 2px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .dock-slot {
+      width: 140px;
+      height: 140px;
+      border-radius: 18px;
+      border: 2px dashed #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a3b8;
+      position: relative;
+    }
+
+    /* Active Showcase Stage (Center-Left Image, Center-Right Details) */
+    .stage {
+      position: absolute;
+      top: 130px;
+      left: 80px;
+      right: 80px;
+      height: 660px;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* Floating ODS Card that animates */
+    .ods-actor {
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      background: #ffffff;
+      transform-origin: top left;
+      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 30;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .ods-actor img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Details Panel */
+    .details-panel {
+      position: absolute;
+      left: 580px;
+      top: 60px;
+      right: 40px;
+      max-width: 1100px;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 25;
+    }
+
+    .details-panel.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .detail-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .detail-title {
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: #0f172a;
+    }
+
+    .detail-box-desc {
+      background: #f8fafc;
+      border-left: 5px solid #0284c7;
+      padding: 24px 30px;
+      border-radius: 0 16px 16px 0;
+      margin-bottom: 24px;
+    }
+
+    .detail-box-desc h4 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .detail-box-desc p {
+      font-size: 22px;
+      line-height: 1.45;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    .detail-box-adapt {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.06) 0%, rgba(16, 185, 129, 0.06) 100%);
+      border: 1.5px solid rgba(2, 132, 199, 0.2);
+      border-radius: 18px;
+      padding: 26px 32px;
+    }
+
+    .detail-box-adapt-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .detail-box-adapt-badge {
+      background: #0f172a;
+      color: #38bdf8;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .detail-box-adapt-header h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0369a1;
+    }
+
+    .detail-box-adapt p {
+      font-size: 22px;
+      line-height: 1.45;
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    /* Docked item styling */
+    .docked-thumb {
+      width: 140px;
+      height: 140px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+    }
+
+    .docked-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <!-- Header -->
+  <div class="header-bar">
+    <div class="brand-left">
+      <div class="brand-badge">SITRA · SISTEMA TERRITORIAL</div>
+      <div class="brand-title">Alineación Estratégica con los <span>Objetivos de Desarrollo Sostenible</span></div>
+    </div>
+    <div class="agenda-pill">
+      <div class="agenda-pill-dot"></div>
+      AGENDA 2030 · NACIONES UNIDAS
+    </div>
+  </div>
+
+  <!-- Main Stage -->
+  <div class="stage" id="stage">
+    <!-- Actor for big featured ODS image -->
+    <div class="ods-actor" id="odsActor">
+      <img id="actorImg" src="" alt="ODS">
+    </div>
+
+    <!-- Details panel -->
+    <div class="details-panel" id="detailsPanel">
+      <div class="detail-tag" id="odsTag">ODS 1</div>
+      <h2 class="detail-title" id="odsTitle">Fin de la Pobreza</h2>
+      
+      <div class="detail-box-desc">
+        <h4>Descripción del Objetivo</h4>
+        <p id="odsDesc">Poner fin a la pobreza en todas sus formas en todo el mundo.</p>
+      </div>
+
+      <div class="detail-box-adapt">
+        <div class="detail-box-adapt-header">
+          <span class="detail-box-adapt-badge">CÓMO SE ADAPTA SITRA</span>
+          <h4>Impacto Operativo y Resiliencia</h4>
+        </div>
+        <p id="odsAdapt">Protege el patrimonio familiar y evita que los desastres empujen a las personas a la pobreza extrema. Cada vida salvada y cada hogar protegido evita que una familia caiga en pobreza estructural.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dock tray at the bottom -->
+  <div class="dock-container" id="dockContainer">
+    <div class="dock-placeholder-label">ODS PRIORIZADOS EN EL DESPLIEGUE</div>
+    <div class="dock-slot" id="slot-0">ODS 1</div>
+    <div class="dock-slot" id="slot-1">ODS 2</div>
+    <div class="dock-slot" id="slot-2">ODS 9</div>
+    <div class="dock-slot" id="slot-3">ODS 11</div>
+    <div class="dock-slot" id="slot-4">ODS 13</div>
+    <div class="dock-slot" id="slot-5">ODS 15</div>
+  </div>
+
+  <script>
+    const ODS_DATA = [
+      {
+        num: 1,
+        code: 'ODS 1',
+        title: 'Fin de la Pobreza',
+        tagColor: '#e5243b',
+        tagBg: '#fee2e2',
+        img: '/assets/ods/clean-ods-1.png',
+        desc: 'Poner fin a la pobreza en todas sus formas y proteger a las poblaciones vulnerables ante eventos catastróficos.',
+        adapt: 'Protege el patrimonio familiar y evita que los desastres empujen a las familias a la pobreza extrema. Cada vida salvada y cada evacuación preventiva resguarda los medios de vida de la comunidad.'
+      },
+      {
+        num: 2,
+        code: 'ODS 2',
+        title: 'Hambre Cero',
+        tagColor: '#dda63a',
+        tagBg: '#fef3c7',
+        img: '/assets/ods/clean-ods-2.png',
+        desc: 'Lograr la seguridad alimentaria, la mejora de la nutrición y promover la protección de cadenas de subsistencia.',
+        adapt: 'Fomenta la agricultura resiliente y mitiga la destrucción de cosechas por inundaciones. La estimación de ocupación y riesgo permite focalizar y dirigir la asistencia alimentaria de emergencia con total precisión.'
+      },
+      {
+        num: 9,
+        code: 'ODS 9',
+        title: 'Industria, Innovación e Infraestructura',
+        tagColor: '#fd6925',
+        tagBg: '#ffedd5',
+        img: '/assets/ods/clean-ods-9.png',
+        desc: 'Desarrollar infraestructuras fiables, sostenibles, resilientes y de calidad para apoyar el desarrollo humano.',
+        adapt: 'Aporta sensores e inteligencia LoRa autónoma para diseñar obras públicas y puentes resilientes, y define con datos en tiempo real qué infraestructura crítica debe protegerse primero ante desbordes.'
+      },
+      {
+        num: 11,
+        code: 'ODS 11',
+        title: 'Ciudades y Comunidades Sostenibles',
+        tagColor: '#fd9d24',
+        tagBg: '#fef3c7',
+        img: '/assets/ods/clean-ods-11.png',
+        desc: 'Lograr que las ciudades y los asentamientos humanos sean inclusivos, seguros, resilientes y sostenibles.',
+        adapt: 'El mapa de calor y ocupación de SITRA identifica asentamientos urbanos informales en alto riesgo hidrológico, facilitando rutas de evacuación anticipadas y orientando el ordenamiento territorial.'
+      },
+      {
+        num: 13,
+        code: 'ODS 13',
+        title: 'Acción por el Clima',
+        tagColor: '#3f7e44',
+        tagBg: '#dcfce7',
+        img: '/assets/ods/clean-ods-13.png',
+        desc: 'Adoptar medidas urgentes para combatir el cambio climático, sus efectos y fortalecer la respuesta temprana.',
+        adapt: 'Vincula monitoreo meteorológico de lluvia y caudal con simulacros multi-amenazas y alertas tempranas automáticas por sirenas LoRa, reduciendo drásticamente el tiempo de respuesta ciudadana.'
+      },
+      {
+        num: 15,
+        code: 'ODS 15',
+        title: 'Vida de Ecosistemas Terrestres',
+        tagColor: '#56c02b',
+        tagBg: '#dcfce7',
+        img: '/assets/ods/clean-ods-15.png',
+        desc: 'Gestionar sosteniblemente los bosques, luchar contra la desertificación y frenar la degradación de las cuencas.',
+        adapt: 'Los sensores de lluvia y nivel de agua validan en tiempo real la capacidad amortiguadora de las cuencas reforestadas, previniendo deslaves montañosos y desbordamientos en laderas vulnerables.'
+      }
+    ];
+
+    const actor = document.getElementById('odsActor');
+    const actorImg = document.getElementById('actorImg');
+    const detailsPanel = document.getElementById('detailsPanel');
+    const odsTag = document.getElementById('odsTag');
+    const odsTitle = document.getElementById('odsTitle');
+    const odsDesc = document.getElementById('odsDesc');
+    const odsAdapt = document.getElementById('odsAdapt');
+    const dockContainer = document.getElementById('dockContainer');
+
+    // Timing helper
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    // Expose orchestrator for Playwright recording or interactive playback
+    window.runODSSequence = async function(onComplete, paceSeconds = 5) {
+      console.log('Iniciando secuencia ODS...');
+
+      for (let i = 0; i < ODS_DATA.length; i++) {
+        const item = ODS_DATA[i];
+        const slotEl = document.getElementById('slot-' + i);
+        const slotRect = slotEl.getBoundingClientRect();
+
+        // 1. Configurar datos del ODS
+        actorImg.src = item.img;
+        odsTag.textContent = item.code;
+        odsTag.style.color = item.tagColor;
+        odsTag.style.backgroundColor = item.tagBg;
+        odsTitle.textContent = item.title;
+        odsDesc.textContent = item.desc;
+        odsAdapt.textContent = item.adapt;
+
+        // 2. Aparece en grande al centro-izquierda
+        // Grande: left: 90px, top: 180px, width: 440px, height: 440px
+        actor.style.transition = 'none';
+        actor.style.left = '90px';
+        actor.style.top = '170px';
+        actor.style.width = '440px';
+        actor.style.height = '440px';
+        actor.style.opacity = '0';
+        actor.style.transform = 'scale(0.85)';
+        actor.style.visibility = 'visible';
+        detailsPanel.classList.remove('visible');
+
+        // Force reflow
+        actor.offsetHeight;
+
+        // Animar entrada del ODS en grande
+        actor.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+        actor.style.opacity = '1';
+        actor.style.transform = 'scale(1)';
+
+        // Animar detalles
+        await sleep(250);
+        detailsPanel.classList.add('visible');
+
+        // TIEMPO EN GRANDE PARA MENCIONARLO (lectura / locución)
+        await sleep(paceSeconds * 1000);
+
+        // 3. Ocultar detalles
+        detailsPanel.classList.remove('visible');
+        await sleep(350);
+
+        // 4. Animar ODS encogiéndose y viajando a su ranura en la fila inferior
+        actor.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        actor.style.left = slotRect.left + 'px';
+        actor.style.top = slotRect.top + 'px';
+        actor.style.width = slotRect.width + 'px';
+        actor.style.height = slotRect.height + 'px';
+        actor.style.borderRadius = '18px';
+
+        await sleep(800);
+
+        // Fijar en el slot permanente
+        slotEl.innerHTML = `<img src="${item.img}" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">`;
+        slotEl.style.border = 'none';
+        slotEl.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
+
+        // Ocultar actor momentáneamente antes del siguiente
+        actor.style.visibility = 'hidden';
+        actor.style.opacity = '0';
+        await sleep(200);
+      }
+
+      console.log('Secuencia completa de los 6 ODS finalizada.');
+      if (onComplete) onComplete();
+    };
+
+    // Auto-arranque en modo preview si se abre manualmente en el navegador
+    if (new URLSearchParams(window.location.search).get('autoplay') === '1') {
+      window.addEventListener('load', () => {
+        setTimeout(() => window.runODSSequence(null, 4), 1000);
+      });
+    }
+  </script>
+</body>
+</html>
