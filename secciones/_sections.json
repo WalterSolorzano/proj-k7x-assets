@@ -6,7 +6,7 @@
       "title": "SITRA · Sistema Internacional Territorial para Rescates y Alertas",
       "theme": "institucional",
       "scheme": "light",
-      "sections": ["00-sinapred-app", "10-bar", "07-latam", "08-nacional", "09-escala", "11-mapa", "12-prioridad", "13-comparar", "15-detalle", "17-croquis", "14-red", "16-recursos", "19-privacidad"]
+      "sections": ["10-bar", "07-latam", "08-nacional", "09-escala", "11-mapa", "12-prioridad", "13-comparar", "15-detalle", "17-croquis", "14-red", "16-recursos", "19-privacidad"]
     },
     {
       "id": "02-brigadas",

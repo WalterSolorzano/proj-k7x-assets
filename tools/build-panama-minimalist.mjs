@@ -97,7 +97,29 @@ const html = `<!DOCTYPE html>
     .brand-box {
       display: flex;
       align-items: center;
-      gap: var(--s-3);
+      gap: 14px;
+    }
+    .sinapred-logo-img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+    }
+    .brand-divider {
+      width: 1.5px;
+      height: 32px;
+      background: var(--border);
+    }
+    .sitra-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sitra-logo-img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 4px;
     }
     .brand-mark {
       color: var(--accent);
@@ -806,6 +828,126 @@ const html = `<!DOCTYPE html>
     .health-pill-val.alert { color: var(--accent); }
     .health-pill-val.ok { color: var(--ok); }
 
+    /* TARJETA DE DATOS METEOROLÓGICOS EN VIVO (ESTILO SINAPRED) */
+    .meteo-section {
+      margin-top: 10px;
+      border-top: var(--hairline);
+      padding-top: 10px;
+    }
+    .meteo-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .meteo-title b { color: var(--accent); }
+    .meteo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .meteo-card {
+      background: var(--surface-2);
+      border: var(--hairline);
+      border-radius: var(--r-sm);
+      padding: 7px 9px;
+      font-family: var(--font-mono);
+    }
+    .meteo-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-dim);
+      font-size: 9px;
+      margin-bottom: 3px;
+    }
+    .meteo-card-val {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .meteo-spark {
+      width: 36px;
+      height: 12px;
+    }
+    .meteo-card-val small {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--text-dim);
+    }
+
+    /* BARRA DE CAPAS METEOROLÓGICAS (SUPERIOR EN MAPA) */
+    .weather-pill-bar {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 4px 6px;
+      border-radius: 20px;
+      border: var(--hairline);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      z-index: 25;
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+    .w-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+    .w-pill.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* LEYENDA TÉRMICA / RIESGO EN ESQUINA INFERIOR */
+    .meteo-legend-box {
+      position: absolute;
+      bottom: 16px;
+      left: 28px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 8px 12px;
+      border-radius: var(--r-sm);
+      border: var(--hairline);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      z-index: 25;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      width: 220px;
+    }
+    .meteo-legend-bar {
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(to right, #48bb78, #ecc94b, #ed8936, #e53e3e, #9b2c2c);
+      margin: 5px 0 3px;
+    }
+    .meteo-legend-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+      font-size: 8.5px;
+    }
+
     .pt-general {
       border-top: var(--hairline);
       padding-top: 10px;
@@ -863,14 +1005,25 @@ const html = `<!DOCTYPE html>
   <!-- FRANJA DE MANDO INSTITUCIONAL SITRE -->
   <header class="command-header">
     <div class="brand-box">
-      <svg class="brand-mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
-        <circle cx="13" cy="13" r="3.2" fill="currentColor"></circle>
-        <path d="M6.4 6.4a9.4 9.4 0 0 0 0 13.2M19.6 19.6a9.4 9.4 0 0 0 0-13.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
-        <path d="M9.4 9.4a5.1 5.1 0 0 0 0 7.2M16.6 16.6a5.1 5.1 0 0 0 0-7.2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></path>
-      </svg>
-      <div class="brand-titles">
-        <span class="brand-name">SITRE</span>
-        <span class="brand-sub">SISTEMA TERRITORIAL DE RESCATE</span>
+      <!-- LOGO OFICIAL SINAPRED -->
+      <div style="display:flex; align-items:center; gap:8px;">
+        <img class="sinapred-logo-img" src="../../assets/sinapred-logo.png" alt="Logo Oficial SINAPRED" />
+        <div class="brand-titles">
+          <span style="font-family:var(--font-display); font-size:13px; font-weight:800; letter-spacing:0.04em; color:#0f172a;">SINAPRED</span>
+          <span style="font-family:var(--font-mono); font-size:7.5px; font-weight:600; letter-spacing:0.08em; color:var(--text-dim); text-transform:uppercase;">Prevención & Mitigación</span>
+        </div>
+      </div>
+
+      <!-- BARRA DE SEPARACIÓN -->
+      <div class="brand-divider"></div>
+
+      <!-- NUESTRO LOGO Y NOMBRE: SITRA -->
+      <div class="sitra-logo-wrap">
+        <img class="sitra-logo-img" src="../../assets/sitra-logo.jpg" alt="Logo SITRA" />
+        <div class="brand-titles">
+          <span class="brand-name" style="font-size:15px; font-weight:800; letter-spacing:0.06em; color:var(--text);">SITRA</span>
+          <span class="brand-sub" style="font-size:7.5px; font-weight:600; letter-spacing:0.06em; color:var(--text-dim);">SISTEMA INTERNACIONAL TERRITORIAL PARA RESCATES Y ALERTAS</span>
+        </div>
       </div>
     </div>
 
@@ -904,6 +1057,33 @@ const html = `<!DOCTYPE html>
     <div class="scene-layer is-active" id="scene-latam">
       <div class="latam-stage">
         <svg viewBox="0 0 1000 900">
+          <!-- CAPA OCEÁNICA Y RADAR METEOROLÓGICO (ESTILO SINAPRED) -->
+          <!-- Océano Pacífico y Atlántico rotulados -->
+          <g font-family="var(--font-mono)" font-size="12" font-weight="700" fill="#a0aec0" letter-spacing="0.15em" opacity="0.65" pointer-events="none">
+            <text x="140" y="520">OCÉANO PACÍFICO</text>
+            <text x="660" y="160">MAR CARIBE</text>
+            <text x="820" y="240">OCÉANO ATLÁNTICO</text>
+          </g>
+
+          <!-- FRENTE TROPICAL Y ESPIRAL DE HURACÁN (RADAR DOPPLER EN EL PACÍFICO / CENTROAMÉRICA) -->
+          <g class="meteo-radar-group" opacity="0.78" pointer-events="none">
+            <!-- Espiral concéntrica del huracán -->
+            <circle cx="160" cy="380" r="110" fill="none" stroke="rgba(237, 137, 54, 0.25)" stroke-width="12" stroke-dasharray="14 8" />
+            <circle cx="160" cy="380" r="75" fill="rgba(229, 62, 62, 0.28)" stroke="rgba(229, 62, 62, 0.6)" stroke-width="4" />
+            <circle cx="160" cy="380" r="35" fill="rgba(197, 48, 48, 0.75)">
+              <animate attributeName="r" values="35;42;35" dur="3s" repeatCount="indefinite" />
+            </animate>
+            <circle cx="160" cy="380" r="6" fill="#ffffff" />
+            <text x="160" y="340" fill="#c53030" font-family="var(--font-mono)" font-size="10" font-weight="800" text-anchor="middle">SISTEMA HURACÁN · CAT 4</text>
+          </g>
+
+          <!-- Manchas térmicas de precipitación intensa sobre el istmo y Sudamérica -->
+          <g opacity="0.45" pointer-events="none">
+            <ellipse cx="460" cy="250" rx="45" ry="25" fill="#e53e3e" filter="blur(8px)" />
+            <ellipse cx="560" cy="280" rx="70" ry="40" fill="#ed8936" filter="blur(12px)" />
+            <ellipse cx="640" cy="360" rx="110" ry="70" fill="#ecc94b" filter="blur(18px)" />
+          </g>
+
           <g class="sec-07-latam__countries">
             ${latamPaths}
           </g>
@@ -940,6 +1120,37 @@ const html = `<!DOCTYPE html>
             <animate attributeName="opacity" values="1;0" dur="1.6s" repeatCount="indefinite"/>
           </circle>
         </svg>
+
+        <!-- BARRA SUPERIOR DE CAPAS METEOROLÓGICAS (PRECIPITACIÓN, TEMPERATURA, VIENTO) -->
+        <div class="weather-pill-bar">
+          <button class="w-pill is-active">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242M8 19v1M8 14v1M16 19v1M16 14v1M12 21v1M12 16v1"/></svg>
+            Precipitación
+          </button>
+          <button class="w-pill">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+            Temperatura
+          </button>
+          <button class="w-pill">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+            Viento
+          </button>
+        </div>
+
+        <!-- LEYENDA INFERIOR DE RIESGO DE IMPACTO -->
+        <div class="meteo-legend-box">
+          <div style="display:flex; justify-content:space-between; color:var(--text); font-weight:700;">
+            <span>NIVEL DE PRECIPITACIÓN</span>
+            <span style="color:var(--accent);">EXTREMO</span>
+          </div>
+          <div class="meteo-legend-bar"></div>
+          <div class="meteo-legend-labels">
+            <span>Bajo</span>
+            <span>Moderado</span>
+            <span>Alto</span>
+            <span>Muy Alto</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1205,19 +1416,73 @@ const html = `<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- DATOS GENERALES DE TELEMETRÍA AMBIENTAL -->
-    <div class="pt-general">
-      <div class="pt-row">
-        <span>Total Pronosticado:</span>
-        <b style="color:var(--accent);" id="lbl-pt-total">640 personas en inmueble</b>
+    <!-- DATOS GENERALES DE TELEMETRÍA AMBIENTAL & METEOROLOGÍA ESTILO SINAPRED -->
+    <div class="meteo-section">
+      <div class="meteo-title">
+        <span>ESTACIÓN METEOROLÓGICA & RADAR</span>
+        <b>SINAPROC / SINAPRED</b>
+      </div>
+      <div class="meteo-grid">
+        <!-- HUMEDAD -->
+        <div class="meteo-card">
+          <div class="meteo-card-top">
+            <span class="meteo-card-label">HUMEDAD REL.</span>
+            <svg class="meteo-sparkline" viewBox="0 0 40 16">
+              <path d="M2,12 Q10,4 20,9 T38,5" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="meteo-card-val" style="color:#0284c7;">78<span class="meteo-card-unit">%</span></div>
+          <span style="font-size:8px; color:var(--text-dim);">Sat. Humedad Alta</span>
+        </div>
+
+        <!-- VIENTO / RÁFAGAS -->
+        <div class="meteo-card">
+          <div class="meteo-card-top">
+            <span class="meteo-card-label">VIENTO / RÁFAGA</span>
+            <svg class="meteo-sparkline" viewBox="0 0 40 16">
+              <path d="M2,13 L12,8 L22,14 L32,3 L38,6" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="meteo-card-val" id="lbl-wind" style="color:#ea580c;">92<span class="meteo-card-unit">km/h</span></div>
+          <span style="font-size:8px; color:var(--text-dim);">Anemómetro NE</span>
+        </div>
+
+        <!-- LLUVIA ACUMULADA -->
+        <div class="meteo-card">
+          <div class="meteo-card-top">
+            <span class="meteo-card-label">PRECIPITACIÓN</span>
+            <svg class="meteo-sparkline" viewBox="0 0 40 16">
+              <rect x="3" y="9" width="4" height="7" fill="#2563eb" rx="1"/>
+              <rect x="11" y="6" width="4" height="10" fill="#2563eb" rx="1"/>
+              <rect x="19" y="4" width="4" height="12" fill="#2563eb" rx="1"/>
+              <rect x="27" y="2" width="4" height="14" fill="#2563eb" rx="1"/>
+              <rect x="35" y="1" width="4" height="15" fill="#0284c7" rx="1"/>
+            </svg>
+          </div>
+          <div class="meteo-card-val" style="color:#2563eb;">12.6<span class="meteo-card-unit">mm/h</span></div>
+          <span style="font-size:8px; color:var(--text-dim);">Radar Acumulado</span>
+        </div>
+
+        <!-- PRESIÓN ATMOSFÉRICA -->
+        <div class="meteo-card">
+          <div class="meteo-card-top">
+            <span class="meteo-card-label">PRESIÓN BAROM.</span>
+            <svg class="meteo-sparkline" viewBox="0 0 40 16">
+              <path d="M2,6 Q12,12 24,11 T38,15" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="meteo-card-val" style="color:#7c3aed;">1012<span class="meteo-card-unit">hPa</span></div>
+          <span style="font-size:8px; color:var(--text-dim);">Barómetro Estable</span>
+        </div>
+      </div>
+
+      <div class="pt-row" style="margin-top:6px; border-top:1px dashed var(--border); padding-top:5px;">
+        <span>Pronóstico Ocupación:</span>
+        <b style="color:var(--accent); font-family:var(--font-mono); font-size:11px;" id="lbl-pt-total">640 personas en inmueble</b>
       </div>
       <div class="pt-row">
-        <span>Viento Exterior:</span>
-        <b id="lbl-wind">92 km/h (Anemómetro)</b>
-      </div>
-      <div class="pt-row">
-        <span>Telemetría:</span>
-        <b id="lbl-battery">Batería 89% · Panel Solar 22°</b>
+        <span>Telemetría LoRaWAN:</span>
+        <b id="lbl-battery" style="color:var(--text-dim); font-size:9.5px;">Batería 89% · Panel Solar 22°</b>
       </div>
     </div>
   </aside>

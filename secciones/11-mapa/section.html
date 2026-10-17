@@ -8,9 +8,10 @@
         <p class="sec-11-mapa__lede">Ocupación estimada por manzana, agrupada en 6 sectores. Corte 17 oct, 04:30 · hora 7 post-impacto.</p>
       </div>
       <div class="sec-11-mapa__layers" role="group" aria-label="Capas del mapa">
-        <button type="button" class="sec-11-mapa__layer is-on" aria-pressed="true">Ocupación</button>
-        <button type="button" class="sec-11-mapa__layer" aria-pressed="false">Amenaza</button>
-        <button type="button" class="sec-11-mapa__layer" aria-pressed="false">Confianza</button>
+        <button type="button" class="sec-11-mapa__layer is-on" id="btn-layer-ocupacion" aria-pressed="true">Ocupación</button>
+        <button type="button" class="sec-11-mapa__layer" id="btn-layer-clima" aria-pressed="false">🌧️ Simulación Meteorológica</button>
+        <button type="button" class="sec-11-mapa__layer" id="btn-layer-amenaza" aria-pressed="false">Amenaza Inundación</button>
+        <button type="button" class="sec-11-mapa__layer" id="btn-layer-confianza" aria-pressed="false">Confianza LoRa</button>
       </div>
     </div>
 
@@ -24,15 +25,32 @@
         <span class="sec-11-mapa__counter-v">2&nbsp;010 <span class="sec-11-mapa__counter-u">est.</span></span>
       </div>
       <div class="sec-11-mapa__counter">
-        <span class="sec-11-mapa__counter-lab">Nodos en silencio</span>
-        <span class="sec-11-mapa__counter-v">8 <span class="sec-11-mapa__counter-u">de 42</span></span>
+        <span class="sec-11-mapa__counter-lab">Simulación Meteorológica</span>
+        <span class="sec-11-mapa__counter-v">142 <span class="sec-11-mapa__counter-u">mm/6h · Ráfagas 84 km/h</span></span>
       </div>
     </div>
 
     <p class="sec-11-mapa__scrollhint">Desliza para recorrer el mapa</p>
 
     <div class="sec-11-mapa__map">
-      <svg class="sec-11-mapa__svg" viewBox="0 0 1320 566" role="img" aria-label="Mapa de ocupación estimada por manzana, agrupada en 6 sectores, con nodos y estación base">
+      <svg class="sec-11-mapa__svg" viewBox="0 0 1320 566" role="img" aria-label="Mapa de ocupación estimada por manzana con simulación meteorológica de lluvia y viento">
+        <defs>
+          <!-- Gradiente de radar de lluvia / precipitación -->
+          <radialGradient id="meteo-rain-core" cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stop-color="#00a8cc" stop-opacity="0.55"/>
+            <stop offset="45%" stop-color="#14273d" stop-opacity="0.35"/>
+            <stop offset="75%" stop-color="#f05a22" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#f05a22" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="meteo-wind-stream" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00a8cc" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.1"/>
+          </linearGradient>
+          <filter id="meteo-blur">
+            <feGaussianBlur stdDeviation="8"/>
+          </filter>
+        </defs>
+
         <path class="sec-11-mapa__sea" d="M0 62 C120 54 210 78 320 74 C430 70 500 50 590 56 C640 60 660 50 700 54 C790 62 900 46 1010 54 C1140 64 1240 50 1320 58 L1320 0 L0 0 Z"></path>
         <path class="sec-11-mapa__sea-mark" d="M60 26 q14 -8 28 0 M110 40 q14 -8 28 0 M250 22 q14 -8 28 0 M420 30 q14 -8 28 0 M900 26 q14 -8 28 0 M1170 32 q14 -8 28 0"></path>
         <path class="sec-11-mapa__coast" d="M0 62 C120 54 210 78 320 74 C430 70 500 50 590 56 C640 60 660 50 700 54 C790 62 900 46 1010 54 C1140 64 1240 50 1320 58"></path>
@@ -160,12 +178,35 @@
           <text class="sec-11-mapa__svglab sec-11-mapa__halo" x="26" y="42">CAPA OCUPACIÓN · MANZANAS 04:30</text>
         </g>
 
-        <g class="sec-11-mapa__compass">
-          <path d="M1258 470 L1265 494 L1258 488 L1251 494 Z" fill="var(--text)"></path>
-          <text class="sec-11-mapa__axis" x="1258" y="510" text-anchor="middle">N</text>
-          <path class="sec-11-mapa__gridline" d="M1130 540 H1250 M1130 540 V534 M1250 540 V534 M1190 540 V536"></path>
-          <text class="sec-11-mapa__axis" x="1130" y="530">0</text>
-          <text class="sec-11-mapa__axis" x="1244" y="530">500 m</text>
+        <!-- CAPA DE SIMULACIÓN METEOROLÓGICA (Radar térmico de lluvia y vectores de viento) -->
+        <g class="sec-11-mapa__meteo-layer" id="sec-11-meteo-overlay" style="opacity: 0.88; transition: opacity 0.3s ease;">
+          <!-- Célula de precipitación severa sobre el sector costero -->
+          <ellipse cx="440" cy="200" rx="420" ry="240" fill="url(#meteo-rain-core)" filter="url(#meteo-blur)"/>
+          <ellipse cx="460" cy="180" rx="220" ry="140" fill="color-mix(in srgb, #f05a22 35%, #00a8cc)" filter="url(#meteo-blur)"/>
+          <ellipse cx="450" cy="170" rx="110" ry="75" fill="color-mix(in srgb, #d90429 45%, #f05a22)" filter="url(#meteo-blur)"/>
+
+          <!-- Vectores de viento simulados con animación continua -->
+          <g class="sec-11-mapa__wind-streams" stroke="url(#meteo-wind-stream)" stroke-width="1.8" stroke-dasharray="8 6" stroke-linecap="round" fill="none">
+            <path d="M60 120 C240 100 480 140 720 110 C960 90 1160 130 1280 110">
+              <animate attributeName="stroke-dashoffset" from="100" to="0" dur="4s" repeatCount="indefinite"/>
+            </path>
+            <path d="M40 210 C220 190 460 230 700 200 C940 180 1140 220 1260 200">
+              <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3.5s" repeatCount="indefinite"/>
+            </path>
+            <path d="M50 310 C230 290 470 330 710 300 C950 280 1150 320 1270 300">
+              <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3s" repeatCount="indefinite"/>
+            </path>
+            <path d="M70 410 C250 390 490 430 730 400 C970 380 1170 420 1290 400">
+              <animate attributeName="stroke-dashoffset" from="100" to="0" dur="4.2s" repeatCount="indefinite"/>
+            </path>
+          </g>
+
+          <!-- Marcador meteorológico del núcleo de tormenta -->
+          <g transform="translate(480, 140)">
+            <rect x="0" y="0" width="168" height="34" rx="4" fill="rgba(8, 29, 61, 0.9)" stroke="#00a8cc" stroke-width="1"/>
+            <text x="10" y="15" fill="#38bdf8" font-family="var(--font-mono)" font-size="9" font-weight="700">CELDA CONVECTIVA #02</text>
+            <text x="10" y="27" fill="#ffffff" font-family="var(--font-mono)" font-size="9">142 mm/6h · Ráfagas 84 km/h</text>
+          </g>
         </g>
       </svg>
     </div>
@@ -195,6 +236,54 @@
       </div>
     </div>
 
-    <p class="sec-11-mapa__note">15 nodos representados de 42 · agrupación por sector</p>
+    <p class="sec-11-mapa__note">15 nodos representados de 42 · agrupación por sector · Simulación meteorológica integrada en tiempo real</p>
   </div>
+
+  <script>
+    (function() {
+      const btnOcupacion = document.getElementById('btn-layer-ocupacion');
+      const btnClima = document.getElementById('btn-layer-clima');
+      const btnAmenaza = document.getElementById('btn-layer-amenaza');
+      const btnConfianza = document.getElementById('btn-layer-confianza');
+      const meteoOverlay = document.getElementById('sec-11-meteo-overlay');
+      const allBtns = [btnOcupacion, btnClima, btnAmenaza, btnConfianza].filter(Boolean);
+
+      function setActive(targetBtn) {
+        allBtns.forEach(b => {
+          b.classList.remove('is-on');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        targetBtn.classList.add('is-on');
+        targetBtn.setAttribute('aria-pressed', 'true');
+      }
+
+      if (btnClima && meteoOverlay) {
+        btnClima.addEventListener('click', () => {
+          setActive(btnClima);
+          meteoOverlay.style.opacity = '1';
+        });
+      }
+
+      if (btnOcupacion && meteoOverlay) {
+        btnOcupacion.addEventListener('click', () => {
+          setActive(btnOcupacion);
+          meteoOverlay.style.opacity = '0.4';
+        });
+      }
+
+      if (btnAmenaza && meteoOverlay) {
+        btnAmenaza.addEventListener('click', () => {
+          setActive(btnAmenaza);
+          meteoOverlay.style.opacity = '0.7';
+        });
+      }
+
+      if (btnConfianza && meteoOverlay) {
+        btnConfianza.addEventListener('click', () => {
+          setActive(btnConfianza);
+          meteoOverlay.style.opacity = '0.15';
+        });
+      }
+    })();
+  </script>
 </section>
