@@ -46,6 +46,38 @@
   line-height: 1;
   color: var(--text-dim);
 }
+.sec-10-bar__livepill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-left: var(--s-3);
+  padding: 3px 8px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--dur) var(--ease);
+}
+.sec-10-bar__livepill:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+.sec-10-bar__livepill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: sec-10-live 1s infinite alternate ease-in-out;
+}
+@keyframes sec-10-live {
+  0% { opacity: 0.3; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.15); }
+}
 
 /* ---------- nivel nacional: dos renglones, el dato rey primero ---------- */
 .sec-10-bar__pais {

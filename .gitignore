@@ -36,3 +36,6 @@ tools/cache/
 parsec-windows.exe
 .pc-backup/
 
+
+.tmp-video*
+

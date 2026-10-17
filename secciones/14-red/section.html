@@ -134,9 +134,83 @@
       </div>
     </div>
 
+    <div class="sec-14-red__cine">
+      <div class="sec-14-red__cine-head">
+        <div>
+          <span class="sec-14-red__cine-tag"><i class="sec-14-red__cine-dot"></i>TELEMETRÍA EN VIVO · TRANSMISIÓN CONTINUA</span>
+          <h3 class="sec-14-red__cine-title">Flujo Cinematográfico del Despliegue · VIGÍA-07</h3>
+        </div>
+        <div class="sec-14-red__cine-tabs" role="tablist">
+          <button class="sec-14-red__tab is-active" data-video="pitch-recurso-latam-panama-innovador.mp4" role="tab">1. Panorámica LATAM</button>
+          <button class="sec-14-red__tab" data-video="pitch-recurso-sinapred-impacto.mp4" role="tab">2. Descenso Foco</button>
+          <button class="sec-14-red__tab" data-video="3d-01-turntable0001-0193.mp4" role="tab">3. Hardware 3D</button>
+          <button class="sec-14-red__tab" data-video="t7-croquis-zoom.mp4" role="tab">4. Telemetría LoRa</button>
+        </div>
+      </div>
+      <div class="sec-14-red__playerframe">
+        <video id="sitre-video-stream" src="/presentacion/video/pitch-recurso-latam-panama-innovador.mp4" autoplay loop muted playsinline preload="auto"></video>
+        <div class="sec-14-red__hud">
+          <div class="sec-14-red__hud-left">
+            <span class="sec-14-red__hud-stat"><b>FPS</b> 30.0 LOCK</span>
+            <span class="sec-14-red__hud-stat"><b>LORA</b> 915 MHz · ACTIVO</span>
+            <span class="sec-14-red__hud-stat"><b>SAT</b> CEPREDENAC-1</span>
+          </div>
+          <div class="sec-14-red__hud-right">
+            <span class="sec-14-red__hud-stat">REC <i class="sec-14-red__rec-dot"></i></span>
+            <span class="sec-14-red__hud-stat" id="sitre-hud-time">00:00:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <p class="sec-14-red__auto">
       <span class="sec-14-red__auto-k">Autonomía</span>Panel solar de 10 W y batería LiFePO4 de 12 Ah en cada nodo. El corte de energía no detiene la medición: los nodos operan con batería de respaldo hasta 7 días sin sol.
     </p>
+
+    <script>
+      (function() {
+        const video = document.getElementById('sitre-video-stream');
+        const tabs = document.querySelectorAll('.sec-14-red__tab');
+        const timeDisplay = document.getElementById('sitre-hud-time');
+        if (!video || !tabs.length) return;
+
+        const playlist = [
+          'pitch-recurso-latam-panama-innovador.mp4',
+          'pitch-recurso-sinapred-impacto.mp4',
+          '3d-01-turntable0001-0193.mp4',
+          't7-croquis-zoom.mp4'
+        ];
+        let currentIdx = 0;
+
+        function setVideo(idx) {
+          currentIdx = idx % playlist.length;
+          tabs.forEach((tab, i) => tab.classList.toggle('is-active', i === currentIdx));
+          video.src = '/presentacion/video/' + playlist[currentIdx];
+          video.play().catch(() => {});
+        }
+
+        tabs.forEach((tab, i) => {
+          tab.addEventListener('click', () => setVideo(i));
+        });
+
+        // Al terminar el clip, salta fluidamente al siguiente del ciclo
+        video.addEventListener('ended', () => {
+          setVideo(currentIdx + 1);
+        });
+
+        // Actualización de reloj de telemetría de rodaje
+        video.addEventListener('timeupdate', () => {
+          if (!timeDisplay) return;
+          const s = Math.floor(video.currentTime % 60);
+          const m = Math.floor((video.currentTime / 60) % 60);
+          const f = Math.floor((video.currentTime % 1) * 30);
+          timeDisplay.textContent = 
+            String(m).padStart(2, '0') + ':' + 
+            String(s).padStart(2, '0') + ':' + 
+            String(f).padStart(2, '0');
+        });
+      })();
+    </script>
 
   </div>
 </section>
