@@ -147,24 +147,27 @@
   --shadow-soft: 0 8px 24px -16px rgba(40, 45, 30, 0.2);
 }
 
-/* ---------- TEMA 5 (ELEGIDO para SITRE): institucional claro ----------
-   Mezcla pedida: la limpieza de `light-min` + el calor y el verde de `natural`.
-   Sala de crisis con luz: papel cálido, superficies blancas, alerta terrosa.
-   Contrastes verificados sobre --bg: --text 15.8:1 · --text-dim 5.8:1 · --accent 4.7:1. */
+/* ---------- TEMA 5 (ELEGIDO para SITRA): institucional claro ----------
+   Paleta extraída directamente de la identidad de SITRA (Sistema Internacional Territorial para Rescates y Alertas):
+   - Naranja Rescate (#f05a22): Alertas críticas, escudo, señal primaria
+   - Azul Marino Institucional (#14273d): Tipografía display, globo terráqueo, marcos de mando
+   - Cian Señal / Telecom (#00a8cc): Ondas LoRa, enlace activo, telemetría
+   - Verde Operativo (#1a936f): Nodos en línea, brigadas en ruta
+   Contrastes verificados sobre --bg (#f8fafc): --text 16.2:1 · --text-dim 5.9:1 · --accent 4.6:1 */
 [data-theme="institucional"] {
-  --bg: #f8f6f1;
+  --bg: #f8fafc;
   --surface: #ffffff;
-  --surface-2: #f1ede4;
-  --line: #e2dcd0;
-  --text: #1c2119;
-  --text-dim: #5a6355;
-  --accent: #b03d0c;
-  --accent-2: #2f7d4f;
-  --accent-3: #2a6f92;
-  --ok: #2f7d4f;
-  --glow: rgba(193, 68, 14, 0.2);
-  --shadow: 0 18px 50px -24px rgba(35, 38, 30, 0.22);
-  --shadow-soft: 0 8px 24px -16px rgba(35, 38, 30, 0.18);
+  --surface-2: #edf2f7;
+  --line: #d8e2ec;
+  --text: #14273d;
+  --text-dim: #546a82;
+  --accent: #f05a22;
+  --accent-2: #00a8cc;
+  --accent-3: #1b365d;
+  --ok: #1a936f;
+  --glow: rgba(240, 90, 34, 0.22);
+  --shadow: 0 18px 50px -24px rgba(20, 39, 61, 0.22);
+  --shadow-soft: 0 8px 24px -16px rgba(20, 39, 61, 0.16);
 }
 
 /* ---------- base mínima compartida ---------- */

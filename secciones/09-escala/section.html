@@ -1,15 +1,13 @@
 <section class="sec sec-09-escala">
   <div class="wrap wrap--wide">
     <header class="sec-09-escala__head">
-      <p class="sec-09-escala__scale">Escala · País → Región → Municipio → Sector</p>
-      <h2 class="sec-09-escala__title">Descenso de escala</h2>
+      <p class="sec-09-escala__scale">Escala · Red LATAM → País → Municipio → Sector → Edificio Específico</p>
+      <h2 class="sec-09-escala__title">Descenso de escala territorial</h2>
       <div class="sec-09-escala__intro">
         <p class="sec-09-escala__lede">
-          El tablero no abre con una calle: abre con el país entero y baja hasta ella. Cuatro veces
-          la misma geografía en cuatro recortes, <b>17 unidades</b> arriba y <b>780 personas</b>
-          abajo, unidas por la línea de foco que el sistema recorre al decidir.
+          El sistema SITRA no abre con una calle: abre con la red continental de América Latina y desciende en cinco escalas hasta la azotea de un edificio específico. Cada nivel justifica la toma de decisiones con telemetría en tiempo real.
         </p>
-        <p class="sec-09-escala__note">Huracán <em>Celeste</em> · corte 17 oct 04:30 · hora 7</p>
+        <p class="sec-09-escala__note">Protocolo SITRA · corte 17 oct 04:30 · Enlace Satelital CEPREDENAC</p>
       </div>
     </header>
 
@@ -144,12 +142,41 @@
               <span class="sec-09-escala__ruler" aria-hidden="true"><i class="sec-09-escala__rule"></i>100 m</span>
             </div>
           </div>
+        <!-- NIVEL 5: EDIFICIO ESPECÍFICO (MICRO-DESPLIEGUE) -->
+        <li class="sec-09-escala__step sec-09-escala__step--focus">
+          <span class="sec-09-escala__tick" aria-hidden="true"></span>
+          <div class="sec-09-escala__body">
+            <div class="sec-09-escala__id">
+              <p class="sec-09-escala__tag"><span class="sec-09-escala__lvl">5</span>Edificio Específico</p>
+              <h3 class="sec-09-escala__name">Centro Comercial Colón</h3>
+              <p class="sec-09-escala__king"><b>Azotea</b> · Nodo VIGÍA-07 Activo · 780 Refugiados</p>
+              <p class="sec-09-escala__within">Instalación en cubierta: Anemómetro, Lluvia y Baliza LoRa</p>
+            </div>
+            <div class="sec-09-escala__frame sec-09-escala__frame--sector">
+              <svg class="sec-09-escala__map" viewBox="0 0 320 180" role="img" aria-label="Edificio específico: estructura isométrica del Centro Comercial Colón con el nodo VIGÍA-07 en cubierta">
+                <rect class="sec-09-escala__ground" x="0" y="0" width="320" height="180" fill="#edf2f7"/>
+                <!-- Estructura del edificio -->
+                <polygon points="60,115 160,155 160,88 60,48" fill="#14273d" opacity="0.9"/>
+                <polygon points="260,115 160,155 160,88 260,48" fill="#1b365d" opacity="0.95"/>
+                <polygon points="160,22 260,48 160,88 60,48" fill="#24416b"/>
+                <!-- Domo de cubierta -->
+                <polygon points="130,48 190,62 160,76 100,62" fill="#00a8cc" opacity="0.75"/>
+                <!-- Mástil y Nodo VIGÍA-07 en el techo -->
+                <line x1="160" y1="62" x2="160" y2="30" stroke="#f05a22" stroke-width="2.5"/>
+                <circle cx="160" cy="28" r="5" fill="#f05a22"/>
+                <circle cx="160" cy="28" r="12" fill="none" stroke="#f05a22" stroke-width="1.2" opacity="0.6"/>
+                <!-- Rótulo en el plano del edificio -->
+                <text x="160" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="#14273d" font-weight="600">NODO 07 · ALTURA +18m · ENLACE LORA</text>
+              </svg>
+              <span class="sec-09-escala__ruler" aria-hidden="true"><i class="sec-09-escala__rule"></i>15 m</span>
+            </div>
+          </div>
         </li>
 
       </ol>
       <div class="sec-09-escala__rail" aria-hidden="true"></div>
       <div class="sec-09-escala__here" aria-hidden="true">
-        <span class="sec-09-escala__here-lab">Estás aquí</span>
+        <span class="sec-09-escala__here-lab">Foco en Edificio</span>
         <i class="sec-09-escala__here-dot"></i>
       </div>
     </div>

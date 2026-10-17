@@ -1,56 +1,64 @@
-<section class="sec sec-10-bar" aria-label="Franja de mando SITRE · SINAPRED · escala nacional">
+<section class="sec sec-10-bar" aria-label="Franja de mando SITRA · Sistema Internacional Territorial para Rescates y Alertas">
   <div class="wrap wrap--wide sec-10-bar__in">
 
-    <!-- marca: SITRE sobre SINAPRED -->
+    <!-- marca: SITRA (Sistema Internacional Territorial para Rescates y Alertas) -->
     <div class="sec-10-bar__brand">
-      <svg class="sec-10-bar__mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
-        <circle cx="13" cy="13" r="3.2" fill="currentColor"></circle>
-        <path d="M6.4 6.4a9.4 9.4 0 0 0 0 13.2M19.6 19.6a9.4 9.4 0 0 0 0-13.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
-        <path d="M9.4 9.4a5.1 5.1 0 0 0 0 7.2M16.6 16.6a5.1 5.1 0 0 0 0-7.2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></path>
+      <svg class="sec-10-bar__mark" width="34" height="34" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <!-- Globo terráqueo LATAM (Azul marino) -->
+        <circle cx="20" cy="23" r="14" fill="none" stroke="#14273d" stroke-width="2" opacity="0.85"/>
+        <path d="M7 23h26 M20 9c4 4.5 6 9 6 14s-2 9.5-6 14 M20 9c-4 4.5-6 9-6 14s2 9.5 6 14" fill="none" stroke="#14273d" stroke-width="1.2" opacity="0.6"/>
+        <!-- Ondas de transmisión de alerta (Cian) -->
+        <path d="M29 9 A14 14 0 0 1 41 21" fill="none" stroke="#00a8cc" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M30 14 A8 8 0 0 1 37 21" fill="none" stroke="#00a8cc" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Escudo de protección y rescate (Naranja) -->
+        <path d="M16 19 L25 19 C25 29 20.5 35 20.5 35 C20.5 35 16 29 16 19 Z" fill="none" stroke="#f05a22" stroke-width="2.6" stroke-linejoin="round"/>
+        <!-- Marcador Pin Central (Naranja sólido) -->
+        <path d="M20.5 11 C17.5 11 15 13.5 15 16.5 C15 20.5 20.5 25.5 20.5 25.5 C20.5 25.5 26 20.5 26 16.5 C26 13.5 23.5 11 20.5 11 Z" fill="#f05a22"/>
+        <circle cx="20.5" cy="16.5" r="2.2" fill="#ffffff"/>
       </svg>
       <span class="sec-10-bar__names">
-        <span class="sec-10-bar__name">SITRE</span>
-        <span class="sec-10-bar__org">SINAPRED</span>
+        <span class="sec-10-bar__name">SITRA</span>
+        <span class="sec-10-bar__org">SISTEMA INTERNACIONAL · RESCATES Y ALERTAS</span>
       </span>
       <a href="#sitre-video-stream" class="sec-10-bar__livepill" title="Ir al flujo de video en vivo">
-        <i class="sec-10-bar__livepill-dot"></i>EN VIVO 30 FPS
+        <i class="sec-10-bar__livepill-dot"></i>TRANSMISIÓN EN VIVO 30 FPS
       </a>
     </div>
 
     <!-- nivel nacional: el país manda -->
     <div class="sec-10-bar__pais">
       <div class="sec-10-bar__row">
-        <span class="sec-10-bar__scale">País · Nicaragua</span>
+        <span class="sec-10-bar__scale">Red LATAM · 12 Países</span>
         <span class="sec-10-bar__item"><b class="sec-10-bar__num">3</b> eventos activos</span>
-        <span class="sec-10-bar__item"><b class="sec-10-bar__num">1&#8239;276</b> nodos</span>
+        <span class="sec-10-bar__item"><b class="sec-10-bar__num">1&#8239;276</b> nodos desplegados</span>
         <span class="sec-10-bar__item">
           <i class="sec-10-bar__dot" aria-hidden="true"></i><b class="sec-10-bar__num">1&#8239;138</b> en línea
           <span class="sec-10-bar__pct">(89&#8239;%)</span>
         </span>
       </div>
       <div class="sec-10-bar__row">
-        <span class="sec-10-bar__item">Última sincronización nacional <b class="sec-10-bar__num">04:30</b></span>
+        <span class="sec-10-bar__item">Sincronización Satelital CEPREDENAC <b class="sec-10-bar__num">04:30</b></span>
         <span class="sec-10-bar__blackout">
           <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
             <path d="M7 1.4 12.7 11.1H1.3Z" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"></path>
             <path d="M7 5.1v2.9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"></path>
             <circle cx="7" cy="9.6" r=".7" fill="currentColor"></circle>
           </svg>
-          <span>Modo apagón · <b>LoRa, sin internet</b></span>
+          <span>Canal Resiliente · <b>LoRa Store & Forward</b></span>
         </span>
       </div>
     </div>
 
-    <!-- nivel foco: el descenso al municipio del evento -->
+    <!-- nivel foco: el descenso al edificio específico del evento -->
     <div class="sec-10-bar__foco">
       <div class="sec-10-bar__row">
-        <span class="sec-10-bar__focus"><span class="sec-10-bar__tag">Foco</span> · <b>Huracán Celeste</b></span>
-        <span class="sec-10-bar__item"><b>Puerto Cabezas</b> · RACCN</span>
-        <span class="sec-10-bar__alerta"><i class="sec-10-bar__sw" aria-hidden="true"></i>Roja</span>
+        <span class="sec-10-bar__focus"><span class="sec-10-bar__tag">Foco Micro</span> · <b>Centro Comercial Colón</b></span>
+        <span class="sec-10-bar__item"><b>Panamá</b> · Nodo 07</span>
+        <span class="sec-10-bar__alerta"><i class="sec-10-bar__sw" aria-hidden="true"></i>Alerta Roja</span>
       </div>
       <div class="sec-10-bar__row">
-        <span class="sec-10-bar__item">nodos <b class="sec-10-bar__num">34/42</b></span>
-        <span class="sec-10-bar__item"><b class="sec-10-bar__num">1&#8239;246</b> registros en cola → SINAPRED</span>
+        <span class="sec-10-bar__item">Edificio en azotea: <b class="sec-10-bar__num">780 personas</b></span>
+        <span class="sec-10-bar__item"><b class="sec-10-bar__num">1&#8239;246</b> paquetes en cola</span>
       </div>
     </div>
 

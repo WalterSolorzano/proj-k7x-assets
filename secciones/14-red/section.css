@@ -234,7 +234,7 @@
   overflow: hidden;
   border: var(--hairline);
   background: #000;
-  box-shadow: 0 16px 36px rgba(0,0,0,0.4);
+  box-shadow: 0 16px 36px -10px rgba(0,0,0,0.4);
 }
 .sec-14-red__playerframe video {
   display: block;
@@ -272,12 +272,7 @@
   height: 8px;
   border-radius: 50%;
   background: #ff3b30;
-  animation: sec-14-rec 1s infinite alternate ease-in-out;
   vertical-align: middle;
-}
-@keyframes sec-14-rec {
-  0% { opacity: 0.2; transform: scale(0.85); }
-  100% { opacity: 1; transform: scale(1.1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
