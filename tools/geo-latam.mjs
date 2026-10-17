@@ -8,9 +8,6 @@ const cacheFile = join(ROOT, 'tools', 'cache', 'countries-latam.json');
 async function main() {
   const gj = JSON.parse(await readFile(cacheFile, 'utf8'));
 
-  // Bounding box LatAm:
-  // Lon: -118 a -34
-  // Lat: -56 a 33
   const minLon = -118, maxLon = -34;
   const minLat = -56, maxLat = 33;
   const W = 1000, H = 900;
@@ -21,20 +18,6 @@ async function main() {
     return [Math.round(x * 10) / 10, Math.round(y * 10) / 10];
   }
 
-  function rdp(pts, eps = 0.8) {
-    if (pts.length < 3) return pts;
-    const [a, b] = [pts[0], pts[pts.length - 1]];
-    const dx = b[0] - a[0], dy = b[1] - a[1];
-    const len = Math.hypot(dx, dy) || 1e-9;
-    let idx = -1, max = -1;
-    for (let i = 1; i < pts.length - 1; i++) {
-      const d = Math.abs((pts[i][0] - a[0]) * dy - (pts[i][1] - a[1]) * dx) / len;
-      if (d > max) { max = d; idx = i; }
-    }
-    if (max <= eps) return [a, b];
-    return [...rdp(pts.slice(0, idx + 1), eps).slice(0, -1), ...rdp(pts.slice(idx), eps)];
-  }
-
   const paths = [];
   const centers = {};
 
@@ -43,15 +26,13 @@ async function main() {
     const name = feat.properties.name;
     const geom = feat.geometry;
 
-    let rings = [];
+    let rawRings = [];
     if (geom.type === 'Polygon') {
-      // coordinates es [ [ [lon, lat], ... ] ]
-      rings = geom.coordinates;
+      rawRings = geom.coordinates;
     } else if (geom.type === 'MultiPolygon') {
-      // coordinates es [ [ [ [lon, lat], ... ] ] ]
-      for (const poly of geom.coordinates) {
-        for (const ring of poly) {
-          rings.push(ring);
+      for (const p of geom.coordinates) {
+        for (const r of p) {
+          rawRings.push(r);
         }
       }
     }
@@ -59,15 +40,15 @@ async function main() {
     let d = '';
     let sumX = 0, sumY = 0, count = 0;
 
-    for (const ring of rings) {
+    for (const ring of rawRings) {
       if (!Array.isArray(ring) || ring.length < 3) continue;
-      // Comprobar que ring[0] es un par [lon, lat]
-      if (typeof ring[0][0] !== 'number') continue;
-      const proj = ring.map(([lon, lat]) => project(lon, lat));
-      const simp = rdp(proj, 0.9);
-      if (simp.length < 3) continue;
-      d += `M${simp[0][0]} ${simp[0][1]}` + simp.slice(1).map(p => `L${p[0]} ${p[1]}`).join('') + 'Z ';
-      for (const pt of simp) { sumX += pt[0]; sumY += pt[1]; count++; }
+      const proj = ring.map(pt => project(pt[0], pt[1]));
+      d += `M${proj[0][0]} ${proj[0][1]}` + proj.slice(1).map(p => `L${p[0]} ${p[1]}`).join('') + 'Z ';
+      for (const p of proj) {
+        sumX += p[0];
+        sumY += p[1];
+        count++;
+      }
     }
 
     if (count > 0) {
@@ -82,8 +63,8 @@ async function main() {
     'utf8'
   );
 
-  console.log(`✓ assets/geo-latam.json generado con ${paths.length} países.`);
-  console.log('Centros clave:', { PAN: centers['PAN'], NIC: centers['NIC'], COL: centers['COL'], MEX: centers['MEX'] });
+  console.log(`✓ assets/geo-latam.json creado con éxito (${paths.length} países)`);
+  console.log('Centros calculados:', { PAN: centers['PAN'], NIC: centers['NIC'], COL: centers['COL'], MEX: centers['MEX'] });
 }
 
 main().catch(console.error);

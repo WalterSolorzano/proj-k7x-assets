@@ -1,0 +1,264 @@
+/* secciones/07-latam/section.css */
+.sec-07-latam {
+  background: var(--bg);
+  padding: var(--sec-pad) 0;
+  border-bottom: var(--hairline);
+}
+
+.sec-07-latam__board {
+  display: grid;
+  gap: var(--gap-block);
+}
+
+.sec-07-latam__scale {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sec-07-latam__scale i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.sec-07-latam__title {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.sec-07-latam__lede {
+  margin: 0;
+  max-width: 75ch;
+  color: var(--text-dim);
+  font-size: var(--fs-base);
+}
+
+.sec-07-latam__state {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-3) var(--s-4);
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r-sm);
+}
+
+.sec-07-latam__state-v {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.sec-07-latam__state-v span {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.sec-07-latam__state-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.sec-07-latam__state-m {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+}
+
+/* Mapa SVG Continental */
+.sec-07-latam__map {
+  margin: 0;
+  position: relative;
+  background: color-mix(in srgb, var(--text) 2.5%, var(--bg));
+  border: var(--hairline);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.sec-07-latam__mapframe {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: var(--s-3);
+}
+
+.sec-07-latam__svg {
+  width: 100%;
+  max-height: 620px;
+  display: block;
+}
+
+/* Países */
+.sec-07-latam__country {
+  fill: color-mix(in srgb, var(--text) 7%, var(--bg));
+  stroke: var(--bg);
+  stroke-width: 1.2;
+  transition: fill 0.3s ease;
+}
+
+.sec-07-latam__country.is-active {
+  fill: color-mix(in srgb, var(--accent-2) 24%, var(--bg));
+  stroke: color-mix(in srgb, var(--accent-2) 60%, var(--bg));
+  stroke-width: 1.4;
+}
+
+#latam-pan {
+  fill: var(--accent) !important;
+  stroke: #fff !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 8px rgba(176, 61, 12, 0.6));
+}
+
+#latam-nic {
+  fill: var(--accent-2) !important;
+  stroke: #fff !important;
+  stroke-width: 1.6px !important;
+}
+
+/* Red de líneas entre países */
+.sec-07-latam__link {
+  fill: none;
+  stroke: color-mix(in srgb, var(--accent-2) 55%, transparent);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+}
+
+.sec-07-latam__packet {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+
+/* Pulso animado sobre Panamá */
+.sec-07-latam__pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  transform-origin: 448px 248px;
+  animation: sec-07-latam-wave 2.2s ease-out infinite;
+}
+
+.sec-07-latam__pulse--delay {
+  animation-delay: 1.1s;
+}
+
+@keyframes sec-07-latam-wave {
+  0% { transform: scale(0.3); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.sec-07-latam__node-core {
+  fill: var(--accent);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.sec-07-latam__node-core--sec {
+  fill: var(--accent-2);
+}
+
+.sec-07-latam__node-lab {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--text);
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 3px;
+}
+
+/* HUD sobre Panamá */
+.sec-07-latam__hud-bg {
+  fill: rgba(18, 22, 28, 0.92);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,0.35));
+}
+
+.sec-07-latam__hud-t1 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.sec-07-latam__hud-t2 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  fill: #fff;
+}
+
+.sec-07-latam__hud-t3 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: #8fe5ff;
+}
+
+.sec-07-latam__hud-t4 {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  fill: #ffca85;
+}
+
+/* KPIs inferiores */
+.sec-07-latam__kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--s-4);
+  padding-top: var(--pad-block);
+  border-top: var(--hairline);
+}
+
+.sec-07-latam__kpi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.sec-07-latam__kpi-lab {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+
+.sec-07-latam__kpi-val {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.sec-07-latam__kpi-val--alert {
+  color: var(--accent);
+}
+
+.sec-07-latam__kpi-unit {
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--text-dim);
+}

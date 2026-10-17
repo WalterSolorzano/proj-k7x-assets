@@ -160,15 +160,16 @@ out.push(`<circle class="cz__led" cx="${r(puck[0] + 15)}" cy="${r(puck[1] - 11)}
 out.push(T(np[0] + 30, np[1] + 26, 'NODO 07', 'cz__rot cz__halo'));
 
 // --- lecturas en vivo, en el margen de anotación -------------------------
-const lx = 24, ly = 78;
+const lx = 24, ly = 68;
 [
-  ['OCUPACIÓN ESTIMADA', '780 personas'],
-  ['NODO 07 · BATERÍA', '71 %'],
-  ['ÚLTIMA LECTURA', '04:28 · confianza alta'],
-  ['ESTADO DEL ENLACE', 'LoRa · modo apagón'],
+  ['OCUPACIÓN ESTIMADA', '780 personas (conteo RF pasivo)'],
+  ['VELOCIDAD DEL VIENTO', '84 km/h · ráfagas 112 km/h (Anemómetro)'],
+  ['LLUVIA Y NIVEL AGUA', '142 mm/6h · inundación +0.92 m'],
+  ['NODO 07 · BATERÍA / PV', '71 % · panel solar 22° activo'],
+  ['ENLACE DE EMERGENCIA', 'LoRa 915 MHz · enlace continuo SINAPRED'],
 ].forEach(([k, v], i) => {
-  out.push(T(lx, ly + i * 29, k, 'cz__k'));
-  out.push(T(lx + 222, ly + i * 29, v, 'cz__v'));
+  out.push(T(lx, ly + i * 26, k, 'cz__k'));
+  out.push(T(lx + 230, ly + i * 26, v, 'cz__v'));
 });
 
 // --- quién responde -------------------------------------------------------

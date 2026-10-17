@@ -1,0 +1,93 @@
+<section class="sec sec-07-latam">
+  <div class="wrap wrap--wide">
+    <div class="sec-07-latam__board">
+
+      <div class="sec-07-latam__head">
+        <p class="sec-07-latam__scale"><span>Red Regional · América Latina y el Caribe</span><i aria-hidden="true"></i></p>
+        <h2 class="sec-07-latam__title">Monitoreo Territorial SITRE · Red LATAM</h2>
+        <p class="sec-07-latam__lede">Interoperabilidad internacional ante desastres: sincronización de nodos resilientes LoRa/Satélite en tiempo real. Detección temprana en el Istmo de Panamá y Centroamérica.</p>
+      </div>
+
+      <div class="sec-07-latam__state">
+        <p class="sec-07-latam__state-v"><i class="sec-07-latam__state-dot" aria-hidden="true"></i>Alerta Activa: <span>Panamá (Bocas del Toro / Colón)</span></p>
+        <p class="sec-07-latam__state-m">Protocolo SINAPROC & CEPREDENAC · 04:30</p>
+      </div>
+
+      <figure class="sec-07-latam__map">
+        <div class="sec-07-latam__mapframe">
+          <svg class="sec-07-latam__svg" viewBox="0 0 1000 900" role="img" aria-label="Mapa de América Latina con nodos SITRE y evento activo en Panamá">
+            <g class="sec-07-latam__countries">
+<!-- @@paths@@ -->
+            </g>
+
+            <!-- Enlaces satelitales y de red regional entre nodos SITRE -->
+            <g class="sec-07-latam__netlines">
+              <!-- Enlace Panamá - Nicaragua -->
+              <path class="sec-07-latam__link" d="M448 248 L393 201"/>
+              <!-- Enlace Panamá - Colombia -->
+              <path class="sec-07-latam__link" d="M448 248 L539 288"/>
+              <!-- Enlace Nicaragua - México -->
+              <path class="sec-07-latam__link" d="M393 201 L178 93"/>
+              <!-- Paquetes de datos viajando -->
+              <circle class="sec-07-latam__packet" cx="448" cy="248" r="4.5">
+                <animateMotion path="M0 0 L-55 -47" dur="2.4s" repeatCount="indefinite" />
+              </circle>
+              <circle class="sec-07-latam__packet" cx="448" cy="248" r="4.5">
+                <animateMotion path="M0 0 L91 40" dur="2.8s" repeatCount="indefinite" />
+              </circle>
+            </g>
+
+            <!-- Foco Activo en Panamá: Colón / Bocas del Toro / Canal -->
+            <g class="sec-07-latam__event-panama">
+              <circle class="sec-07-latam__pulse" cx="448" cy="248" r="28"/>
+              <circle class="sec-07-latam__pulse sec-07-latam__pulse--delay" cx="448" cy="248" r="44"/>
+              <circle class="sec-07-latam__node-core" cx="448" cy="248" r="6"/>
+              
+              <!-- Tarjeta HUD interactiva sobre Panamá -->
+              <g class="sec-07-latam__hud" transform="translate(470, 210)">
+                <rect class="sec-07-latam__hud-bg" x="0" y="0" width="260" height="92" rx="4"/>
+                <text class="sec-07-latam__hud-t1" x="12" y="22">PANAMÁ · FOCO DE ALERTA 01</text>
+                <text class="sec-07-latam__hud-t2" x="12" y="42">CANAL / COLÓN · MAREA + TORMENTA</text>
+                <text class="sec-07-latam__hud-t3" x="12" y="62">Viento: 92 km/h · Lluvia: 160 mm/6h</text>
+                <text class="sec-07-latam__hud-t4" x="12" y="80">Ocupación estimada: 1 420 pers. (IPR: 96)</text>
+              </g>
+            </g>
+
+            <!-- Nodo Secundario Nicaragua -->
+            <g class="sec-07-latam__event-nicaragua">
+              <circle class="sec-07-latam__node-core sec-07-latam__node-core--sec" cx="393" cy="201" r="5"/>
+              <text class="sec-07-latam__node-lab" x="393" y="190" text-anchor="middle">NICARAGUA (SINAPRED)</text>
+            </g>
+
+            <!-- Nodo Colombia -->
+            <g class="sec-07-latam__event-colombia">
+              <circle class="sec-07-latam__node-core sec-07-latam__node-core--sec" cx="539" cy="288" r="5"/>
+              <text class="sec-07-latam__node-lab" x="539" y="306" text-anchor="middle">COLOMBIA (UNGRD)</text>
+            </g>
+          </svg>
+        </div>
+      </figure>
+
+      <!-- Panel inferior de métricas agregadas de la red regional -->
+      <div class="sec-07-latam__kpis">
+        <div class="sec-07-latam__kpi">
+          <span class="sec-07-latam__kpi-lab">Cobertura de Red</span>
+          <span class="sec-07-latam__kpi-val">21 Países LATAM</span>
+        </div>
+        <div class="sec-07-latam__kpi">
+          <span class="sec-07-latam__kpi-lab">Nodos VIGÍA Conectados</span>
+          <span class="sec-07-latam__kpi-val">8 450 <span class="sec-07-latam__kpi-unit">en línea</span></span>
+        </div>
+        <div class="sec-07-latam__kpi">
+          <span class="sec-07-latam__kpi-lab">Detección Activa Panamá</span>
+          <span class="sec-07-latam__kpi-val sec-07-latam__kpi-val--alert">IPR 96 <span class="sec-07-latam__kpi-unit">Crítico</span></span>
+        </div>
+        <div class="sec-07-latam__kpi">
+          <span class="sec-07-latam__kpi-lab">Intercambio de Datos</span>
+          <span class="sec-07-latam__kpi-val">LoRa + Satélite LEO</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

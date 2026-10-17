@@ -4,9 +4,9 @@ Memoria barata del proyecto. Actualízala en cada hito (o con `/checkpoint`) par
 compactar o reiniciar la sesión sin perder contexto.
 
 - **Proyecto:** **SITRE — Sistema de Inteligencia Territorial para Rescates** (Rallylatam)
-- **Fase actual:** 1 — Look de referencia (tema ya congelado: `institucional`)
-- **Stack:** web (HTML/CSS) + Blender para el objeto 3D
-- **Entregable:** `presentacion/*.png` + `presentacion.md` (+ `presentacion/video/*.webm`)
+- **Fase actual:** Video y Material de Rodaje Cinematográfico Concluido
+- **Stack:** web (HTML/CSS) + Blender para el objeto y entorno 3D + Playwright + FFmpeg
+- **Entregable:** `presentacion/video/pitch-recurso-latam-panama-innovador.mp4` (1080p, 17s fluido sin blanco inicial, nombres de provincias de Panamá, vista dron dinámica de 3 unidades y telemetría en vivo).
 
 ## Fase 0 — cerrada (brief + contrato)
 

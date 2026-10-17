@@ -1,0 +1,629 @@
+<div class="sinapred-layout">
+  <!-- 1. TOPBAR NAVEGACIÓN SUPERIOR -->
+  <header class="sinapred-topbar">
+    <div class="sinapred-topbar__brand">
+      <img src="../assets/sitra-logo.jpg" alt="Logo SITRA / SINAPRED" class="sinapred-topbar__logo">
+      <div class="sinapred-topbar__titles">
+        <span class="sinapred-topbar__name">SINAPRED · SITRA</span>
+        <span class="sinapred-topbar__sub">Sistema Internacional Territorial para Prevención, Rescates y Alertas</span>
+      </div>
+    </div>
+
+    <div class="sinapred-topbar__search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" placeholder="Buscar ubicación, país, municipio o sector específico..." id="sinapred-search-input" value="Centro Comercial Colón, Sector Prioritario 1">
+    </div>
+
+    <div class="sinapred-topbar__actions">
+      <button class="sinapred-topbar__btn-alert" aria-label="Notificaciones de emergencia">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span class="sinapred-topbar__badge">3</span>
+      </button>
+      <div class="sinapred-topbar__user">
+        <div class="sinapred-topbar__avatar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </div>
+        <div class="sinapred-topbar__userinfo">
+          <b>Dirección Nacional SITRA</b>
+          <span>CEPREDENAC · Operaciones</span>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO PRINCIPAL CON SIDEBAR + ÁREA DE MAPA + PANEL LATERAL DERECHO -->
+  <div class="sinapred-body">
+
+    <!-- 2. SIDEBAR IZQUIERDO -->
+    <aside class="sinapred-sidebar">
+      <nav class="sinapred-nav">
+        <a href="#inicio" class="sinapred-nav__item is-active" id="btn-nav-inicio">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+          <span>Inicio</span>
+        </a>
+        <a href="#mapa-riesgos" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+          <span>Mapa de riesgos</span>
+        </a>
+        <a href="#sectores" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span>Sectores prioritarios</span>
+        </a>
+        <a href="#alertas" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Alertas tempranas</span>
+        </a>
+        <a href="#reportes" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Reportes técnicos</span>
+        </a>
+        <a href="#capas" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <span>Capas de información</span>
+        </a>
+        <a href="#pronostico" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+          <span>Pronóstico satelital</span>
+        </a>
+        <a href="#recursos" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span>Brigadas y recursos</span>
+        </a>
+        <a href="#configuracion" class="sinapred-nav__item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Configuración</span>
+        </a>
+      </nav>
+
+      <div class="sinapred-sidebar__footer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <div>
+          <b>SITRA · CEPREDENAC</b>
+          <span>Región más segura y resiliente</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 3. ÁREA DE MAPA INTERACTIVO CENTRAL (LATAM -> PAÍS -> EDIFICIO) -->
+    <main class="sinapred-stage">
+
+      <!-- Píldoras de Filtros / Capas Climáticas Superiores -->
+      <div class="sinapred-filters">
+        <button class="sinapred-filter is-active" data-layer="precipitacion">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path><path d="M8 19v2"></path><path d="M8 13v2"></path><path d="M16 19v2"></path><path d="M16 13v2"></path><path d="M12 21v2"></path><path d="M12 15v2"></path></svg>
+          <span>Precipitación</span>
+        </button>
+        <button class="sinapred-filter" data-layer="temperatura">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>
+          <span>Temperatura</span>
+        </button>
+        <button class="sinapred-filter" data-layer="viento">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path></svg>
+          <span>Viento</span>
+        </button>
+        <button class="sinapred-filter" data-layer="nubosidad">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+          <span>Nubosidad</span>
+        </button>
+        <button class="sinapred-filter" data-layer="deslizamiento">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 22 2 22"></polygon><path d="M12 12l4 4"></path></svg>
+          <span>Riesgo de deslizamiento</span>
+        </button>
+        <button class="sinapred-filter" data-layer="incendios">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+          <span>Incendios forestales</span>
+        </button>
+      </div>
+
+      <!-- Selector de Escalas de Descenso (LATAM -> PAÍS -> CIUDAD -> EDIFICIO) -->
+      <div class="sinapred-view-switch">
+        <button class="sinapred-switch-btn is-active" id="btn-view-latam" data-mode="latam">1. Red LATAM</button>
+        <button class="sinapred-switch-btn" id="btn-view-pais" data-mode="pais">2. Managua / País</button>
+        <button class="sinapred-switch-btn" id="btn-view-edificio" data-mode="edificio">3. Edificio Específico</button>
+      </div>
+
+      <!-- Controles de Mapa Flotantes (Zoom + Tipo de Mapa) -->
+      <div class="sinapred-map-ctrls">
+        <div class="sinapred-zoom-ctrl">
+          <button id="btn-zoom-in" aria-label="Acercar mapa">+</button>
+          <button id="btn-zoom-out" aria-label="Alejar mapa">−</button>
+        </div>
+        <div class="sinapred-layer-mode">
+          <button class="is-active" id="btn-type-sat">Satélite</button>
+          <button id="btn-type-map">Mapa</button>
+        </div>
+      </div>
+
+      <!-- LIENZO DINÁMICO DE MAPA (Cambia fluidamente entre las tres vistas) -->
+      <div class="sinapred-canvas-container" id="sinapred-canvas-wrap">
+        <!-- Vista 1: Panorámica Continental LATAM (Foto 1) -->
+        <div class="sinapred-view-panel is-visible" id="panel-latam">
+          <img src="../assets/ref-dashboard-latam.jpg" alt="Mapa satelital continental de América Latina con mapa de calor meteorológico" class="sinapred-map-img">
+          
+          <!-- Pines Interactivos en el Continente -->
+          <div class="sinapred-hotspot hotspot-managua" data-target="pais" title="Click para descender a Nicaragua / Managua">
+            <div class="sinapred-pin-pulse"></div>
+            <div class="sinapred-pin-label">Managua · Alerta Alta</div>
+          </div>
+          <div class="sinapred-hotspot hotspot-colon" data-target="edificio" title="Click para descender al Edificio Centro Comercial">
+            <div class="sinapred-pin-pulse pin--orange"></div>
+            <div class="sinapred-pin-label">Centro Comercial Colón · Foco Crítico</div>
+          </div>
+        </div>
+
+        <!-- Vista 2: Ciudad / Municipio (Managua / Colón por Manzanas - Foto 2) -->
+        <div class="sinapred-view-panel" id="panel-pais">
+          <img src="../assets/ref-dashboard-managua.jpg" alt="Mapa detallado por manzanas de riesgo urbano" class="sinapred-map-img">
+          <div class="sinapred-hotspot hotspot-mercado" data-target="edificio" title="Click para inspeccionar el Edificio / Mercado">
+            <div class="sinapred-pin-marker">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="#f05a22"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            </div>
+            <div class="sinapred-pin-banner">
+              <b>Mercado Oriental / Centro Comercial</b>
+              <span>Población en riesgo: 780 pers.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista 3: Edificio Específico (Micro-despliegue, Azotea, Domo 3D y Telemetría LoRa) -->
+        <div class="sinapred-view-panel" id="panel-edificio">
+          <div class="sinapred-building-stage">
+            <video class="sinapred-building-video" src="/presentacion/video/video-latam-panama-epicentro-experiencia.mp4" autoplay loop muted playsinline></video>
+            <div class="sinapred-building-overlay">
+              <div class="sinapred-building-hud">
+                <span class="sinapred-badge-focus">FOCO NIVEL 5 · EDIFICIO ESPECÍFICO</span>
+                <h2>Centro Comercial Colón / Muelle Norte</h2>
+                <p>Estructura física de 3 niveles con nodo VIGÍA-07 en cubierta (+18 m de elevación). Monitoreo de 780 personas resguardadas en azotea por anegación en vías de acceso.</p>
+                <div class="sinapred-sensor-readouts">
+                  <div class="readout-card">
+                    <span class="lab">Anemómetro VIGÍA-07</span>
+                    <b class="val">84 km/h</b>
+                    <span class="sub">Ráfagas a 112 km/h</span>
+                  </div>
+                  <div class="readout-card">
+                    <span class="lab">Nivel de Agua en Calzada</span>
+                    <b class="val">+0.92 m</b>
+                    <span class="sub">Marea en ascenso</span>
+                  </div>
+                  <div class="readout-card">
+                    <span class="lab">Enlace Store & Forward</span>
+                    <b class="val">915 MHz LoRa</b>
+                    <span class="sub">1 246 paquetes en cola</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Leyenda de Nivel de Riesgo (Inferior Izquierda) -->
+      <div class="sinapred-legend-risk">
+        <span class="sinapred-legend-risk__title">Nivel de riesgo</span>
+        <div class="sinapred-risk-bar">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="sinapred-risk-labels">
+          <span>Bajo</span>
+          <span>Moderado</span>
+          <span>Alto</span>
+          <span>Muy alto</span>
+        </div>
+      </div>
+
+      <!-- Barra de Tiempo y Simulación Satelital (Inferior Centro) -->
+      <div class="sinapred-timeline-card">
+        <div class="sinapred-timeline-header">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>Última actualización: <b>14 abr 2025 · 10:24 a. m.</b></span>
+        </div>
+        <div class="sinapred-timeline-slider">
+          <button class="sinapred-play-btn" id="btn-timeline-play" aria-label="Reproducir simulación temporal">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </button>
+          <div class="sinapred-track">
+            <div class="sinapred-track-step is-active" data-t="0">Ahora</div>
+            <div class="sinapred-track-step" data-t="6">+6 h</div>
+            <div class="sinapred-track-step" data-t="12">+12 h</div>
+            <div class="sinapred-track-step" data-t="24">+24 h</div>
+            <div class="sinapred-track-step" data-t="48">+48 h</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- 4. PANEL LATERAL DERECHO DE CONTROL E INFORMACIÓN DETALLADA -->
+    <aside class="sinapred-panel-info" id="sinapred-side-panel">
+
+      <!-- ESTADO A: RESUMEN GENERAL (Foto 1) -->
+      <div class="sinapred-info-state is-visible" id="info-state-general">
+        
+        <!-- Bloque 1: Sectores prioritarios -->
+        <div class="sinapred-card-section">
+          <div class="sinapred-card-section__head">
+            <div class="sinapred-card-section__title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M6 7V3h12v4M9 11h2M9 15h2M13 11h2M13 15h2"></path></svg>
+              <h3>Sectores prioritarios</h3>
+            </div>
+            <a href="#ver-todos" class="sinapred-link">Ver todos →</a>
+          </div>
+
+          <div class="sinapred-priority-list">
+            <!-- Item 1: Mercado Oriental (Clickeable para abrir el detalle de Foto 2) -->
+            <div class="sinapred-priority-item is-clickable" id="item-sector-mercado" data-target="pais">
+              <div class="sinapred-item-icon icon--orange">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              </div>
+              <div class="sinapred-item-text">
+                <b>Mercado Oriental</b>
+                <span>Managua, Nicaragua</span>
+              </div>
+              <span class="sinapred-chip chip--red">Alto riesgo</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+
+            <!-- Item 2: Hospital Escuela -->
+            <div class="sinapred-priority-item">
+              <div class="sinapred-item-icon icon--blue">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="sinapred-item-text">
+                <b>Hospital Escuela</b>
+                <span>Tegucigalpa, Honduras</span>
+              </div>
+              <span class="sinapred-chip chip--orange">Riesgo moderado</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+
+            <!-- Item 3: Centro Comercial Colón / San Salvador -->
+            <div class="sinapred-priority-item is-clickable" id="item-sector-cc" data-target="edificio">
+              <div class="sinapred-item-icon icon--purple">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              </div>
+              <div class="sinapred-item-text">
+                <b>Centro Comercial Colón</b>
+                <span>Foco Edificio · Azotea</span>
+              </div>
+              <span class="sinapred-chip chip--yellow">Monitoreo</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+
+            <!-- Item 4: Escuela Pública -->
+            <div class="sinapred-priority-item">
+              <div class="sinapred-item-icon icon--green">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+              </div>
+              <div class="sinapred-item-text">
+                <b>Escuela Pública</b>
+                <span>Ciudad de Guatemala, Guatemala</span>
+              </div>
+              <span class="sinapred-chip chip--green">Sin riesgo</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+
+            <!-- Item 5: Terminal urbana -->
+            <div class="sinapred-priority-item">
+              <div class="sinapred-item-icon icon--blue">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+              </div>
+              <div class="sinapred-item-text">
+                <b>Terminal urbana</b>
+                <span>San José, Costa Rica</span>
+              </div>
+              <span class="sinapred-chip chip--orange">Riesgo moderado</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloque 2: Datos meteorológicos en vivo -->
+        <div class="sinapred-card-section">
+          <div class="sinapred-card-section__head">
+            <div class="sinapred-card-section__title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+              <h3>Datos meteorológicos en vivo</h3>
+            </div>
+            <a href="#ver-mas" class="sinapred-link">Ver más →</a>
+          </div>
+
+          <div class="sinapred-weather-grid">
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#00a8cc"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                <span>Humedad</span>
+              </div>
+              <div class="cell-val">
+                <b>78%</b>
+                <svg class="mini-sparkline" viewBox="0 0 60 20"><path d="M0 15 Q 15 5, 30 12 T 60 8" fill="none" stroke="#00a8cc" stroke-width="2"/></svg>
+              </div>
+            </div>
+
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#00a8cc"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path></svg>
+                <span>Velocidad del viento</span>
+              </div>
+              <div class="cell-val">
+                <b>28 km/h</b>
+                <svg class="mini-sparkline" viewBox="0 0 60 20"><path d="M0 12 Q 20 18, 40 6 T 60 14" fill="none" stroke="#00a8cc" stroke-width="2"/></svg>
+              </div>
+            </div>
+
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#00a8cc"><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path><path d="M8 19v2"></path><path d="M16 19v2"></path></svg>
+                <span>Lluvia acumulada</span>
+              </div>
+              <div class="cell-val">
+                <b>12.6 mm</b>
+                <div class="mini-bars"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#00a8cc"><circle cx="12" cy="12" r="10"></circle><path d="M16.2 7.8l-2 6.3-6.4 2 2-6.3z"></path></svg>
+                <span>Presión atmosférica</span>
+              </div>
+              <div class="cell-val">
+                <b>1012 hPa</b>
+                <svg class="mini-sparkline" viewBox="0 0 60 20"><path d="M0 8 Q 15 16, 30 10 T 60 15" fill="none" stroke="#7c5cff" stroke-width="2"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloque 3: Nivel de confianza de ocupación estimada -->
+        <div class="sinapred-card-section">
+          <div class="sinapred-card-section__head">
+            <div class="sinapred-card-section__title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              <h3>Nivel de confianza de ocupación</h3>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#93a0b8" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          </div>
+
+          <div class="sinapred-confidence-box">
+            <div class="sinapred-donut-chart">
+              <svg viewBox="0 0 36 36">
+                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="circle-val" stroke-dasharray="87, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <text x="18" y="20.5" class="percentage">87%</text>
+              </svg>
+            </div>
+            <p class="confidence-desc">
+              Alta confiabilidad en la estimación de ocupación en sectores prioritarios con base en datos móviles, censos y patrones históricos.
+            </p>
+            <div class="confidence-bars">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- ESTADO B: DETALLE DE SECTOR / EDIFICIO (Foto 2 y 3) -->
+      <div class="sinapred-info-state" id="info-state-detail">
+        
+        <div class="sinapred-detail-header">
+          <div class="sinapred-detail-tag">
+            <div class="sinapred-item-icon icon--orange icon--lg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            </div>
+            <div>
+              <h2 id="detail-sector-name">Mercado Oriental / Colón</h2>
+              <p id="detail-sector-loc">Sector prioritario 1 · Managua, Nicaragua</p>
+            </div>
+          </div>
+          <button class="sinapred-btn-close" id="btn-close-detail" aria-label="Cerrar detalle">✕</button>
+        </div>
+
+        <div class="sinapred-chip-row">
+          <span class="sinapred-chip chip--red">Alto riesgo</span>
+          <a href="#ver-en-mapa" class="sinapred-link-ext" id="link-zoom-sector">
+            Ver en mapa ↗
+          </a>
+        </div>
+
+        <!-- Comparativa Antes vs Durante -->
+        <div class="sinapred-comparison-box">
+          <div class="comparison-col">
+            <span class="comparison-badge badge--blue">Antes de la emergencia</span>
+            <span class="comparison-metric-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+              Ocupación habitual
+            </span>
+            <b class="comparison-num">65%</b>
+            <div class="comparison-bar"><span style="width: 65%;"></span></div>
+          </div>
+
+          <div class="comparison-arrow">→</div>
+
+          <div class="comparison-col">
+            <span class="comparison-badge badge--red">Durante la emergencia</span>
+            <span class="comparison-metric-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f05a22" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              Ocupación actual
+            </span>
+            <b class="comparison-num num--danger">92%</b>
+            <div class="comparison-bar bar--danger"><span style="width: 92%;"></span></div>
+          </div>
+        </div>
+
+        <!-- Telemetría Meteorológica del Sector -->
+        <div class="sinapred-card-section">
+          <div class="sinapred-card-section__head">
+            <div class="sinapred-card-section__title">
+              <h3>Datos meteorológicos (última lectura)</h3>
+            </div>
+            <span class="sinapred-subtext">14 abr 2025 · 10:24 a. m.</span>
+          </div>
+
+          <div class="sinapred-weather-grid">
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#00a8cc"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                <span>Humedad</span>
+              </div>
+              <div class="cell-val">
+                <b>78%</b>
+                <svg class="mini-sparkline" viewBox="0 0 60 20"><path d="M0 15 Q 15 5, 30 12 T 60 8" fill="none" stroke="#00a8cc" stroke-width="2"/></svg>
+              </div>
+            </div>
+
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#00a8cc"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path></svg>
+                <span>Velocidad del viento</span>
+              </div>
+              <div class="cell-val">
+                <b>28 km/h</b>
+                <svg class="mini-sparkline" viewBox="0 0 60 20"><path d="M0 12 Q 20 18, 40 6 T 60 14" fill="none" stroke="#00a8cc" stroke-width="2"/></svg>
+              </div>
+            </div>
+
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#00a8cc"><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path><path d="M8 19v2"></path><path d="M16 19v2"></path></svg>
+                <span>Lluvia acumulada</span>
+              </div>
+              <div class="cell-val">
+                <b>12.6 mm</b>
+                <div class="mini-bars"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+
+            <div class="sinapred-weather-cell">
+              <div class="cell-head">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#00a8cc"><circle cx="12" cy="12" r="10"></circle><path d="M16.2 7.8l-2 6.3-6.4 2 2-6.3z"></path></svg>
+                <span>Presión atmosférica</span>
+              </div>
+              <div class="cell-val">
+                <b>1012 hPa</b>
+                <svg class="mini-sparkline" viewBox="0 0 60 20"><path d="M0 8 Q 15 16, 30 10 T 60 15" fill="none" stroke="#7c5cff" stroke-width="2"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confianza y Botones de Acción Inmediata -->
+        <div class="sinapred-confidence-box">
+          <div class="sinapred-donut-chart">
+            <svg viewBox="0 0 36 36">
+              <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              <path class="circle-val" stroke-dasharray="87, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              <text x="18" y="20.5" class="percentage">87%</text>
+            </svg>
+          </div>
+          <p class="confidence-desc">
+            Alta confiabilidad en la estimación de ocupación para este sector, con base en datos satelitales, censos y reportes en tiempo real.
+          </p>
+        </div>
+
+        <!-- Botón de Alerta Naranja / Sirena Sonora -->
+        <button class="sinapred-btn-action-primary" id="btn-sound-alarm">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>ACTIVAR ALERTA SONORA</span>
+        </button>
+
+        <a href="#historial" class="sinapred-btn-action-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>Ver historial de este sector</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Manejo interactivo de cambio de vista (LATAM -> PAÍS -> EDIFICIO)
+    const btnLatam = document.getElementById('btn-view-latam');
+    const btnPais = document.getElementById('btn-view-pais');
+    const btnEdificio = document.getElementById('btn-view-edificio');
+
+    const panelLatam = document.getElementById('panel-latam');
+    const panelPais = document.getElementById('panel-pais');
+    const panelEdificio = document.getElementById('panel-edificio');
+
+    const infoGeneral = document.getElementById('info-state-general');
+    const infoDetail = document.getElementById('info-state-detail');
+
+    const itemMercado = document.getElementById('item-sector-mercado');
+    const itemCC = document.getElementById('item-sector-cc');
+    const btnCloseDetail = document.getElementById('btn-close-detail');
+
+    function switchView(mode) {
+      [btnLatam, btnPais, btnEdificio].forEach(b => b && b.classList.remove('is-active'));
+      [panelLatam, panelPais, panelEdificio].forEach(p => p && p.classList.remove('is-visible'));
+
+      if (mode === 'latam') {
+        btnLatam.classList.add('is-active');
+        panelLatam.classList.add('is-visible');
+        infoGeneral.classList.add('is-visible');
+        infoDetail.classList.remove('is-visible');
+      } else if (mode === 'pais') {
+        btnPais.classList.add('is-active');
+        panelPais.classList.add('is-visible');
+        infoGeneral.classList.remove('is-visible');
+        infoDetail.classList.add('is-visible');
+      } else if (mode === 'edificio') {
+        btnEdificio.classList.add('is-active');
+        panelEdificio.classList.add('is-visible');
+        infoGeneral.classList.remove('is-visible');
+        infoDetail.classList.add('is-visible');
+      }
+    }
+
+    if (btnLatam) btnLatam.addEventListener('click', () => switchView('latam'));
+    if (btnPais) btnPais.addEventListener('click', () => switchView('pais'));
+    if (btnEdificio) btnEdificio.addEventListener('click', () => switchView('edificio'));
+
+    if (itemMercado) itemMercado.addEventListener('click', () => switchView('pais'));
+    if (itemCC) itemCC.addEventListener('click', () => switchView('edificio'));
+
+    document.querySelectorAll('.sinapred-hotspot').forEach(el => {
+      el.addEventListener('click', () => {
+        const t = el.getAttribute('data-target');
+        switchView(t);
+      });
+    });
+
+    if (btnCloseDetail) {
+      btnCloseDetail.addEventListener('click', () => {
+        switchView('latam');
+      });
+    }
+
+    // Filtros meteorológicos
+    document.querySelectorAll('.sinapred-filter').forEach(f => {
+      f.addEventListener('click', () => {
+        document.querySelectorAll('.sinapred-filter').forEach(x => x.classList.remove('is-active'));
+        f.classList.add('is-active');
+      });
+    });
+
+    // Control de slider temporal
+    document.querySelectorAll('.sinapred-track-step').forEach(step => {
+      step.addEventListener('click', () => {
+        document.querySelectorAll('.sinapred-track-step').forEach(x => x.classList.remove('is-active'));
+        step.classList.add('is-active');
+      });
+    });
+
+    // Botón de sirena sonora
+    const btnAlarm = document.getElementById('btn-sound-alarm');
+    if (btnAlarm) {
+      btnAlarm.addEventListener('click', () => {
+        alert('🚨 ALERTA SITRA TRANSMITIDA: Protocolo de evacuación y baliza activada para el sector.');
+      });
+    }
+  })();
+</script>

@@ -26,7 +26,9 @@ Los dos se distinguen por prefijo: `t*` y `m*` son interfaz; `3d-*` es el render
 
 | clip | dur. | movimiento | para qué sirve en el montaje |
 | --- | --- | --- | --- |
-| `pitch-recurso-sinapred-impacto.mp4` | 29,8 s | 3D dinámico + Disolvencias cruzadas + UI telemetría | **Recurso estrella de alto impacto.** Vuelo 3D hacia el centro comercial, órbita del nodo 360° con anemómetro/sensores, y descenso de crisis SINAPRED: país → personas mapeadas por manzanas → orden de rescate → croquis con viento (84 km/h), lluvia y avance de brigadas. |
+| `video-latam-panama-epicentro-experiencia.mp4` | 28,0 s | Apertura LATAM continental + Epicentro Panamá + 3D + Interfaces en cascada | **Video recurso definitivo.** Movimiento cinematográfico amplio: mapa de América Latina con nombres y red interconectada, zoom dinámico al epicentro de alerta en Panamá (Canal/Colón), rotación del hardware 3D con anemómetro, mapa de calor con personas mapeadas por manzana, ranking IPR y croquis vivo con viento a 84 km/h y avance de brigadas. |
+| `pitch-recurso-latam-panama-innovador.mp4` | 24,1 s | Continental LATAM + Foco Panamá + 3D + Micro-escala | Recurso regional previo de escala continental y foco Panamá. |
+| `pitch-recurso-sinapred-impacto.mp4` | 29,8 s | 3D dinámico + Disolvencias cruzadas + UI telemetría | Recurso estrella de impacto nacional SINAPRED: vuelo 3D, turntable y descenso por manzanas. |
 | `recorrido-institucional-sinapred.mp4` | 37,0 s | Recorrido continuo multicámara + disolvencias cruzadas | Pieza unificada de interfaces desde lo nacional hasta el croquis y la topología de red. |
 | `t1-fijo-pais.mp4` | 15,4 s | Fijo | Plano sin movimiento sobre el mapa nacional. Es el fondo donde el montaje escribe los titulares del arranque. |
 | `t2-zoom-pais.mp4` | 12,3 s | Zoom al país | **Plano de apertura.** La nación entera empujando hacia dentro: 17 unidades, 1 276 nodos, 3 eventos activos en un solo cuadro. |

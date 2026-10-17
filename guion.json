@@ -6,6 +6,18 @@
   "_movil": "La pantalla de brigada va en su propio guion y su propio lanzamiento: guion-movil.json, 540x1170 (el contenedor móvil mide 430 px).",
   "shots": [
     {
+      "name": "t0-latam-panama",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-07-latam__map",
+      "zoom": 0.22,
+      "duration": 7,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "hide": ".sec-10-bar",
+      "_para": "Plano continental LATAM. Detección en Panamá (Canal/Colón, IPR 96, viento 92 km/h) y enlace satelital con Nicaragua y la región."
+    },
+    {
       "name": "t1-fijo-pais",
       "target": "paginas/01-plataforma.html",
       "motion": "zoom",

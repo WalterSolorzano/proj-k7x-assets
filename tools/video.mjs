@@ -227,9 +227,9 @@ const MOVES = {
 
 // --- grabación ------------------------------------------------------------
 const outDir = resolve(ROOT, OUT);
-const tmpDir = resolve(ROOT, '.tmp-video');
+const tmpDir = resolve(ROOT, `.tmp-video-${Date.now()}`);
 await mkdir(outDir, { recursive: true });
-await rm(tmpDir, { recursive: true, force: true });
+try { await rm(resolve(ROOT, '.tmp-video'), { recursive: true, force: true }); } catch {}
 await mkdir(tmpDir, { recursive: true });
 
 // Flags para PC de 8 GB: contiene la RAM del navegador y evita tirones al grabar.
@@ -296,7 +296,7 @@ for (const shot of shots) {
 
 await context.close();
 await browser.close();
-await rm(tmpDir, { recursive: true, force: true });
+try { await rm(tmpDir, { recursive: true, force: true }); } catch {}
 
 // --- conversión a mp4 (opcional) -----------------------------------------
 if (MP4) {

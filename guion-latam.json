@@ -1,0 +1,16 @@
+{
+  "_nota": "Toma individual para el clip continental de LATAM y Panamá",
+  "shots": [
+    {
+      "name": "t0-latam-panama",
+      "target": "paginas/01-plataforma.html",
+      "motion": "zoom",
+      "focus": ".sec-07-latam__map",
+      "zoom": 0.22,
+      "duration": 7,
+      "pauseTop": 1.0,
+      "pauseBottom": 1.2,
+      "hide": ".sec-10-bar"
+    }
+  ]
+}

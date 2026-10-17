@@ -32,6 +32,8 @@ for (const page of cfg.pages) {
   }
 }
 
+await cp(join(ROOT, 'presentacion', 'video'), join(DIST, 'presentacion', 'video'), { recursive: true });
+
 // Índice de publicación: dos enlaces, con el mismo sistema de diseño. Nada más.
 const links = cfg.pages
   .map(
@@ -49,14 +51,15 @@ await writeFile(
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>SITRE · prototipo</title>
+<title>SITRA · Sistema Internacional Territorial para Rescates y Alertas</title>
 <link rel="stylesheet" href="assets/tokens.css">
 <style>
   body { padding: var(--s-8) 0; }
-  .r { display: grid; gap: var(--gap-block); max-width: 700px; margin: 0 auto; padding: 0 var(--s-5); }
-  .h { margin: 0; font-family: var(--font-display); font-size: var(--fs-2xl); letter-spacing: -.02em; }
-  .s { margin: 0 0 var(--s-5); color: var(--text-dim); }
-  .card { display: block; padding: var(--pad-block) 0; border-top: var(--hairline); }
+  .r { display: grid; gap: var(--gap-block); max-width: 760px; margin: 0 auto; padding: 0 var(--s-5); }
+  .h { margin: 0; font-family: var(--font-display); font-size: var(--fs-3xl); letter-spacing: -.02em; color: var(--accent); }
+  .s { margin: 0 0 var(--s-5); color: var(--text-dim); font-size: var(--fs-md); }
+  .card { display: block; padding: var(--pad-block) 0; border-top: var(--hairline); text-decoration: none; }
+  .card:hover .card__t { color: var(--accent); }
   .card__id { display: block; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
   .card__t { font-family: var(--font-display); font-size: var(--fs-xl); color: var(--text); }
   .f { margin: var(--s-6) 0 0; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); }
@@ -64,10 +67,10 @@ await writeFile(
 </head>
 <body>
   <div class="r">
-    <h1 class="h">SITRE</h1>
-    <p class="s">Sistema de Inteligencia Territorial para Rescates · prototipo visual</p>
+    <h1 class="h">SITRA</h1>
+    <p class="s">Sistema Internacional Territorial para Rescates y Alertas · Prototipo Visual e Interfaz de Mando</p>
 ${links}
-    <p class="f">Conteo agregado · sin identificar personas</p>
+    <p class="f">Transmisión LoRa + Satélite · Descenso continuo de LATAM a edificio específico</p>
   </div>
 </body>
 </html>
